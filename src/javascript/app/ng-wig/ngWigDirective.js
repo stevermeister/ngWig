@@ -7,7 +7,7 @@ angular.module('ngWig').directive('ngWig', function () {
         },
         restrict: 'A',
         replace: true,
-        templateUrl: 'javascript/app/ng-wig/view/ng-wig.html',
+        templateUrl: 'ng-wig/views/ng-wig.html',
         link: function (scope) {
           scope.editMode = false;
 

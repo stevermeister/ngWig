@@ -1,6 +1,9 @@
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
+  var srcPath = './src',
+      distPath = './dist';
+
   grunt.initConfig({
     express: {
       server: {
@@ -17,7 +20,21 @@ module.exports = function(grunt) {
         ]
       }
     },
-
+    ngmin:{
+      build: {
+        src: ['src/javascript/app/ng-wig/*.js',
+              srcPath + '/javascript/app/templates.js',
+              '!public/javascript/app/**/tests/*.js'],
+        dest: distPath + '/ng-wig.js'
+      }
+    },
+    uglify: {
+      build: {
+        files: {
+           'dist/ng-wig.min.js': [ distPath +'/ng-wig.js']
+        }
+      }
+    },
     clean:{
       libs:  ['src/javascript/libs/**/*'],
       bower: ['bower_components'],
@@ -25,12 +42,12 @@ module.exports = function(grunt) {
     },
     html2js: {
       options: {
-        base: 'src/javascript/app/',
+        base: srcPath + '/javascript/app/',
         module: 'app-templates'
       },
       main: {
-        src: ['src/javascript/app/**/views/**/*.html'],
-        dest: 'src/javascript/app/templates.js'
+        src: [ srcPath + '/javascript/app/ng-wig/views/*.html'],
+        dest: srcPath + '/javascript/app/templates.js'
       }
     },
     watch: {
@@ -44,5 +61,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['express', 'watch', 'express-keepalive']);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
+  grunt.registerTask('build', ['html2js', 'ngmin', 'uglify']);
 
 };
