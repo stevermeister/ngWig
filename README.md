@@ -1,4 +1,4 @@
 ngWig
 =====
 
-WYSIWY Editor for AgularJS
+WYSIWYG Editor for AgularJS
