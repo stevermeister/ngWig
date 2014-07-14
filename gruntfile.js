@@ -16,7 +16,7 @@ module.exports = function(grunt) {
     copy: {
       dev: {
         files: [
-          {src: 'bower_components/angular/angular.js', dest:'public/javascript/libs/angular.js'},
+          {src: 'bower_components/angular/angular.js', dest:'src/javascript/libs/angular.js'},
         ]
       }
     },

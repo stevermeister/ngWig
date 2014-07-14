@@ -1,4 +1,4 @@
-angular.module('ngWig', []);
+angular.module('ngWig', ['app-templates']);
 
 
 

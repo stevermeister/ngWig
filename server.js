@@ -1,9 +1,9 @@
 var express = require('express');
 var app = express();
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/src'));
 app.all('/*', function(req, res) {
-  res.sendfile('index.html', { root: __dirname+'/public' });
+  res.sendfile('index.html', { root: __dirname+'/src' });
 });
 
 //app.listen(3000);
