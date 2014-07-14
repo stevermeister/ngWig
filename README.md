@@ -1,6 +1,4 @@
 ngWig
 =====
 
-WYSIWYG Editor for AgularJS
-
-    bower install ng-wig    
+More information on [ngWig site](http://stevermeister.github.io/ngWig/)
