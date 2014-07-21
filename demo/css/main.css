@@ -1,0 +1,164 @@
+body {
+    margin: 0;
+    padding: 25px;
+    font: 12px Verdana, Arial
+}
+
+#ngwig {
+    border: none;
+    margin: 0;
+    padding: 0;
+    font: 14px 'Courier New', Verdana
+}
+
+.ngwig {
+    border: 1px solid #bbb;
+    padding: 0 1px 1px;
+    font: 12px Verdana, Arial
+}
+
+.ngwig iframe {
+    border: none;
+    background: white;
+    overflow-x: hidden
+}
+
+.ngwig-header {
+    height: 31px;
+    border-bottom: 1px solid #bbb;
+    background: url(../images/header-bg.gif) repeat-x;
+    padding-top: 1px
+}
+
+.ngwig-header select {
+    float: left;
+    margin-top: 5px
+}
+
+.ngwig-font {
+    margin-left: 12px
+}
+
+.ngwig-size {
+    margin: 0 3px
+}
+
+.ngwig-style {
+    margin-right: 12px
+}
+
+.ngwig-divider {
+    float: left;
+    width: 1px;
+    height: 30px;
+    background: #ccc
+}
+
+.ngwig-control {
+    float: left;
+    width: 34px;
+    height: 30px;
+    cursor: pointer;
+    background-image: url(../images/icons.png);
+    background-position-x: 0px;
+}
+
+.ngwig-control:hover {
+    background-color: #fff;
+    background-position-x: 34px;
+}
+
+.bold {
+    background-position-y: -120px;
+}
+
+.italic {
+    background-position-y: -150px;
+}
+
+.underline {
+    background-position-y: -180px;
+}
+
+.paragraph {
+    background-position-y: -180px;
+}
+
+.h1 {
+    background-position-y: -180px;
+}
+
+.h2 {
+    background-position-y: -180px;
+}
+
+.h3 {
+    background-position-y: -180px;
+}
+
+.orderedlist {
+    background-position-y: -300px;
+}
+
+.unorderedlist {
+    background-position-y: -330px;
+}
+
+.leftalign {
+    background-position-y: -420px;
+}
+
+.centeralign {
+    background-position-y: -450px;
+}
+
+.rightalign {
+    background-position-y: -480px;
+}
+
+.blockalign {
+    background-position-y: -510px;
+}
+
+.ngwig-editor {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 300px;
+}
+
+textarea.ngwig-editor {
+    resize: none;
+}
+
+.resize {
+    float: right;
+    height: 32px;
+    width: 32px;
+    background: url(../images/resize.gif) 15px 15px no-repeat;
+    cursor: s-resize
+}
+
+.colors-grid {
+    position: absolute;
+    left: 0;
+    top: 30px;
+    background-color: white;
+    width: 192px;
+    border: black solid 2px;
+    padding: 0;
+    margin: 0;
+}
+
+.colors-grid > li {
+    list-style: none;
+    border: white solid 2px;
+    float: left;
+    width: 20px;
+    height: 20px;
+}
+
+.colors-grid > li:hover {
+    opacity: 0.7;
+}

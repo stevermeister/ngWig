@@ -1,0 +1,25 @@
+<div class="ngwig">
+  <div class="ngwig-header">
+    <div class="ngwig-control bold" title="Bold" ng-click="execCommand('bold')"></div>
+    <div class="ngwig-control italic" title="Italic" ng-click="execCommand('italic')"></div>
+    <div class="ngwig-control underline" title="Underline" ng-click="execCommand('underline')"></div>
+    <div class="ngwig-divider"></div>
+    <div class="ngwig-control paragraph" title="Paragraph" ng-click="execCommand('formatblock', '<p>')"></div>
+    <div class="ngwig-control h1" title="H1" ng-click="execCommand('formatblock', '<h1>')"></div>
+    <div class="ngwig-control h2" title="H2" ng-click="execCommand('formatblock', '<h2>')"></div>
+    <div class="ngwig-control h3" title="H3" ng-click="execCommand('formatblock', '<h3>')"></div>
+    <div class="ngwig-divider"></div>
+    <div class="ngwig-control orderedlist" title="Insert Ordered List" ng-click="execCommand('insertorderedlist')"></div>
+    <div class="ngwig-control unorderedlist" title="Insert Unordered List" ng-click="execCommand('insertunorderedlist')"></div>
+    <div class="ngwig-divider"></div>
+    <div class="ngwig-control leftalign" title="Left Align" ng-click="execCommand('justifyleft')"></div>
+    <div class="ngwig-control centeralign" title="Center Align" ng-click="execCommand('justifycenter')"></div>
+    <div class="ngwig-control rightalign" title="Right Align" ng-click="execCommand('justifyright')"></div>
+    <div class="ngwig-control blockalign" title="Block Justify" ng-click="execCommand('justifyfull')"></div>
+    <div ng-show="debug" class="ngwig-control blockalign" title="Block Justify" ng-click="editMode = !editMode"></div>
+  </div>
+  <div>
+    <textarea class="ngwig-editor" ng-show="editMode" ng-model="content"></textarea>
+    <iframe class="ngwig-editor" ng-hide="editMode" ng-model="content" ng-wig-editable></iframe>
+  </div>
+</div>
