@@ -24,7 +24,7 @@ module.exports = function(grunt) {
       build: {
         src: ['src/javascript/app/ng-wig/*.js',
               srcPath + '/javascript/app/templates.js',
-              '!public/javascript/app/**/tests/*.js'],
+              '!src/javascript/app/**/tests/*.js'],
         dest: distPath + '/ng-wig.js'
       }
     },
