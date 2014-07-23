@@ -49,7 +49,7 @@ module.exports = function(grunt) {
     html2js: {
       options: {
         base: srcPath + '/javascript/app/',
-        module: 'app-templates'
+        module: 'ngwig-app-templates'
       },
       main: {
         src: [ srcPath + '/javascript/app/ng-wig/views/*.html'],

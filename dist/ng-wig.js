@@ -1,4 +1,4 @@
-angular.module('ngWig', ['app-templates']);
+angular.module('ngWig', ['ngwig-app-templates']);
 
 
 
@@ -75,7 +75,7 @@ angular.module('ngWig').directive('ngWigEditable', function () {
       }
     }
 );
-angular.module('app-templates', ['ng-wig/views/ng-wig.html']);
+angular.module('ngwig-app-templates', ['ng-wig/views/ng-wig.html']);
 
 angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("ng-wig/views/ng-wig.html",
