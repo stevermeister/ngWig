@@ -5,6 +5,11 @@ module.exports = function(grunt) {
       distPath = './dist';
 
   grunt.initConfig({
+
+    srcPath: srcPath,
+
+    distPath: distPath,
+
     express: {
       server: {
         options: {
@@ -20,12 +25,13 @@ module.exports = function(grunt) {
         ]
       }
     },
-    ngmin:{
-      build: {
-        src: ['src/javascript/app/ng-wig/*.js',
+    ngAnnotate: {
+      app1: {
+        files: {
+          '<%= distPath %>/ng-wig.js': ['src/javascript/app/ng-wig/*.js',
               srcPath + '/javascript/app/templates.js',
-              '!src/javascript/app/**/tests/*.js'],
-        dest: distPath + '/ng-wig.js'
+            '!src/javascript/app/**/tests/*.js']
+        }
       }
     },
     uglify: {
@@ -61,6 +67,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['express', 'watch', 'express-keepalive']);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
-  grunt.registerTask('build', ['html2js', 'ngmin', 'uglify']);
+  grunt.registerTask('build', ['html2js', 'ngAnnotate', 'uglify']);
 
 };
