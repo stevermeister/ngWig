@@ -1,0 +1,53 @@
+/**
+ *  NGWIG MODULE
+ * 
+ *  styling for ng-wig editor
+ * 
+ *  .ng-wig
+ *    <>--  .nw-toolbar
+ *            &__action
+ *              &--active
+ *              &--last
+ *    <>--  .nw-editor
+ *            &__src
+ *            &__res
+ *
+ */
+.ng-wig {
+  // nothing here for now...
+}
+
+.nw-toolbar {
+  border: 1px solid #ccc;
+  border-radius: $global-baseline/2;
+
+  &__action {
+    padding: 0 $global-baseline/2;
+    border-right: 1px solid #ccc;
+
+    &:hover {
+      background-color: #eee;
+    }
+  }
+    &__action--last {
+      border-right: none;
+    }
+    &__action--active {
+      &, &:hover {
+        background-color: #ccc;
+      }
+    }
+}
+
+.nw-editor {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+
+  &__src {
+    width: 100%;
+  }
+
+  &__res {
+    width: 100%;
+  }
+}

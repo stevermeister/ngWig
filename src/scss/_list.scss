@@ -1,0 +1,44 @@
+/**
+ *  LIST LAYOUT
+ *
+ *  layout for unstyled block list or inline list
+ *
+ *  .l-list
+ *    &__item
+ *    &--collapsed
+ *    &--inline
+ *    &--multiline
+ *
+ */
+.l-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &__item {
+    display: block;
+  }
+}
+  .l-list--inline {
+    margin-left: - $global-baseline;
+
+    & > .l-list__item {
+      display: inline-block;
+      vertical-align: top;
+      margin-left: $global-baseline;
+    }
+  }
+  .l-list--multiline {
+    margin-bottom: - $global-baseline;
+
+    & > .l-list__item {
+      margin-bottom: $global-baseline;
+    }
+  }
+  .l-list--collapsed {
+    margin: 0;
+
+    & > .l-list__item {
+      margin: 0.1px;
+    }
+  }

@@ -1,0 +1,27 @@
+/**
+ *  BLOCK LAYOUT
+ *
+ *  maintains vertical spacing between different modules
+ *
+ *  .l-block
+ *  .l-block-small
+ *  .l-block-large
+ *  .l-block-x-large
+ *
+ */
+.l-block-small {
+  display: block;
+  margin-bottom: $global-baseline / 2;
+}
+.l-block {
+  display: block;
+  margin-bottom: $global-baseline;
+}
+.l-block-large {
+  display: block;
+  margin-bottom: $global-baseline * 2;
+}
+.l-block-x-large {
+  display: block;
+  margin-bottom: $global-baseline * 3;
+}
