@@ -24,10 +24,9 @@
   &__action {
     padding: 0 $global-baseline/2;
     border-right: 1px solid #ccc;
-    background-color: #eee;
 
     &:hover {
-      background-color: #ddd;
+      background-color: #eee;
     }
   }
     &__action--last {
