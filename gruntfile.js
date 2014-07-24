@@ -97,7 +97,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', ['start']);
-  grunt.registerTask('start', ['compass', 'html2js', 'watch', 'express', 'express-keepalive']);
+  grunt.registerTask('start', ['compass', 'html2js', 'express', 'watch', 'express-keepalive',]);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'compass', 'html2js']);
   grunt.registerTask('build', ['html2js', 'ngAnnotate', 'uglify']);
   grunt.registerTask('icons', ['clean:icons', 'grunticon']);
