@@ -1,0 +1,59 @@
+/**
+ *  RESETS
+ */
+
+/**
+ *  Box model
+ */
+* {
+  margin: 0;
+  padding: 0;
+
+  &:active {
+    outline: none;
+  }
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/**
+ * Default styling removal
+ */
+button {
+  margin: 0;
+  padding: 0;
+
+  font: inherit;
+  line-height: inherit;
+
+  text-align: inherit;
+
+  color: inherit;
+  border: none;
+  background: none;
+
+  cursor: pointer;
+}
+
+textarea {
+  resize: vertical;
+  vertical-align: top;
+}
+
+input, textarea {
+  font: inherit;
+  line-height: inherit;
+  color: inherit;
+
+  &:focus {
+    outline: none;
+  }
+}
