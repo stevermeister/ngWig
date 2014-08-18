@@ -80,7 +80,7 @@ angular.module('ngwig-app-templates', ['ng-wig/views/ng-wig.html']);
 angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("ng-wig/views/ng-wig.html",
     "<div class=\"ng-wig\">\n" +
-    "  <div class=\"l-block\">\n" +
+    "  <div class=\"l-block nw-header\">\n" +
     "    <div class=\"l-list l-list--inline\">\n" +
     "      <div class=\"l-list__item\">\n" +
     "        <div class=\"nw-toolbar\">\n" +

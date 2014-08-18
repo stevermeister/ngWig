@@ -4,3 +4,4 @@ src/javascript/libs/
 src/javascript/app/templates.js
 svg-icons-out/
 src/css/
+.sass-cache/
