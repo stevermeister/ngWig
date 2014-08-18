@@ -1,1 +1,13 @@
-$global-baseline: 12px;
+  $global-baseline: 12px;
+
+// typography
+  $global-font-family: "proxima-nova", sans-serif;
+  $global-font-family-soft: "proxima-nova-soft", sans-serif;
+  $global-font-size: 15px;
+  $global-line-height: $global-baseline * 2;
+
+// colors
+  $color-tx:          #444444;
+  $color-bg:            #FFFFFF;
+
+  $light-grey: #F5F5F5;

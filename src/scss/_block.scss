@@ -7,6 +7,7 @@
  *  .l-block-small
  *  .l-block-large
  *  .l-block-x-large
+ *  .container
  *
  */
 .l-block-small {
@@ -24,4 +25,8 @@
 .l-block-x-large {
   display: block;
   margin-bottom: $global-baseline * 3;
+}
+
+.container {
+  padding: $global-baseline * 3;
 }
