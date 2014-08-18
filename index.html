@@ -1,106 +1,118 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="NgWig : WYSIWYG Editor for AgularJS" />
+<head>
+  <meta charset='utf-8'/>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+  <meta name="description" content="NgWig : WYSIWYG Editor for AgularJS"/>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>NgWig</title>
-  </head>
+  <title>NgWig</title>
+</head>
 
-  <body>
+<body>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/stevermeister/ngWig">View on GitHub</a>
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+  <header class="inner">
+    <a id="forkme_banner" href="https://github.com/stevermeister/ngWig">View on GitHub</a>
 
-          <h1 id="project_title">NgWig</h1>
-          <h2 id="project_tagline">WYSIWYG Editor for AgularJS</h2>
+    <h1 id="project_title">NgWig</h1>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/stevermeister/ngWig/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/stevermeister/ngWig/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+    <h2 id="project_tagline">WYSIWYG Editor for AgularJS</h2>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="what-is-ng-wig" class="anchor" href="#what-is-ng-wig"><span class="octicon octicon-link"></span></a>What is ng-wig?</h3>
+    <section id="downloads">
+      <a class="zip_download_link" href="https://github.com/stevermeister/ngWig/zipball/master">Download this project as
+        a .zip file</a>
+      <a class="tar_download_link" href="https://github.com/stevermeister/ngWig/tarball/master">Download this project as
+        a tar.gz file</a>
+    </section>
+  </header>
+</div>
 
-<p>ng-wig(or ngWig) is simple <a href="http://en.wikipedia.org/wiki/WYSIWYG">WYSIWYG</a> editor for <strong>AngularJS</strong> that provides the basic functionality like: text styling, headings, lists, alignment.</p>
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+  <section id="main_content" class="inner">
+    <h3>
+      <a name="what-is-ng-wig" class="anchor" href="#what-is-ng-wig"><span class="octicon octicon-link"></span></a>What
+      is ng-wig?</h3>
 
-<h3>
-<a name="how-to-install" class="anchor" href="#how-to-install"><span class="octicon octicon-link"></span></a>How to install</h3>
+    <p>ng-wig(or ngWig) is simple <a href="http://en.wikipedia.org/wiki/WYSIWYG">WYSIWYG</a> editor for <strong>AngularJS</strong>
+      that provides the basic functionality like: text styling, headings, lists, alignment.</p>
+
+    <h3>
+      <a name="how-to-install" class="anchor" href="#how-to-install"><span class="octicon octicon-link"></span></a>How
+      to install</h3>
 
 <pre><code>bower install ng-wig
 </code></pre>
 
-<p>or just simply download the library.</p>
+    <p>or just simply download the library.</p>
 
-<h3>
-<a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use</h3>
+    <h3>
+      <a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use
+    </h3>
 
-<p>just include dist file:</p>
+    <p>just include dist file:</p>
 
 <pre><code>&lt;script type='text/javascript' src='path/to/ng-wig.js'&gt;&lt;/script&gt;
 </code></pre>
 
-<p>inject module:</p>
+    <p>inject module:</p>
 
 <pre><code>angular.module('myapp', ['ng-wig']);
 </code></pre>
 
-<p>and enjoy attribute directive:</p>
+    <p>and enjoy attribute directive:</p>
 
 <pre><code>&lt;textarea ng-wig="content"&gt;&lt;/textarea&gt;
 </code></pre>
 
-<h3>
-<a name="demo" class="anchor" href="#demo"><span class="octicon octicon-link"></span></a>Demo</h3>
+    <h3>
+      <a name="demo" class="anchor" href="#demo"><span class="octicon octicon-link"></span></a>Demo</h3>
 
-<p>You can find Demo <a href="demo/">here</a>.</p>
+    <p><a href="demo/"><img src="images/ng-wig-demo.png"/></a></p>
+    <p>You can find Demo <a href="demo/">here</a>.</p>
 
-<h3>
-<a name="custom-templates" class="anchor" href="#custom-templates"><span class="octicon octicon-link"></span></a>Custom templates?</h3>
+    <h3>
+      <a name="custom-templates" class="anchor" href="#custom-templates"><span class="octicon octicon-link"></span></a>Custom
+      templates?</h3>
 
-<p>Not a problem!</p>
+    <p>Not a problem!</p>
 
-<h3>
-<a name="custom-commands" class="anchor" href="#custom-commands"><span class="octicon octicon-link"></span></a>Custom commands?</h3>
+    <h3>
+      <a name="custom-commands" class="anchor" href="#custom-commands"><span class="octicon octicon-link"></span></a>Custom
+      commands?</h3>
 
-<p>Not a problem!</p>
+    <p>Not a problem!</p>
 
-<h3>
-<a name="contribution" class="anchor" href="#contribution"><span class="octicon octicon-link"></span></a>Contribution</h3>
+    <h3>
+      <a name="contribution" class="anchor" href="#contribution"><span class="octicon octicon-link"></span></a>Contribution
+    </h3>
 
-<p>Having trouble with ng-wig or want to share idea of improvement? Please create an issue for it <a href="https://github.com/stevermeister/ngWig/issues">here</a></p>
+    <p>Having trouble with ng-wig or want to share idea of improvement? Please create an issue for it <a
+        href="https://github.com/stevermeister/ngWig/issues">here</a></p>
 
-<h3>
-<a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Contributors</h3>
+    <h3>
+      <a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Contributors</h3>
 
-<p>
-  <a href="https://github.com/stevermeister" class="user-mention">@stevermeister</a>,
-  <a href="https://github.com/Velzevul" class="user-mention">@volo</a>
-</p>
-      </section>
-    </div>
+    <p>
+      <a href="https://github.com/stevermeister" class="user-mention">@stevermeister</a>,
+      <a href="https://github.com/Velzevul" class="user-mention">@volo</a>
+    </p>
+  </section>
+</div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">NgWig maintained by <a href="https://github.com/stevermeister">stevermeister</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+  <footer class="inner">
+    <p class="copyright">NgWig maintained by <a href="https://github.com/stevermeister">stevermeister</a></p>
 
-    
+    <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+  </footer>
+</div>
 
-  </body>
+
+</body>
 </html>
