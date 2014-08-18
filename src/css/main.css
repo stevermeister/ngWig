@@ -42,18 +42,24 @@ button {
 }
 
 /* line 46, ../scss/_resets.scss */
+html,
+body {
+  font-family: "proxima-nova", sans-serif;
+}
+
+/* line 56, ../scss/_resets.scss */
 textarea {
   resize: vertical;
   vertical-align: top;
 }
 
-/* line 51, ../scss/_resets.scss */
+/* line 61, ../scss/_resets.scss */
 input, textarea {
   font: inherit;
   line-height: inherit;
   color: inherit;
 }
-/* line 56, ../scss/_resets.scss */
+/* line 66, ../scss/_resets.scss */
 input:focus, textarea:focus {
   outline: none;
 }
@@ -119,30 +125,36 @@ input:focus, textarea:focus {
  *  .l-block-small
  *  .l-block-large
  *  .l-block-x-large
+ *  .container
  *
  */
-/* line 12, ../scss/_block.scss */
+/* line 13, ../scss/_block.scss */
 .l-block-small {
   display: block;
   margin-bottom: 6px;
 }
 
-/* line 16, ../scss/_block.scss */
+/* line 17, ../scss/_block.scss */
 .l-block {
   display: block;
   margin-bottom: 12px;
 }
 
-/* line 20, ../scss/_block.scss */
+/* line 21, ../scss/_block.scss */
 .l-block-large {
   display: block;
   margin-bottom: 24px;
 }
 
-/* line 24, ../scss/_block.scss */
+/* line 25, ../scss/_block.scss */
 .l-block-x-large {
   display: block;
   margin-bottom: 36px;
+}
+
+/* line 30, ../scss/_block.scss */
+.container {
+  padding: 36px;
 }
 
 /**

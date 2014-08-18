@@ -57,3 +57,23 @@ input, textarea {
     outline: none;
   }
 }
+
+html,
+body {
+  height: 100%;
+
+  font-family: $global-font-family;
+  font-size: $global-font-size;
+  line-height: $global-line-height;
+
+  color: $color-tx;
+  background-color: $color-bg;
+}
+
+h1, h2, h3, h4, h5, h6,
+p, small {
+  margin:0;
+  padding:0;
+  font: inherit;
+  line-height: inherit;
+}

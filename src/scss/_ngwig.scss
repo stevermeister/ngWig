@@ -14,7 +14,16 @@
  *
  */
 .ng-wig {
-  // nothing here for now...
+  margin-bottom: $global-baseline * 2;
+}
+
+.nw-header {
+  background: $light-grey;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-radius: ($global-baseline / 2) ($global-baseline / 2) 0 0;
+  padding: $global-baseline / 2;
+  margin-bottom: 0;
 }
 
 .nw-toolbar {
@@ -40,8 +49,9 @@
 }
 
 .nw-editor {
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+//  border-top: 1px solid #ccc;
+//  border-bottom: 1px solid #ccc;
+  border: 1px solid #ccc;
 
   &__src {
     width: 100%;
