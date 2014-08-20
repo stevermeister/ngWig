@@ -1,52 +1,27 @@
 <div class="ng-wig">
-  <div class="l-block nw-header">
-    <div class="l-list l-list--inline">
-      <div class="l-list__item">
-        <div class="nw-toolbar">
-          <ul class="l-list l-list--inline l-list--collapsed">
-            <li class="l-list__item">
-              <button type="button" class="nw-toolbar__action editor-icon-paragraph" title="Paragraph" ng-click="execCommand('formatblock', '<p>')"></button>
-            </li><!--
-            --><li class="l-list__item">
-              <button type="button" class="nw-toolbar__action nw-toolbar__action--last editor-icon-header" title="Header" ng-click="execCommand('formatblock', '<h1>')"></button>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="l-list__item">
-        <div class="nw-toolbar">
-          <ul class="l-list l-list--inline l-list--collapsed">
-            <li class="l-list__item">
-              <button type="button" class="nw-toolbar__action editor-icon-bold" title="Bold" ng-click="execCommand('bold')"></button>
-            </li><!--
-            --><li class="l-list__item">
-              <button type="button" class="nw-toolbar__action nw-toolbar__action--last editor-icon-italic" title="Italic" ng-click="execCommand('italic')"></button>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="l-list__item">
-        <div class="nw-toolbar">
-          <ul class="l-list l-list--inline l-list--collapsed">
-            <li class="l-list__item">
-              <button type="button" class="nw-toolbar__action editor-icon-ul" title="Insert Unordered List" ng-click="execCommand('insertunorderedlist')"></button>
-            </li><!--
-            --><li class="l-list__item">
-              <button type="button" class="nw-toolbar__action nw-toolbar__action--active editor-icon-ol" title="Insert Ordered List" ng-click="execCommand('insertorderedlist')"></button>
-            </li><!--
-            --><li class="l-list__item">
-              <button type="button" class="nw-toolbar__action editor-icon-link"></button>
-            </li><!--
-            --><li class="l-list__item">
-              <button type="button" class="nw-toolbar__action nw-toolbar__action--last editor-icon-unlink"></button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+  <ul class="nw-toolbar">
+    <li class="nw-toolbar__item">
+      <button type="button" class="nw-button nw-button--header-one" title="Header" ng-click="execCommand('formatblock', '<h1>')"></button>
+    </li><!--
+    --><li class="nw-toolbar__item">
+      <button type="button" class="nw-button nw-button--paragraph" title="Paragraph" ng-click="execCommand('formatblock', '<p>')"></button>
+    </li><!--
+    --><li class="nw-toolbar__item">
+      <button type="button" class="nw-button nw-button--unordered-list" title="Unordered List" ng-click="execCommand('insertunorderedlist')"></button>
+    </li><!--
+    --><li class="nw-toolbar__item">
+      <button type="button" class="nw-button nw-button--ordered-list" title="Ordered List" ng-click="execCommand('insertorderedlist')"></button>
+    </li><!--
+    --><li class="nw-toolbar__item">
+      <button type="button" class="nw-button nw-button--bold" title="Bold" ng-click="execCommand('bold')"></button>
+    </li><!--
+    --><li class="nw-toolbar__item">
+      <button type="button" class="nw-button nw-button--italic" title="Italic" ng-click="execCommand('italic')"></button>
+    </li><!--
+    --><li class="nw-toolbar__item">
+      <button type="button" class="nw-button nw-button--link"></button>
+    </li>
+  </ul>
 
   <div class="nw-editor">
     <textarea class="nw-editor__src" ng-show="editMode" ng-model="content"></textarea>
