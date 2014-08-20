@@ -2,6 +2,7 @@
 node_modules/
 src/javascript/libs/
 src/javascript/app/templates.js
+src/css/main.css
 svg-icons-out/
 src/css/
 .sass-cache/
