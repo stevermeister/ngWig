@@ -23,6 +23,11 @@ module.exports = function(grunt) {
         files: [
           {src: 'bower_components/angular/angular.js', dest:'src/javascript/libs/angular.js'},
         ]
+      },
+      dist: {
+        files: [
+          {src: srcPath + '/css/main.css', dest: distPath + '/css/main.css'},
+        ]
       }
     },
     ngAnnotate: {
@@ -81,6 +86,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['html2js', 'express', 'watch', 'express-keepalive',]);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
-  grunt.registerTask('build', ['html2js', 'ngAnnotate', 'uglify']);
+  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify']);
   grunt.registerTask('icons', ['clean:icons', 'grunticon']);
 };
