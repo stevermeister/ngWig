@@ -12,6 +12,9 @@ angular.module('ngWig').directive('ngWig', function () {
           scope.editMode = false;
 
           scope.execCommand = function (command, options) {
+            if(command ==='createlink'){
+              options = prompt('Please enter the URL', 'http://');
+            }
             scope.$emit('execCommand', {command: command, options: options});
           }
         }
