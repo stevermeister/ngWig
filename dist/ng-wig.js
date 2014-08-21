@@ -30,8 +30,9 @@ angular.module('ngWig').directive('ngWigEditable', function () {
         var $document = $element[0].contentDocument,
             $body;
         $document.open();
-        $document.write('<!DOCTYPE html><html><head></head><body contenteditable="true"></body></html>');
+        $document.write('<!DOCTYPE html><html><head><link href="css/ng-wig.css" rel="stylesheet" type="text/css"></head><body contenteditable="true"></body></html>');
         $document.close();
+
         $body = angular.element($element[0].contentDocument.body);
 
         //model --> view
