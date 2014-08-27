@@ -17,6 +17,9 @@ angular.module('ngWig').directive('ngWig', function () {
           scope.editMode = false;
 
           scope.execCommand = function (command, options) {
+            if(command ==='createlink'){
+              options = prompt('Please enter the URL', 'http://');
+            }
             scope.$emit('execCommand', {command: command, options: options});
           }
         }
@@ -30,8 +33,9 @@ angular.module('ngWig').directive('ngWigEditable', function () {
         var $document = $element[0].contentDocument,
             $body;
         $document.open();
-        $document.write('<!DOCTYPE html><html><head></head><body contenteditable="true"></body></html>');
+        $document.write('<!DOCTYPE html><html><head><link href="css/ng-wig.css" rel="stylesheet" type="text/css"></head><body contenteditable="true"></body></html>');
         $document.close();
+
         $body = angular.element($element[0].contentDocument.body);
 
         //model --> view
@@ -100,7 +104,7 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "      <button type=\"button\" class=\"nw-button nw-button--italic\" title=\"Italic\" ng-click=\"execCommand('italic')\"></button>\n" +
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--link\"></button>\n" +
+    "      <button type=\"button\" class=\"nw-button nw-button--link\" title=\"link\" ng-click=\"execCommand('createlink')\"></button>\n" +
     "    </li>\n" +
     "  </ul>\n" +
     "\n" +

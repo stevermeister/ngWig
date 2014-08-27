@@ -1,0 +1,24 @@
+{
+  "name": "ngWig",
+  "version": "0.7.9",
+  "homepage": "https://github.com/stevermeister/ngWig",
+  "authors": [
+    "Stepan Suvorov <stevermeister@gmail.com>"
+  ],
+  "description": "demo installation",
+  "keywords": [
+    "ng-wig",
+    "demo"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "ng-wig": "*"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "ngWig",
+  "version": "0.7.9",
+  "description": "demo for ng-wig",
+  "main": "index.js",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-cli": "~0.1.13",
+    "load-grunt-tasks": "~0.6.0",
+    "bower": "~1.3.9",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-rename": "0.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stevermeister/ngWig.git"
+  },
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/stevermeister/ngWig/issues"
+  },
+  "homepage": "https://github.com/stevermeister/ngWig",
+  "scripts": {
+    "postinstall": "./node_modules/.bin/bower install && ./node_modules/.bin/grunt"
+  }
+}
