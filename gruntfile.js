@@ -14,6 +14,7 @@ module.exports = function(grunt) {
       server: {
         options: {
           server: 'server.js',
+          port: Number(process.env.PORT || 3000),
           livereload: true
         }
       }
@@ -22,6 +23,7 @@ module.exports = function(grunt) {
       dev: {
         files: [
           {src: 'bower_components/angular/angular.js', dest:'src/javascript/libs/angular.js'},
+          {src: 'bower_components/jquery/dist/jquery.min.js', dest:'src/javascript/libs/jquery.js'}
         ]
       },
       dist: {

@@ -1,3 +1,4 @@
+(function($) {
 angular.module('ngWig').directive('ngWigEditable', function () {
       function init(scope, $element, attrs, ctrl) {
         var $document = $element[0].contentDocument,
@@ -11,10 +12,11 @@ angular.module('ngWig').directive('ngWigEditable', function () {
         //model --> view
         ctrl.$render = function () {
           $body[0].innerHTML = ctrl.$viewValue || '';
-        }
+        };
 
         //view --> model
         $body.bind('blur keyup change paste', function () {
+          expandEditor();
           scope.$apply(function blurkeyup() {
             ctrl.$setViewValue($body.html());
           });
@@ -37,10 +39,27 @@ angular.module('ngWig').directive('ngWigEditable', function () {
           //sync
           scope.$evalAsync(function () {
             ctrl.$setViewValue($body.html());
+            expandEditor();
           });
         });
 
+        function expandEditor() {
+          if (!scope.autoexpand) {
+            var height = scope.originalHeight;
+          } else {
+            height = $($document.documentElement).height();
+          }
+          scope.resizeEditor(height);
+        }
+
+        scope.$watch('autoexpand', expandEditor);
+        scope.$watch('editMode', function(oldMode, newMode) {
+          if (newMode) {
+            expandEditor();
+          }
+        });
       }
+
       return {
         restrict: 'A',
         require: 'ngModel',
@@ -49,3 +68,4 @@ angular.module('ngWig').directive('ngWigEditable', function () {
       }
     }
 );
+})(jQuery);
