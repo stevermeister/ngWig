@@ -20,6 +20,9 @@
     </li><!--
     --><li class="nw-toolbar__item">
       <button type="button" class="nw-button nw-button--link" title="link" ng-click="execCommand('createlink')"></button>
+    </li><!--
+    --><li class="nw-toolbar__item">
+      <button type="button" class="nw-button nw-button--source" ng-class="{ 'nw-button--active': editMode }" ng-click="toggleEditMode()"></button>
     </li>
   </ul>
 

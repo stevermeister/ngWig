@@ -11,6 +11,10 @@ angular.module('ngWig').directive('ngWig', function () {
         link: function (scope) {
           scope.editMode = false;
 
+          scope.toggleEditMode = function() {
+            scope.editMode ^= 1;
+          }
+
           scope.execCommand = function (command, options) {
             if(command ==='createlink'){
               options = prompt('Please enter the URL', 'http://');
