@@ -109,6 +109,10 @@
 
   cursor: pointer;
 }
+  .nw-button:focus {
+      outline: none;
+  }
+
   .nw-button:hover,
   .nw-button.nw-button--active { opacity: 1 }
 
