@@ -26,7 +26,15 @@ angular.module('ngWig').directive('ngWig', function () {
           };
 
           scope.resizeEditor = function(height) {
-            element.find('.nw-editor').outerHeight(height, true);
+            var children = element.children();
+            for (var i in children) {
+              var child = children.eq(i);
+              if (child.hasClass('nw-editor')) {
+                child.outerHeight(height);
+                break;
+              }
+            }
+
           }
         }
       }

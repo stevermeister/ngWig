@@ -1,4 +1,3 @@
-(function($) {
 angular.module('ngWig').directive('ngWigEditable', function () {
       function init(scope, $element, attrs, ctrl) {
         var $document = $element[0].contentDocument,
@@ -47,7 +46,7 @@ angular.module('ngWig').directive('ngWigEditable', function () {
           if (!scope.autoexpand) {
             var height = scope.originalHeight;
           } else {
-            height = $($document.documentElement).height();
+            height = angular.element($document.documentElement).outerHeight();
           }
           scope.resizeEditor(height);
         }
@@ -68,4 +67,3 @@ angular.module('ngWig').directive('ngWigEditable', function () {
       }
     }
 );
-})(jQuery);

@@ -2,8 +2,7 @@
   "name": "ngWig",
   "version": "0.7.9",
   "devDependencies": {
-    "angular": "~1.2.16",
-    "jquery": "~1.11.1"
+    "angular": "~1.2.16"
   },
   "homepage": "https://github.com/stevermeister/ngWig",
   "authors": [
