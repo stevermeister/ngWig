@@ -15,7 +15,7 @@ angular.module('ngWig').directive('ngWig', function () {
           scope.autoexpand = 'autoexpand' in attrs;
 
           scope.toggleEditMode = function() {
-            scope.editMode ^= 1;
+            scope.editMode = !scope.editMode;
           };
 
           scope.execCommand = function (command, options) {
