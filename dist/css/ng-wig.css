@@ -52,19 +52,18 @@
   .nw-toolbar__item {
     display: inline-block;
     vertical-align: top;
-
     border-right: 1px solid #DEDEDE;
   }
 
   .nw-toolbar label {
+      font-size: inherit;
       line-height: 30px;
       display: inline-block;
       padding: 0 6px 0 3px;
   }
 
   .nw-toolbar input[type=checkbox] {
-      vertical-align: -3px;
-      margin-right: -1px;
+      margin: 0 -1px 0 0;
   }
 
 /**
@@ -101,7 +100,7 @@
  *    &--{button type}
  *
  */
-.nw-button {
+button.nw-button {
   -webkit-appearance: none;
   -moz-appearance:    none;
   appearance:         none;
@@ -121,14 +120,14 @@
 
   cursor: pointer;
 }
-  .nw-button:focus {
+  button.nw-button:focus {
       outline: none;
   }
 
-  .nw-button:hover,
-  .nw-button.nw-button--active { opacity: 1 }
+  button.nw-button:hover,
+  button.nw-button.nw-button--active { opacity: 1; }
 
-  .nw-button--active {
+  button.nw-button--active {
     background-color: #EEEEEE;
   }
   /* text formatting */
