@@ -12,7 +12,7 @@ angular.module('ngWig').directive('ngWig', function () {
 
           scope.originalHeight = element.outerHeight();
           scope.editMode = false;
-          scope.autoexpand = 'autoexpand' in attrs;
+          scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
 
           scope.toggleEditMode = function() {
             scope.editMode = !scope.editMode;
