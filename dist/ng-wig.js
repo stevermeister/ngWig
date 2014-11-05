@@ -79,7 +79,7 @@ angular.module('ngWig').directive('ngWig', function () {
 
           scope.originalHeight = element.outerHeight();
           scope.editMode = false;
-          scope.autoexpand = 'autoexpand' in attrs;
+          scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
           scope.cssPath = scope.cssPath ? scope.cssPath : 'css/ng-wig.css';
 
           scope.toggleEditMode = function() {
@@ -209,9 +209,6 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
     "      <button type=\"button\" class=\"nw-button nw-button--source\" ng-class=\"{ 'nw-button--active': editMode }\" ng-click=\"toggleEditMode()\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <label><input type=\"checkbox\" ng-model=\"autoexpand\"> Auto-expand editor</label>\n" +
     "    </li>\n" +
     "  </ul>\n" +
     "\n" +
