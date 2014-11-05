@@ -3,7 +3,8 @@ angular.module('ngWig').directive('ngWig', function () {
       return {
         scope: {
           content: '=ngWig',
-          debug: '&'
+          debug: '&',
+          cssPath: '@'
         },
         restrict: 'A',
         replace: true,
@@ -13,6 +14,7 @@ angular.module('ngWig').directive('ngWig', function () {
           scope.originalHeight = element.outerHeight();
           scope.editMode = false;
           scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
+          scope.cssPath = scope.cssPath ? scope.cssPath : 'css/ng-wig.css';
 
           scope.toggleEditMode = function() {
             scope.editMode = !scope.editMode;
