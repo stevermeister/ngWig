@@ -9,7 +9,10 @@
     "Stepan Suvorov <stevermeister@gmail.com>"
   ],
   "description": "Small AngularJS WYSIWYG editor component",
-  "main": "dist/ng-wig.js",
+  "main": [
+    "dist/ng-wig.js",
+    "dist/css/ng-wig.css"
+  ],
   "keywords": [
     "angular",
     "wysiwyg",
