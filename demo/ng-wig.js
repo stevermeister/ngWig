@@ -115,7 +115,7 @@ angular.module('ngWig').directive('ngWigEditable', function () {
         var $document = $element[0].contentDocument,
             $body;
         $document.open();
-        $document.write('<!DOCTYPE html><html><head><link href="'+ scope.cssPath +'" rel="stylesheet" type="text/css"></head><body contenteditable="true"></body></html>');
+        $document.write('<!DOCTYPE html><html><head>'+ (scope.cssPath ? ('<link href="'+ scope.cssPath +'" rel="stylesheet" type="text/css">') : '') + '</head><body contenteditable="true"></body></html>');
         $document.close();
 
         $body = angular.element($element[0].contentDocument.body);
