@@ -12,7 +12,11 @@
 <h1>One more</h1>
 <textarea ng-wig="text2"></textarea>
 
+<h1>Bind to html</h1>
+<ng-wig-html to-bind="text2"></ng-wig-html>
+
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-sanitize.min.js"></script>
 <script src="ng-wig.js"></script>
 <script>
   angular.module('myapp', ['ngWig', 'ngSanitize']).
