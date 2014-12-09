@@ -188,7 +188,6 @@ angular.module('ngWig').directive('ngWigEditable', function () {
 **/
  angular.module('ngWig').directive('ngWigHtml', function ($compile) {
 	 return {
-		 //
         restrict: "AE",
 		link: function(scope, element, attr)  {
 			var ele = $compile('<div ng-bind-html="'+attr.toBind+'"></div>')(scope);
