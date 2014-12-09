@@ -115,7 +115,7 @@ angular.module('ngWig').directive('ngWigEditable', function () {
         var $document = $element[0].contentDocument,
             $body;
         $document.open();
-        $document.write('<!DOCTYPE html><html><head><link href="'+ scope.cssPath +'" rel="stylesheet" type="text/css"></head><body contenteditable="true"></body></html>');
+       $document.write('<!DOCTYPE html><html><head>'+ (scope.cssPath ? ('<link href="'+ scope.cssPath +'" rel="stylesheet" type="text/css">') : '') + '</head><body contenteditable="true"></body></html>');
         $document.close();
 
         $body = angular.element($element[0].contentDocument.body);
@@ -179,7 +179,24 @@ angular.module('ngWig').directive('ngWigEditable', function () {
       }
     }
 );
+/**
+ * Allow dynamic binding to html
+ * require angular-sanitize module loaded
+ * to use;
+ * <ng-wig-html to-bind="text2"></ng-wig-html>
+ * 'text2' is the actual model assign in the ng-wig directive 
+**/
+ angular.module('ngWig').directive('ngWigHtml', function ($compile) {
+	 return {
+        restrict: "AE",
+		link: function(scope, element, attr)  {
+			var ele = $compile('<div ng-bind-html="'+attr.toBind+'"></div>')(scope);
+			element.replaceWith(ele);
+		}
+    }
+ })
 
+	 
 angular.module('ngwig-app-templates', ['ng-wig/views/ng-wig.html']);
 
 angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($templateCache) {
