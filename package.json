@@ -1,7 +1,7 @@
 {
   "name": "ngWig",
   "version": "0.8.5",
-  "author": "StudyTube",
+  "author": "Stepan Suvorov",
   "devDependencies": {
     "bower": "~1.3.3",
     "express": "~3.4.8",
