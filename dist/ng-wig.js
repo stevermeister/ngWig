@@ -205,6 +205,9 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "      <button type=\"button\" class=\"nw-button nw-button--italic\" title=\"Italic\" ng-click=\"execCommand('italic')\"></button>\n" +
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
+    "      <button type=\"button\" class=\"nw-button nw-button--underline\" title=\"Underline\" ng-click=\"execCommand('underline')\"></button>\n" +
+    "    </li><!--\n" +
+    "    --><li class=\"nw-toolbar__item\">\n" +
     "      <button type=\"button\" class=\"nw-button nw-button--link\" title=\"link\" ng-click=\"execCommand('createlink')\"></button>\n" +
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
