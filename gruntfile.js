@@ -23,6 +23,7 @@ module.exports = function(grunt) {
       dev: {
         files: [
           {src: 'bower_components/angular/angular.js', dest:'src/javascript/libs/angular.js'},
+		   {src: 'bower_components/angular-sanitize/angular-sanitize.js', dest:'src/javascript/libs/angular-sanitize.js'}
         ]
       },
       dist: {

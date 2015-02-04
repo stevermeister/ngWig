@@ -2,7 +2,8 @@
   "name": "ngWig",
   "version": "0.8.5",
   "devDependencies": {
-    "angular": "~1.2.16"
+    "angular": "~1.2.16",
+	"angular-sanitize": "~1.2.16"
   },
   "homepage": "https://github.com/stevermeister/ngWig",
   "authors": [

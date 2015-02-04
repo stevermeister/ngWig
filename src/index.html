@@ -20,12 +20,17 @@
 
     <h1>One more</h1>
     <textarea ng-wig="text2" data-autoexpand="off"></textarea>
+	
+	<h1>Bind to html</h1>
+	<ng-wig-html to-bind="text2"></ng-wig-html>
 
 </div>
 <script src="javascript/libs/angular.js"></script>
+<script src="javascript/libs/angular-sanitize.js"></script>
 <script src="javascript/app/app.js"></script>
 <script src="javascript/app/templates.js"></script>
 <script src="javascript/app/ng-wig/ng-wig.js"></script>
+<script src="javascript/app/ng-wig/ngWigHtml.js"></script>
 <script src="javascript/app/ng-wig/ngWigDirective.js"></script>
 <script src="javascript/app/ng-wig/ngWigEditableDirective.js"></script>
 <script src="javascript/app/ng-wig/angular.element.outerHeight.js"></script>
