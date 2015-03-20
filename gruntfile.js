@@ -81,12 +81,23 @@ module.exports = function(grunt) {
         files:['src/javascript/app/**/views/**/*.html'],
         tasks: ['html2js']
       }
+    },
+    bump: {
+      options: {
+        files: ['package.json', 'bower.json'],
+        createTag: true,
+        tagName: 'v%VERSION%',
+        tagMessage: 'Version %VERSION%',
+        push: false
+      }
     }
   });
 
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['html2js', 'express', 'watch', 'express-keepalive',]);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
-  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify']);
+  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify', 'bump:path']);
+  grunt.registerTask('upversion', ['bump:minor']);
+  //grunt.registerTask('upversion', ['bump:major']);
   grunt.registerTask('icons', ['clean:icons', 'grunticon']);
 };
