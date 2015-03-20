@@ -14,6 +14,7 @@ module.exports = function(grunt) {
       server: {
         options: {
           server: 'server.js',
+          port: Number(process.env.PORT || 3000),
           livereload: true
         }
       }
@@ -22,6 +23,11 @@ module.exports = function(grunt) {
       dev: {
         files: [
           {src: 'bower_components/angular/angular.js', dest:'src/javascript/libs/angular.js'},
+        ]
+      },
+      dist: {
+        files: [
+          {src: srcPath + '/css/main.css', dest: distPath + '/css/main.css'},
         ]
       }
     },
@@ -46,20 +52,6 @@ module.exports = function(grunt) {
       bower: ['bower_components'],
       target: ['dist/**'],
       icons: ['svg-icons-out/**/*'],
-    },
-    compass: {
-      dev: {
-        options: {
-          sassDir: 'src/scss',
-          cssDir: 'src/css'
-        }
-      },
-      dist: {
-        options: {
-          sassDir: 'src/scss',
-          cssDir: 'dist/css'
-        }
-      }
     },
     html2js: {
       options: {
@@ -88,17 +80,13 @@ module.exports = function(grunt) {
       templates: {
         files:['src/javascript/app/**/views/**/*.html'],
         tasks: ['html2js']
-      },
-      css: {
-        files: ['src/scss/**/*.scss'],
-        tasks: ['compass']
       }
     }
   });
 
   grunt.registerTask('default', ['start']);
-  grunt.registerTask('start', ['compass', 'html2js', 'express', 'watch', 'express-keepalive',]);
-  grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'compass', 'html2js']);
-  grunt.registerTask('build', ['html2js', 'ngAnnotate', 'uglify']);
+  grunt.registerTask('start', ['html2js', 'express', 'watch', 'express-keepalive',]);
+  grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
+  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify']);
   grunt.registerTask('icons', ['clean:icons', 'grunticon']);
 };
