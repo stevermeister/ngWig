@@ -3,7 +3,7 @@ angular.module('ngWig').directive('ngWigEditable', function () {
         var $document = $element[0].contentDocument,
             $body;
         $document.open();
-        $document.write('<!DOCTYPE html><html><head></head><body contenteditable="true"></body></html>');
+        $document.write('<!DOCTYPE html><html style="height:100%"><head></head><body contenteditable="true" style="height:100%; margin: 0; padding: 8px;box-sizing: border-box;"></body></html>');
         $document.close();
         $body = angular.element($element[0].contentDocument.body);
 
