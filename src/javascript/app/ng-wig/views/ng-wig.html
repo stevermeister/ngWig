@@ -13,7 +13,7 @@
       <button type="button" class="nw-button nw-button--ordered-list" title="Ordered List" ng-click="execCommand('insertorderedlist')"></button>
     </li><!--
     --><li class="nw-toolbar__item">
-      <button type="button" class="nw-button nw-button--bold" title="Bold" ng-click="execCommand('bold')"></button>
+      <button type="button" class="nw-button nw-button--bold" ng-class="{'nw-button--active': selection.isBold}"  title="Bold" ng-click="execCommand('bold')"></button>
     </li><!--
     --><li class="nw-toolbar__item">
       <button type="button" class="nw-button nw-button--italic" title="Italic" ng-click="execCommand('italic')"></button>

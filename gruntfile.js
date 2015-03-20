@@ -2,7 +2,7 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
   var srcPath = './src',
-      distPath = './dist';
+    distPath = './dist';
 
   grunt.initConfig({
 
@@ -22,12 +22,12 @@ module.exports = function(grunt) {
     copy: {
       dev: {
         files: [
-          {src: 'bower_components/angular/angular.js', dest:'src/javascript/libs/angular.js'},
+          { src: 'bower_components/angular/angular.js', dest: 'src/javascript/libs/angular.js' },
         ]
       },
       dist: {
         files: [
-          {src: srcPath + '/css/main.css', dest: distPath + '/css/main.css'},
+          { src: srcPath + '/css/main.css', dest: distPath + '/css/main.css' },
         ]
       }
     },
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
       app1: {
         files: {
           '<%= distPath %>/ng-wig.js': ['src/javascript/app/ng-wig/*.js',
-              srcPath + '/javascript/app/templates.js',
+            srcPath + '/javascript/app/templates.js',
             '!src/javascript/app/**/tests/*.js']
         }
       }
@@ -43,15 +43,15 @@ module.exports = function(grunt) {
     uglify: {
       build: {
         files: {
-           'dist/ng-wig.min.js': [ distPath +'/ng-wig.js']
+          'dist/ng-wig.min.js': [distPath + '/ng-wig.js']
         }
       }
     },
-    clean:{
-      libs:  ['src/javascript/libs/**/*'],
+    clean: {
+      libs: ['src/javascript/libs/**/*'],
       bower: ['bower_components'],
       target: ['dist/**'],
-      icons: ['svg-icons-out/**/*'],
+      icons: ['svg-icons-out/**/*']
     },
     html2js: {
       options: {
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
         module: 'ngwig-app-templates'
       },
       main: {
-        src: [ srcPath + '/javascript/app/ng-wig/views/*.html'],
+        src: [srcPath + '/javascript/app/ng-wig/views/*.html'],
         dest: srcPath + '/javascript/app/templates.js'
       }
     },
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
     },
     watch: {
       templates: {
-        files:['src/javascript/app/**/views/**/*.html'],
+        files: ['src/javascript/app/**/views/**/*.html'],
         tasks: ['html2js']
       }
     }
