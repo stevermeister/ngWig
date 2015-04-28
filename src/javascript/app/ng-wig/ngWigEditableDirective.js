@@ -8,8 +8,8 @@ angular.module('ngWig').directive('ngWigEditable', function () {
             '<html><head>' +
               (scope.cssPath ? ('<link href="'+ scope.cssPath +'" rel="stylesheet" type="text/css">') : '') +
             '</head>' +
-            '<body contenteditable="true" style="' + (scope.minHeight ? ('min-height: ' + scope.minHeight + 'px;') : '') +
-              ' margin: 0; padding: 8px;box-sizing: border-box;"></body>' +
+            '<body contenteditable="true" style="' + (scope.minHeight ? ('min-height: ' + scope.minHeight + 'px; ') : '') +
+              'margin: 0; padding: 8px; box-sizing: border-box;"></body>' +
           '</html>');
         $document.close();
 
@@ -53,7 +53,7 @@ angular.module('ngWig').directive('ngWigEditable', function () {
           if (!scope.autoexpand) {
             var height = scope.originalHeight;
           } else {
-            height = angular.element($document.documentElement).outerHeight() + 1;
+            height = angular.element($document.documentElement).outerHeight();
           }
           scope.resizeEditor(height);
         }
