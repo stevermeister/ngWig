@@ -10,16 +10,20 @@
       font-size: 14px;
       line-height: 24px;
     }
+
+    .editor1 .nw-editor__res {
+      min-height: 450px;
+    }
   </style>
 </head>
 <body ng-controller="demoController" ng-cloak>
 <div class="container">
 
     <h1>One simple WYSIWYG</h1>
-    <textarea ng-wig="text1" min-height="200"></textarea>
+    <textarea ng-wig="text1" class="editor1"></textarea>
 
     <h1>One more</h1>
-    <textarea ng-wig="text2" data-autoexpand="off"></textarea>
+    <textarea ng-wig="text2" class="editor2" data-autoexpand="off"></textarea>
 
 </div>
 <script src="javascript/libs/angular.js"></script>

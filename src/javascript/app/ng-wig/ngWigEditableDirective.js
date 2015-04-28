@@ -1,50 +1,43 @@
 angular.module('ngWig').directive('ngWigEditable', function () {
       function init(scope, $element, attrs, ctrl) {
-        var $document = $element[0].contentDocument,
-            $body;
-        $document.open();
-        $document.write(
-          '<!DOCTYPE html>' +
-            '<html><head>' +
-              (scope.cssPath ? ('<link href="'+ scope.cssPath +'" rel="stylesheet" type="text/css">') : '') +
-            '</head>' +
-            '<body contenteditable="true" style="' + (scope.minHeight ? ('min-height: ' + scope.minHeight + 'px; ') : '') +
-              'margin: 0; padding: 8px; box-sizing: border-box;"></body>' +
-          '</html>');
-        $document.close();
+        var document = $element[0].ownerDocument;
 
-        $body = angular.element($element[0].contentDocument.body);
+        $element.attr('contenteditable', true);
 
         //model --> view
         ctrl.$render = function () {
-          $body[0].innerHTML = ctrl.$viewValue || '';
+          $element.html(ctrl.$viewValue || '');
         };
 
         //view --> model
-        $body.bind('blur keyup change paste', function () {
+        $element.bind('blur keyup change paste', function () {
           resizeEditor();
           scope.$apply(function blurkeyup() {
-            ctrl.$setViewValue($body.html());
+            ctrl.$setViewValue($element.html());
           });
         });
 
         scope.$on('execCommand', function (event, params) {
-          var sel = $document.selection,
+          $element[0].focus();
+
+            var sel = document.selection,
               command = params.command,
               options = params.options;
+
           if (sel) {
             var textRange = sel.createRange();
-            $document.execCommand(command, false, options);
+          }
+
+          document.execCommand(command, false, options);
+
+          if (sel) {
             textRange.collapse(false);
             textRange.select();
           }
-          else {
-            $document.execCommand(command, false, options);
-          }
-          $document.body.focus();
+
           //sync
           scope.$evalAsync(function () {
-            ctrl.$setViewValue($body.html());
+            ctrl.$setViewValue($element.html());
             resizeEditor();
           });
         });
@@ -53,7 +46,7 @@ angular.module('ngWig').directive('ngWigEditable', function () {
           if (!scope.autoexpand) {
             var height = scope.originalHeight;
           } else {
-            height = angular.element($document.documentElement).outerHeight();
+            height = $element.outerHeight();
           }
           scope.resizeEditor(height);
         }

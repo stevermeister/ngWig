@@ -3,9 +3,7 @@ angular.module('ngWig').directive('ngWig', function () {
       return {
         scope: {
           content: '=ngWig',
-          debug: '&',
-          cssPath: '@',
-          minHeight: '=?'
+          debug: '&'
         },
         restrict: 'A',
         replace: true,
