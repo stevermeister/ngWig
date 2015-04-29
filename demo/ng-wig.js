@@ -68,9 +68,7 @@ angular.module('ngWig').directive('ngWig', function () {
 
       return {
         scope: {
-          content: '=ngWig',
-          debug: '&',
-          cssPath: '@'
+          content: '=ngWig'
         },
         restrict: 'A',
         replace: true,
@@ -112,53 +110,49 @@ angular.module('ngWig').directive('ngWig', function () {
 
 angular.module('ngWig').directive('ngWigEditable', function () {
       function init(scope, $element, attrs, ctrl) {
-        var $document = $element[0].contentDocument,
-            $body;
-        $document.open();
-        $document.write('<!DOCTYPE html><html style="height:100%"><head>'+ (scope.cssPath ? ('<link href="'+ scope.cssPath +'" rel="stylesheet" type="text/css">') : '') + '</head><body contenteditable="true" style="height:100%; margin: 0; padding: 8px;box-sizing: border-box;"></body></html>');
-        $document.close();
+        var document = $element[0].ownerDocument;
 
-        $body = angular.element($element[0].contentDocument.body);
+        $element.attr('contenteditable', true);
 
         //model --> view
         ctrl.$render = function () {
-          $body[0].innerHTML = ctrl.$viewValue || '';
+          $element.html(ctrl.$viewValue || '');
         };
 
         //view --> model
-        $body.bind('blur keyup change paste', function () {
+        function viewToModel() {
           resizeEditor();
-          scope.$apply(function blurkeyup() {
-            ctrl.$setViewValue($body.html());
-          });
-        });
+          ctrl.$setViewValue($element.html());
+        }
+
+        $element.bind('blur keyup change paste', viewToModel);
 
         scope.$on('execCommand', function (event, params) {
-          var sel = $document.selection,
+          $element[0].focus();
+
+            var ieStyleTextSelection = document.selection,
               command = params.command,
               options = params.options;
-          if (sel) {
-            var textRange = sel.createRange();
-            $document.execCommand(command, false, options);
+
+          if (ieStyleTextSelection) {
+            var textRange = ieStyleTextSelection.createRange();
+          }
+
+          document.execCommand(command, false, options);
+
+          if (ieStyleTextSelection) {
             textRange.collapse(false);
             textRange.select();
           }
-          else {
-            $document.execCommand(command, false, options);
-          }
-          $document.body.focus();
-          //sync
-          scope.$evalAsync(function () {
-            ctrl.$setViewValue($body.html());
-            resizeEditor();
-          });
+
+          viewToModel();
         });
 
         function resizeEditor() {
           if (!scope.autoexpand) {
             var height = scope.originalHeight;
           } else {
-            height = angular.element($document.documentElement).outerHeight();
+            height = $element.outerHeight();
           }
           scope.resizeEditor(height);
         }
@@ -212,9 +206,11 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "    </li>\n" +
     "  </ul>\n" +
     "\n" +
-    "  <div class=\"nw-editor\">\n" +
-    "    <textarea class=\"nw-editor__src\" ng-show=\"editMode\" ng-model=\"content\"></textarea>\n" +
-    "    <iframe scrolling=\"{{ autoexpand ? 'no' : 'yes' }}\" class=\"nw-editor__res\" frameBorder=\"0\" ng-hide=\"editMode\" ng-model=\"content\" ng-wig-editable></iframe>\n" +
+    "  <div class=\"nw-editor-container\">\n" +
+    "    <div class=\"nw-editor\">\n" +
+    "      <textarea class=\"nw-editor__src\" ng-show=\"editMode\" ng-model=\"content\"></textarea>\n" +
+    "      <div ng-class=\"{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}\" class=\"nw-editor__res\" ng-model=\"content\" ng-wig-editable></div>\n" +
+    "    </div>\n" +
     "  </div>\n" +
     "</div>\n" +
     "");
