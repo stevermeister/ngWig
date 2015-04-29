@@ -1,4 +1,90 @@
 /**
+ * version: 1.1.2
+ */
+angular.module('ngWig', ['ngwig-app-templates']);
+
+angular.module('ngWig').directive('ngWig', function () {
+
+      return {
+        scope: {
+          content: '=ngWig'
+        },
+        restrict: 'A',
+        replace: true,
+        templateUrl: 'ng-wig/views/ng-wig.html',
+        link: function (scope, element, attrs) {
+
+          scope.originalHeight = element.outerHeight();
+          scope.editMode = false;
+          scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
+          scope.cssPath = scope.cssPath ? scope.cssPath : 'css/ng-wig.css';
+
+          scope.toggleEditMode = function() {
+            scope.editMode = !scope.editMode;
+          };
+
+          scope.execCommand = function (command, options) {
+            if(command ==='createlink'){
+              options = prompt('Please enter the URL', 'http://');
+            }
+            scope.$emit('execCommand', {command: command, options: options});
+          };
+        }
+      }
+    }
+);
+
+
+angular.module('ngWig').directive('ngWigEditable', function () {
+      function init(scope, $element, attrs, ctrl) {
+        var document = $element[0].ownerDocument;
+
+        $element.attr('contenteditable', true);
+
+        //model --> view
+        ctrl.$render = function () {
+          $element.html(ctrl.$viewValue || '');
+        };
+
+        //view --> model
+        function viewToModel() {
+          ctrl.$setViewValue($element.html());
+        }
+
+        $element.bind('blur keyup change paste', viewToModel);
+
+        scope.$on('execCommand', function (event, params) {
+          $element[0].focus();
+
+            var ieStyleTextSelection = document.selection,
+              command = params.command,
+              options = params.options;
+
+          if (ieStyleTextSelection) {
+            var textRange = ieStyleTextSelection.createRange();
+          }
+
+          document.execCommand(command, false, options);
+
+          if (ieStyleTextSelection) {
+            textRange.collapse(false);
+            textRange.select();
+          }
+
+          viewToModel();
+        });
+      }
+
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        replace: true,
+        link: init
+      }
+    }
+);
+
+/**
  * No box-sizing, such a shame
  *
  * 1.Calculate outer height
@@ -61,118 +147,6 @@ angular.element.prototype.outerHeight = function() {
 };
 
 }
-
-angular.module('ngWig', ['ngwig-app-templates']);
-
-angular.module('ngWig').directive('ngWig', function () {
-
-      return {
-        scope: {
-          content: '=ngWig'
-        },
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'ng-wig/views/ng-wig.html',
-        link: function (scope, element, attrs) {
-
-          scope.originalHeight = element.outerHeight();
-          scope.editMode = false;
-          scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
-          scope.cssPath = scope.cssPath ? scope.cssPath : 'css/ng-wig.css';
-
-          scope.toggleEditMode = function() {
-            scope.editMode = !scope.editMode;
-          };
-
-          scope.execCommand = function (command, options) {
-            if(command ==='createlink'){
-              options = prompt('Please enter the URL', 'http://');
-            }
-            scope.$emit('execCommand', {command: command, options: options});
-          };
-
-          scope.resizeEditor = function(height) {
-            var children = element.children();
-            for (var i in children) {
-              var child = children.eq(i);
-              if (child.hasClass('nw-editor')) {
-                child.outerHeight(height);
-                break;
-              }
-            }
-
-          }
-        }
-      }
-    }
-);
-
-
-angular.module('ngWig').directive('ngWigEditable', function () {
-      function init(scope, $element, attrs, ctrl) {
-        var document = $element[0].ownerDocument;
-
-        $element.attr('contenteditable', true);
-
-        //model --> view
-        ctrl.$render = function () {
-          $element.html(ctrl.$viewValue || '');
-        };
-
-        //view --> model
-        function viewToModel() {
-          resizeEditor();
-          ctrl.$setViewValue($element.html());
-        }
-
-        $element.bind('blur keyup change paste', viewToModel);
-
-        scope.$on('execCommand', function (event, params) {
-          $element[0].focus();
-
-            var ieStyleTextSelection = document.selection,
-              command = params.command,
-              options = params.options;
-
-          if (ieStyleTextSelection) {
-            var textRange = ieStyleTextSelection.createRange();
-          }
-
-          document.execCommand(command, false, options);
-
-          if (ieStyleTextSelection) {
-            textRange.collapse(false);
-            textRange.select();
-          }
-
-          viewToModel();
-        });
-
-        function resizeEditor() {
-          if (!scope.autoexpand) {
-            var height = scope.originalHeight;
-          } else {
-            height = $element.outerHeight();
-          }
-          scope.resizeEditor(height);
-        }
-
-        scope.$watch('autoexpand', resizeEditor);
-        scope.$watch('editMode', function(oldMode, newMode) {
-          if (newMode) {
-            resizeEditor();
-          }
-        });
-      }
-
-      return {
-        restrict: 'A',
-        require: 'ngModel',
-        replace: true,
-        link: init
-      }
-    }
-);
 
 angular.module('ngwig-app-templates', ['ng-wig/views/ng-wig.html']);
 
