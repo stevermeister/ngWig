@@ -34,7 +34,9 @@ module.exports = function(grunt) {
     ngAnnotate: {
       app1: {
         files: {
-          '<%= distPath %>/ng-wig.js': ['src/javascript/app/ng-wig/*.js',
+          '<%= distPath %>/ng-wig.js': [
+              srcPath + '/javascript/app/ng-wig/!(angular.element.outerHeight).js',
+              srcPath + '/javascript/app/ng-wig/angular.element.outerHeight.js',
               srcPath + '/javascript/app/templates.js',
             '!src/javascript/app/**/tests/*.js']
         }
@@ -84,9 +86,10 @@ module.exports = function(grunt) {
     },
     bump: {
       options: {
-        files: ['package.json', 'bower.json'],
-        createTag: true,
-        tagName: 'v%VERSION%',
+        files: ['package.json', 'bower.json', 'dist/ng-wig.js'],
+        //commitFiles: ['package.json', 'bower.json'],
+        //createTag: true,
+        //tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',
         push: false
       }
