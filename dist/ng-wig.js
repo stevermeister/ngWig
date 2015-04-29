@@ -90,18 +90,6 @@ angular.module('ngWig').directive('ngWig', function () {
             }
             scope.$emit('execCommand', {command: command, options: options});
           };
-
-          scope.resizeEditor = function(height) {
-            var children = element.children();
-            for (var i in children) {
-              var child = children.eq(i);
-              if (child.hasClass('nw-editor')) {
-                child.outerHeight(height);
-                break;
-              }
-            }
-
-          }
         }
       }
     }
@@ -121,7 +109,6 @@ angular.module('ngWig').directive('ngWigEditable', function () {
 
         //view --> model
         function viewToModel() {
-          resizeEditor();
           ctrl.$setViewValue($element.html());
         }
 
@@ -146,22 +133,6 @@ angular.module('ngWig').directive('ngWigEditable', function () {
           }
 
           viewToModel();
-        });
-
-        function resizeEditor() {
-          if (!scope.autoexpand) {
-            var height = scope.originalHeight;
-          } else {
-            height = $element.outerHeight();
-          }
-          scope.resizeEditor(height);
-        }
-
-        scope.$watch('autoexpand', resizeEditor);
-        scope.$watch('editMode', function(oldMode, newMode) {
-          if (newMode) {
-            resizeEditor();
-          }
         });
       }
 
