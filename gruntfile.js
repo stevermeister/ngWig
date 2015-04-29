@@ -87,9 +87,9 @@ module.exports = function(grunt) {
     bump: {
       options: {
         files: ['package.json', 'bower.json', 'dist/ng-wig.js'],
-        //commitFiles: ['package.json', 'bower.json'],
-        //createTag: true,
-        //tagName: 'v%VERSION%',
+        commitFiles: ['package.json', 'bower.json', 'dist/ng-wig.js'],
+        createTag: true,
+        tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',
         push: false
       }
