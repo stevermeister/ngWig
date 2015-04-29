@@ -2,9 +2,7 @@ angular.module('ngWig').directive('ngWig', function () {
 
       return {
         scope: {
-          content: '=ngWig',
-          debug: '&',
-          cssPath: '@'
+          content: '=ngWig'
         },
         restrict: 'A',
         replace: true,

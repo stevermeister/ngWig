@@ -26,8 +26,10 @@
     </li>
   </ul>
 
-  <div class="nw-editor">
-    <textarea class="nw-editor__src" ng-show="editMode" ng-model="content"></textarea>
-    <iframe scrolling="{{ autoexpand ? 'no' : 'yes' }}" class="nw-editor__res" frameBorder="0" ng-hide="editMode" ng-model="content" ng-wig-editable></iframe>
+  <div class="nw-editor-container">
+    <div class="nw-editor">
+      <textarea class="nw-editor__src" ng-show="editMode" ng-model="content"></textarea>
+      <div ng-class="{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}" class="nw-editor__res" ng-model="content" ng-wig-editable></div>
+    </div>
   </div>
 </div>

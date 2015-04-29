@@ -77,19 +77,34 @@
  */
 .nw-editor {
   display: block;
+  position: relative;
+  overflow-y: auto;
+}
 
+.nw-invisible {
+    visibility: hidden;
+}
+
+.nw-editor-container {
   border: 1px solid #CCCCCC;
   border-top: none;
   border-radius: 0 0 3px 3px;
 }
-  .nw-editor__src {
-    width: 100%;
-    height: 100%;
-    resize: none;
-  }
+  .nw-editor__src,
   .nw-editor__res {
+    resize: none;
     width: 100%;
-    height: 100%;
+    outline: none;
+    box-sizing: border-box;
+    padding: 4px 8px;
+    border: none;
+    display: block;
+  }
+
+  .nw-editor__src {
+      height: 100%;
+      position: absolute;
+      padding: 8px;
   }
 
 
