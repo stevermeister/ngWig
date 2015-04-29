@@ -11,7 +11,6 @@ angular.module('ngWig').directive('ngWigEditable', function () {
 
         //view --> model
         function viewToModel() {
-          resizeEditor();
           ctrl.$setViewValue($element.html());
         }
 
@@ -36,22 +35,6 @@ angular.module('ngWig').directive('ngWigEditable', function () {
           }
 
           viewToModel();
-        });
-
-        function resizeEditor() {
-          if (!scope.autoexpand) {
-            var height = scope.originalHeight;
-          } else {
-            height = $element.outerHeight();
-          }
-          scope.resizeEditor(height);
-        }
-
-        scope.$watch('autoexpand', resizeEditor);
-        scope.$watch('editMode', function(oldMode, newMode) {
-          if (newMode) {
-            resizeEditor();
-          }
         });
       }
 

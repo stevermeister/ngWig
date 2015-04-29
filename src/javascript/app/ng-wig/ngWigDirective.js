@@ -24,18 +24,6 @@ angular.module('ngWig').directive('ngWig', function () {
             }
             scope.$emit('execCommand', {command: command, options: options});
           };
-
-          scope.resizeEditor = function(height) {
-            var children = element.children();
-            for (var i in children) {
-              var child = children.eq(i);
-              if (child.hasClass('nw-editor')) {
-                child.outerHeight(height);
-                break;
-              }
-            }
-
-          }
         }
       }
     }
