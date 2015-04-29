@@ -10,36 +10,32 @@ angular.module('ngWig').directive('ngWigEditable', function () {
         };
 
         //view --> model
-        $element.bind('blur keyup change paste', function () {
+        function viewToModel() {
           resizeEditor();
-          scope.$apply(function blurkeyup() {
-            ctrl.$setViewValue($element.html());
-          });
-        });
+          ctrl.$setViewValue($element.html());
+        }
+
+        $element.bind('blur keyup change paste', viewToModel);
 
         scope.$on('execCommand', function (event, params) {
           $element[0].focus();
 
-            var sel = document.selection,
+            var ieStyleTextSelection = document.selection,
               command = params.command,
               options = params.options;
 
-          if (sel) {
-            var textRange = sel.createRange();
+          if (ieStyleTextSelection) {
+            var textRange = ieStyleTextSelection.createRange();
           }
 
           document.execCommand(command, false, options);
 
-          if (sel) {
+          if (ieStyleTextSelection) {
             textRange.collapse(false);
             textRange.select();
           }
 
-          //sync
-          scope.$evalAsync(function () {
-            ctrl.$setViewValue($element.html());
-            resizeEditor();
-          });
+          viewToModel();
         });
 
         function resizeEditor() {

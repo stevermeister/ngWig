@@ -2,8 +2,7 @@ angular.module('ngWig').directive('ngWig', function () {
 
       return {
         scope: {
-          content: '=ngWig',
-          debug: '&'
+          content: '=ngWig'
         },
         restrict: 'A',
         replace: true,
