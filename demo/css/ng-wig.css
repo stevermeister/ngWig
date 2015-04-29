@@ -52,18 +52,19 @@
   .nw-toolbar__item {
     display: inline-block;
     vertical-align: top;
+
     border-right: 1px solid #DEDEDE;
   }
 
   .nw-toolbar label {
-      font-size: inherit;
       line-height: 30px;
       display: inline-block;
       padding: 0 6px 0 3px;
   }
 
   .nw-toolbar input[type=checkbox] {
-      margin: 0 -1px 0 0;
+      vertical-align: -3px;
+      margin-right: -1px;
   }
 
 /**
@@ -76,19 +77,34 @@
  */
 .nw-editor {
   display: block;
+  position: relative;
+  overflow-y: auto;
+}
 
+.nw-invisible {
+    visibility: hidden;
+}
+
+.nw-editor-container {
   border: 1px solid #CCCCCC;
   border-top: none;
   border-radius: 0 0 3px 3px;
 }
-  .nw-editor__src {
-    width: 100%;
-    height: 100%;
-    resize: none;
-  }
+  .nw-editor__src,
   .nw-editor__res {
+    resize: none;
     width: 100%;
-    height: 100%;
+    outline: none;
+    box-sizing: border-box;
+    padding: 4px 8px;
+    border: none;
+    display: block;
+  }
+
+  .nw-editor__src {
+      height: 100%;
+      position: absolute;
+      padding: 8px;
   }
 
 
@@ -100,7 +116,7 @@
  *    &--{button type}
  *
  */
-button.nw-button {
+.nw-button {
   -webkit-appearance: none;
   -moz-appearance:    none;
   appearance:         none;
@@ -120,14 +136,14 @@ button.nw-button {
 
   cursor: pointer;
 }
-  button.nw-button:focus {
+  .nw-button:focus {
       outline: none;
   }
 
-  button.nw-button:hover,
-  button.nw-button.nw-button--active { opacity: 1; }
+  .nw-button:hover,
+  .nw-button.nw-button--active { opacity: 1 }
 
-  button.nw-button--active {
+  .nw-button--active {
     background-color: #EEEEEE;
   }
   /* text formatting */
