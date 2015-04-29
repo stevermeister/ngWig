@@ -27,7 +27,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: [
-          {src: srcPath + '/css/main.css', dest: distPath + '/css/main.css'},
+          {src: srcPath + '/css/ng-wig.css', dest: distPath + '/css/ng-wig.css'},
         ]
       }
     },
