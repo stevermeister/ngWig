@@ -1,6 +1,6 @@
 {
   "name": "ngWig",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Stepan Suvorov",
   "devDependencies": {
     "bower": "~1.3.3",
