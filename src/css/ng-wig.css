@@ -79,10 +79,11 @@
   display: block;
   position: relative;
   overflow-y: auto;
+  padding: 0 8px;
 }
 
 .nw-invisible {
-    visibility: hidden;
+    display: none;
 }
 
 .nw-editor-container {
@@ -96,14 +97,15 @@
     width: 100%;
     outline: none;
     box-sizing: border-box;
-    padding: 4px 8px;
     border: none;
-    display: block;
   }
 
   .nw-editor__src {
+      display: block;
       height: 100%;
       position: absolute;
+      left: 0;
+      top: 0;
       padding: 8px;
   }
 
