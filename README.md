@@ -1,6 +1,16 @@
 ngWig
 =====
 
+##Usage
+it's just attribute directive for textarea:
+
+    <textarea ng-wig="text1" class="editor1"></textarea>
+
+##Installation
+
+ngWig could be simply installed via bower:
+
+    bower install ng-wig
 
 More information on [ngWig site](http://stevermeister.github.io/ngWig/)
 
