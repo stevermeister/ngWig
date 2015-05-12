@@ -80,6 +80,8 @@
   position: relative;
   overflow-y: auto;
   padding: 0 8px;
+  /* Default when height is not set */
+  min-height: 300px;
 }
 
 .nw-invisible {
@@ -182,43 +184,3 @@
   font-size: 14px;
   line-height: 24px;
 }
-  .nw-content h1 {
-    margin: 0 0 6px 0;
-
-    font-size: 24px;
-    line-height: 36px;
-    font-weight: 400;
-  }
-  .nw-content p {
-    margin: 0 0 12px 0;
-  }
-  .nw-content ul {
-    padding: 0;
-    margin: 0 0 12px 24px;
-    list-style: disc;
-  }
-  .nw-content ol {
-    padding: 0;
-    margin: 0 0 12px 24px;
-    list-style: decimal;
-  }
-  .nw-content li {
-    padding: 0;
-    margin: 0;
-  }
-  .nw-content a {
-    text-decoration: underline;
-
-    color: #3fae98; /* green */
-  }
-  .nw-content a:hover {
-    text-decoration: none;
-  }
-  .nw-content bold,
-  .nw-content strong {
-    font-weight: 700;
-  }
-  .nw-content i,
-  .nw-content italic {
-    font-style: italic;
-  }
