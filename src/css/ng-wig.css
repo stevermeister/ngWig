@@ -97,9 +97,12 @@
   border-radius: 0 0 3px 3px;
 }
 
+.nw-editor__res {
+  min-height: inherit;
+}
+
 .nw-editor__src,
 .nw-editor__res {
-  resize: none;
   width: 100%;
   outline: none;
   box-sizing: border-box;
@@ -107,6 +110,7 @@
 }
 
 .nw-editor__src {
+  resize: none;
   display: block;
   height: 100%;
   position: absolute;
