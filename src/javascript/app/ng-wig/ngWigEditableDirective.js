@@ -7,11 +7,13 @@ angular.module('ngWig').directive('ngWigEditable', function () {
         //model --> view
         ctrl.$render = function () {
           $element.html(ctrl.$viewValue || '');
+          scope.$apply();
         };
 
         //view --> model
         function viewToModel() {
           ctrl.$setViewValue($element.html());
+          scope.$apply();
         }
 
         $element.bind('blur keyup change paste', viewToModel);
