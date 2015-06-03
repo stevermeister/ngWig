@@ -1,5 +1,5 @@
 /**
- * version: 1.1.8
+ * version: 1.1.9
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -49,6 +49,11 @@ angular.module('ngWig').directive('ngWigEditable', function () {
         //view --> model
         function viewToModel() {
           ctrl.$setViewValue($element.html());
+          //to support old angular versions
+          if(angular.version.minor < 3){
+            scope.$apply();
+          }
+
         }
 
         $element.bind('blur keyup change paste', viewToModel);
