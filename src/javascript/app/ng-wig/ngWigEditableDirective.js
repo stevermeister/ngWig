@@ -12,6 +12,11 @@ angular.module('ngWig').directive('ngWigEditable', function () {
         //view --> model
         function viewToModel() {
           ctrl.$setViewValue($element.html());
+          //to support old angular versions
+          if(angular.version.minor < 3){
+            scope.$apply();
+          }
+
         }
 
         $element.bind('blur keyup change paste', viewToModel);
