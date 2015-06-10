@@ -24,6 +24,11 @@ angular.module('ngWig').directive('ngWig', function () {
             }
             scope.$emit('execCommand', {command: command, options: options});
           };
+
+          scope.header = "";
+          scope.changeHeader = function(){
+            scope.execCommand('formatblock', scope.header);
+          };
         }
       }
     }
