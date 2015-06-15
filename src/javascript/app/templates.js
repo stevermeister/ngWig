@@ -5,18 +5,9 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "<div class=\"ng-wig\">\n" +
     "  <ul class=\"nw-toolbar\">\n" +
     "    <li class=\"nw-toolbar__item\">\n" +
-    "      <select class=\"form-control\" ng-model=\"header\" ng-change=\"changeHeader()\">\n" +
-    "       <option ng-selected=\"true\" disabled>Select a header</option>\n" +
-    "       <option value=\"h1\">Header 1</option>\n" +
-    "       <option value=\"h2\">Header 2</option>\n" +
-    "       <option value=\"h3\">Header 3</option>\n" +
-    "       <option value=\"h4\">Header 4</option>\n" +
-    "       <option value=\"h5\">Header 5</option>\n" +
-    "       <option value=\"h6\">Header 6</option>\n" +
+    "      <select class=\"form-control\" ng-model=\"style\" ng-change=\"execCommand('formatblock', style.value)\" ng-options=\"style.name for style in styles\">\n" +
+    "        <option ng-selected=\"true\" disabled value=\"\">--- Choose a style ---</option>\n" +
     "      </select>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--paragraph\" title=\"Paragraph\" ng-click=\"execCommand('formatblock', '<p>')\"></button>\n" +
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
     "      <button type=\"button\" class=\"nw-button nw-button--unordered-list\" title=\"Unordered List\" ng-click=\"execCommand('insertunorderedlist')\"></button>\n" +

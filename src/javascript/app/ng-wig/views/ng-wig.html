@@ -1,18 +1,9 @@
 <div class="ng-wig">
   <ul class="nw-toolbar">
     <li class="nw-toolbar__item">
-      <select class="form-control" ng-model="header" ng-change="changeHeader()">
-        <option ng-selected="true" disabled>Select a header</option>
-        <option value=\"h1\">Header 1</option>
-        <option value=\"h2\">Header 2</option>
-        <option value=\"h3\">Header 3</option>
-        <option value=\"h4\">Header 4</option>
-        <option value=\"h5\">Header 5</option>
-        <option value=\"h6\">Header 6</option>
+      <select class="form-control" ng-model="style" ng-change="execCommand('formatblock', style.value)" ng-options="style.name for style in styles">
+        <option ng-selected="true" disabled value="">--- Choose a style ---</option>
       </select>
-    </li><!--
-    --><li class="nw-toolbar__item">
-      <button type="button" class="nw-button nw-button--paragraph" title="Paragraph" ng-click="execCommand('formatblock', '<p>')"></button>
     </li><!--
     --><li class="nw-toolbar__item">
       <button type="button" class="nw-button nw-button--unordered-list" title="Unordered List" ng-click="execCommand('insertunorderedlist')"></button>
