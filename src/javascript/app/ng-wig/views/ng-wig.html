@@ -1,8 +1,7 @@
 <div class="ng-wig">
   <ul class="nw-toolbar">
     <li class="nw-toolbar__item">
-      <select class="form-control" ng-model="style" ng-change="execCommand('formatblock', style.value)" ng-options="style.name for style in styles">
-        <option ng-selected="true" disabled value="">--- Choose a style ---</option>
+      <select class="nw-select" ng-model="style" ng-change="execCommand('formatblock', style.value)" ng-options="style.name for style in styles">
       </select>
     </li><!--
     --><li class="nw-toolbar__item">
