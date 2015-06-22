@@ -31,6 +31,8 @@ angular.module('ngWig').directive('ngWig', function () {
             {name: 'Header 2', value: 'h2'},
             {name: 'Header 3', value: 'h3'}
           ];
+
+          scope.style = scope.styles[0];
         }
       }
     }
