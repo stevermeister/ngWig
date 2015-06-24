@@ -195,3 +195,14 @@
   font-size: 14px;
   line-height: 24px;
 }
+
+.nw-select {
+  height: auto;
+  padding: 6px;
+  color: #555;
+  background-color: inherit;
+  border: 0;
+}
+
+.nw-select:focus { outline: none; }
+

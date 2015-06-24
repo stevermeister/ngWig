@@ -1,5 +1,5 @@
 /**
- * version: 1.1.9
+ * version: 1.1.10
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -29,6 +29,15 @@ angular.module('ngWig').directive('ngWig', function () {
             }
             scope.$emit('execCommand', {command: command, options: options});
           };
+
+          scope.styles = [
+            {name: 'Normal text', value: 'p'},
+            {name: 'Header 1', value: 'h1'},
+            {name: 'Header 2', value: 'h2'},
+            {name: 'Header 3', value: 'h3'}
+          ];
+
+          scope.style = scope.styles[0];
         }
       }
     }
@@ -160,10 +169,8 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "<div class=\"ng-wig\">\n" +
     "  <ul class=\"nw-toolbar\">\n" +
     "    <li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--header-one\" title=\"Header\" ng-click=\"execCommand('formatblock', '<h1>')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--paragraph\" title=\"Paragraph\" ng-click=\"execCommand('formatblock', '<p>')\"></button>\n" +
+    "      <select class=\"nw-select\" ng-model=\"style\" ng-change=\"execCommand('formatblock', style.value)\" ng-options=\"style.name for style in styles\">\n" +
+    "      </select>\n" +
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
     "      <button type=\"button\" class=\"nw-button nw-button--unordered-list\" title=\"Unordered List\" ng-click=\"execCommand('insertunorderedlist')\"></button>\n" +
