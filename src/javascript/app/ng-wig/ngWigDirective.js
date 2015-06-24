@@ -24,6 +24,15 @@ angular.module('ngWig').directive('ngWig', function () {
             }
             scope.$emit('execCommand', {command: command, options: options});
           };
+
+          scope.styles = [
+            {name: 'Normal text', value: 'p'},
+            {name: 'Header 1', value: 'h1'},
+            {name: 'Header 2', value: 'h2'},
+            {name: 'Header 3', value: 'h3'}
+          ];
+
+          scope.style = scope.styles[0];
         }
       }
     }

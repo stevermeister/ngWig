@@ -1,10 +1,8 @@
 <div class="ng-wig">
   <ul class="nw-toolbar">
     <li class="nw-toolbar__item">
-      <button type="button" class="nw-button nw-button--header-one" title="Header" ng-click="execCommand('formatblock', '<h1>')"></button>
-    </li><!--
-    --><li class="nw-toolbar__item">
-      <button type="button" class="nw-button nw-button--paragraph" title="Paragraph" ng-click="execCommand('formatblock', '<p>')"></button>
+      <select class="nw-select" ng-model="style" ng-change="execCommand('formatblock', style.value)" ng-options="style.name for style in styles">
+      </select>
     </li><!--
     --><li class="nw-toolbar__item">
       <button type="button" class="nw-button nw-button--unordered-list" title="Unordered List" ng-click="execCommand('insertunorderedlist')"></button>
