@@ -34,8 +34,11 @@ angular.module('ngWig')
         ];
 
         scope.style = scope.styles[0];
+
+        scope.$on("colorpicker-selected", function($event, color){
+          scope.execCommand('foreColor', color.value);
+        });
       }
     }
-  }
 );
 
