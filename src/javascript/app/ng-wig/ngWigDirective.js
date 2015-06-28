@@ -33,6 +33,10 @@ angular.module('ngWig').directive('ngWig', function () {
           ];
 
           scope.style = scope.styles[0];
+
+          scope.$on("colorpicker-selected", function($event, color){
+            scope.execCommand('foreColor', color.value);
+          });
         }
       }
     }
