@@ -1,53 +1,56 @@
-angular.module('ngWig').directive('ngWigEditable', function () {
-      function init(scope, $element, attrs, ctrl) {
-        var document = $element[0].ownerDocument;
+angular.module('ngWig')
+  .directive('ngWigEditable', function () {
+    function init(scope, $element, attrs, ctrl) {
+      var document = $element[0].ownerDocument;
 
-        $element.attr('contenteditable', true);
+      $element.attr('contenteditable', true);
 
-        //model --> view
-        ctrl.$render = function () {
-          $element.html(ctrl.$viewValue || '');
-        };
+      //model --> view
+      ctrl.$render = function () {
+        $element.html(ctrl.$viewValue || '');
+      };
 
-        //view --> model
-        function viewToModel() {
-          ctrl.$setViewValue($element.html());
-          //to support old angular versions
-          if(angular.version.minor < 3){
-            scope.$apply();
-          }
+      //view --> model
+      function viewToModel() {
 
+        ctrl.$setViewValue($element.html());
+
+        //to support Angular 1.2.x
+        if (angular.version.minor < 3) {
+          scope.$apply();
         }
 
-        $element.bind('blur keyup change paste', viewToModel);
-
-        scope.$on('execCommand', function (event, params) {
-          $element[0].focus();
-
-            var ieStyleTextSelection = document.selection,
-              command = params.command,
-              options = params.options;
-
-          if (ieStyleTextSelection) {
-            var textRange = ieStyleTextSelection.createRange();
-          }
-
-          document.execCommand(command, false, options);
-
-          if (ieStyleTextSelection) {
-            textRange.collapse(false);
-            textRange.select();
-          }
-
-          viewToModel();
-        });
       }
 
-      return {
-        restrict: 'A',
-        require: 'ngModel',
-        replace: true,
-        link: init
-      }
+      $element.bind('blur keyup change paste', viewToModel);
+
+      scope.$on('execCommand', function (event, params) {
+        $element[0].focus();
+
+        var ieStyleTextSelection = document.selection,
+          command = params.command,
+          options = params.options;
+
+        if (ieStyleTextSelection) {
+          var textRange = ieStyleTextSelection.createRange();
+        }
+
+        document.execCommand(command, false, options);
+
+        if (ieStyleTextSelection) {
+          textRange.collapse(false);
+          textRange.select();
+        }
+
+        viewToModel();
+      });
     }
+
+    return {
+      restrict: 'A',
+      require: 'ngModel',
+      replace: true,
+      link: init
+    }
+  }
 );
