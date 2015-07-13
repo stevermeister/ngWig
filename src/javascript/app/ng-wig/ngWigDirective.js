@@ -21,7 +21,9 @@ angular.module('ngWig')
           if (command === 'createlink') {
             options = prompt('Please enter the URL', 'http://');
           }
-          scope.$emit('execCommand', {command: command, options: options});
+          if(options) {
+            scope.$emit('execCommand', {command: command, options: options});
+          }
         };
 
         scope.styles = [
