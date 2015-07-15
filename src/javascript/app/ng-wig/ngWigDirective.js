@@ -1,5 +1,5 @@
 angular.module('ngWig')
-  .directive('ngWig', function () {
+  .directive('ngWig', function (ngWigToolbarProvider) {
 
     return {
       scope: {
@@ -12,6 +12,7 @@ angular.module('ngWig')
 
         scope.editMode = false;
         scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
+        scope.toolbarButtons = ngWigToolbarProvider.buttons;
 
         scope.toggleEditMode = function () {
           scope.editMode = !scope.editMode;
@@ -20,10 +21,11 @@ angular.module('ngWig')
         scope.execCommand = function (command, options) {
           if (command === 'createlink') {
             options = prompt('Please enter the URL', 'http://');
+            if(!options) {
+              return;
+            }
           }
-          if(options) {
-            scope.$emit('execCommand', {command: command, options: options});
-          }
+          scope.$emit('execCommand', {command: command, options: options});
         };
 
         scope.styles = [
