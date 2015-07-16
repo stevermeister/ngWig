@@ -4,20 +4,11 @@
       <select class="nw-select" ng-model="style" ng-change="execCommand('formatblock', style.value)" ng-options="style.name for style in styles">
       </select>
     </li><!--
-    --><li class="nw-toolbar__item">
-      <button type="button" class="nw-button nw-button--unordered-list" title="Unordered List" ng-click="execCommand('insertunorderedlist')"></button>
-    </li><!--
-    --><li class="nw-toolbar__item">
-      <button type="button" class="nw-button nw-button--ordered-list" title="Ordered List" ng-click="execCommand('insertorderedlist')"></button>
-    </li><!--
-    --><li class="nw-toolbar__item">
-      <button type="button" class="nw-button nw-button--bold" title="Bold" ng-click="execCommand('bold')"></button>
-    </li><!--
-    --><li class="nw-toolbar__item">
-      <button type="button" class="nw-button nw-button--italic" title="Italic" ng-click="execCommand('italic')"></button>
-    </li><!--
-    --><li class="nw-toolbar__item">
-      <button type="button" class="nw-button nw-button--link" title="link" ng-click="execCommand('createlink')"></button>
+    --><li class="nw-toolbar__item" ng-repeat="button in toolbarButtons">
+      <button type="button"
+              class="nw-button {{button.styleClass}}"
+              title="{{button.title}}"
+              ng-click="execCommand(button.command)"></button>
     </li><!--
     --><li class="nw-toolbar__item">
       <button type="button" class="nw-button nw-button--source" ng-class="{ 'nw-button--active': editMode }" ng-click="toggleEditMode()"></button>
