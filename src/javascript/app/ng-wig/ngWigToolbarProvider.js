@@ -1,16 +1,27 @@
 angular.module('ngWig').provider('ngWigToolbarProvider', function () {
 
-  var standardToolbarButtons = [
-    {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'nw-button--unordered-list'},
-    {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'nw-button--ordered-list'},
-    {title: 'Bold', command: 'bold', styleClass: 'nw-button--bold'},
-    {title: 'Italic', command: 'italic', styleClass: 'nw-button--italic'},
-    {title: 'Link', command: 'createlink', styleClass: 'nw-button--link'}
-  ];
+  var buttonLibrary = {
+    list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'nw-button--unordered-list'},
+    list2: {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'nw-button--ordered-list'},
+    bold: {title: 'Bold', command: 'bold', styleClass: 'nw-button--bold'},
+    italic: {title: 'Italic', command: 'italic', styleClass: 'nw-button--italic'},
+    link: {title: 'Link', command: 'createlink', styleClass: 'nw-button--link'}
+  };
+
+  var defaultButtonsList = ['list1', 'list2', 'bold', 'italic', 'link'];
 
   this.$get = function () {
     return {
-      buttons: standardToolbarButtons
+      getToolbarButtons: function(list) {
+        var toolbarButtons = [];
+        (list || defaultButtonsList).forEach(function(buttonKey) {
+          if(!buttonLibrary[buttonKey]) {
+            throw 'There is no "' + buttonKey + '" in your library. Possible variants: ' + Object.keys(buttonLibrary);
+          }
+          toolbarButtons.push(buttonLibrary[buttonKey]);
+        });
+        return toolbarButtons;
+      }
     };
   };
 

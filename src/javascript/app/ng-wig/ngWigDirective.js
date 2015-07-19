@@ -12,7 +12,11 @@ angular.module('ngWig')
 
         scope.editMode = false;
         scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
-        scope.toolbarButtons = ngWigToolbarProvider.buttons;
+        scope.toolbarButtons = ngWigToolbarProvider.getToolbarButtons(attrs.buttons && string2array(attrs.buttons));
+
+        function string2array(keysString){
+          return keysString.split(',').map(Function.prototype.call, String.prototype.trim);
+        }
 
         scope.toggleEditMode = function () {
           scope.editMode = !scope.editMode;
