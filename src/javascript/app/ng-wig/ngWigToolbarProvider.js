@@ -39,8 +39,45 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
       return items;
     }
 
+    function addToConfig(type, name) {
+        if(Array.isArray(defaultConfig[type])) {
+            defaultConfig[type].push(name);
+        } else {
+            defaultConfig[type] = [name];
+        }
+    }
+
     this.setConfig = function(config) {
       defaultConfig  = config || {};
+    };
+
+    this.addButton = function (name, options) {
+        if (typeof name !== "string") {
+            throw 'Argument "name" is required and should be string';
+        }
+
+        var lowerCaseName = name.toLowerCase(),
+            defaultOptions = {
+                title: lowerCaseName[0].toUpperCase() + lowerCaseName.slice(1),
+                command: lowerCaseName,
+                styleClass: 'nw-button--' + lowerCaseName
+            };
+
+        itemLibrary[BUTTON_TYPE][name] = angular.extend({},defaultOptions, options);
+        addToConfig(BUTTON_TYPE, name);
+    };
+
+    this.addFormat = function (name, value) {
+        if (typeof name !== "string") {
+            throw 'Argument "name" is required and should be string';
+        }
+
+        if (typeof value !== "string") {
+            throw 'Argument "value" is required and should be string';
+        }
+
+        itemLibrary[FORMAT_TYPE][value] = {name: name, value: value};
+        addToConfig(FORMAT_TYPE, value);
     };
 
     this.$get = function () {
@@ -56,6 +93,4 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
           }
       };
     };
-
-
 });
