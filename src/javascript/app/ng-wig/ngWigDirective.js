@@ -32,7 +32,13 @@ angular.module('ngWig')
           scope.$emit('execCommand', {command: command, options: options});
         };
 
-        scope.formats = ngWigToolbar.getToolbarFormats();
+        scope.formats = [
+            {name: 'Normal text', value: 'p'},
+            {name: 'Header 1', value: 'h1'},
+            {name: 'Header 2', value: 'h2'},
+            {name: 'Header 3', value: 'h3'}
+        ];
+        
         scope.format = scope.formats[0];
         scope.isSourceEnabled = ngWigToolbar.isSourceEnabled();
       }

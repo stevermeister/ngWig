@@ -1,22 +1,10 @@
 angular.module('ngWig').provider('ngWigToolbar', function () {
-    var FORMAT_TYPE = 'format',
-        BUTTON_TYPE = 'button',
-        OTHER_TYPE = 'other';
-
-    var itemLibrary = {
-      button: {
-          list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'nw-button--unordered-list'},
-          list2: {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'nw-button--ordered-list'},
-          bold: {title: 'Bold', command: 'bold', styleClass: 'nw-button--bold'},
-          italic: {title: 'Italic', command: 'italic', styleClass: 'nw-button--italic'},
-          link: {title: 'Link', command: 'createlink', styleClass: 'nw-button--link'}
-      },
-      format: {
-          p: {name: 'Normal text', value: 'p'},
-          h1: {name: 'Header 1', value: 'h1'},
-          h2: {name: 'Header 2', value: 'h2'},
-          h3: {name: 'Header 3', value: 'h3'}
-      }
+    var  buttonLibrary = {
+        list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'nw-button--unordered-list'},
+        list2: {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'nw-button--ordered-list'},
+        bold: {title: 'Bold', command: 'bold', styleClass: 'nw-button--bold'},
+        italic: {title: 'Italic', command: 'italic', styleClass: 'nw-button--italic'},
+        link: {title: 'Link', command: 'createlink', styleClass: 'nw-button--link'}
     };
 
     var defaultConfig = {
@@ -63,33 +51,26 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
                 styleClass: 'nw-button--' + lowerCaseName
             };
 
-        itemLibrary[BUTTON_TYPE][name] = angular.extend({},defaultOptions, options);
-        addToConfig(BUTTON_TYPE, name);
-    };
-
-    this.addFormat = function (name, value) {
-        if (typeof name !== "string") {
-            throw 'Argument "name" is required and should be string';
-        }
-
-        if (typeof value !== "string") {
-            throw 'Argument "value" is required and should be string';
-        }
-
-        itemLibrary[FORMAT_TYPE][value] = {name: name, value: value};
-        addToConfig(FORMAT_TYPE, value);
+        buttonLibrary[name] = angular.extend({},defaultOptions, options);
+        addToConfig('button', name);
     };
 
     this.$get = function () {
       return {
           getToolbarButtons: function(list) {
-              return getToolbarItems(BUTTON_TYPE, list);
-          },
-          getToolbarFormats: function() {
-              return getToolbarItems(FORMAT_TYPE);
+            var toolbarButtons = [],
+                defaultButtonsList = defaultConfig['button'] || [];
+
+            (list || defaultButtonsList).forEach(function(buttonKey) {
+              if(!buttonLibrary[buttonKey]) {
+                throw 'There is no "' + buttonKey + '" in your library. Possible variants: ' + Object.keys(buttonLibrary);
+              }
+              toolbarButtons.push(buttonLibrary[buttonKey]);
+            });
+            return toolbarButtons;
           },
           isSourceEnabled: function() {
-              return defaultConfig[OTHER_TYPE] && !!~defaultConfig[OTHER_TYPE].indexOf('source');
+              return defaultConfig['other'] && !!~defaultConfig['other'].indexOf('source');
           }
       };
     };
