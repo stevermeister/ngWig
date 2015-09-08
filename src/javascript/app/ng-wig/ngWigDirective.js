@@ -29,7 +29,10 @@ angular.module('ngWig')
               return;
             }
           }
-          scope.$emit('execCommand', {command: command, options: options});
+
+          if(!scope.editMode ) {
+            scope.$emit('execCommand', {command: command, options: options});
+          }
         };
 
         scope.styles = [
