@@ -1,7 +1,7 @@
 <div class="ng-wig">
   <ul class="nw-toolbar">
     <li class="nw-toolbar__item">
-      <select class="nw-select" ng-model="style" ng-change="execCommand('formatblock', style.value)" ng-options="style.name for style in styles">
+      <select class="nw-select" ng-model="format" ng-change="execCommand('formatblock', format.value)" ng-options="format.name for format in formats">
       </select>
     </li><!--
     --><li class="nw-toolbar__item" ng-repeat="button in toolbarButtons">

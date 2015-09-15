@@ -1,5 +1,5 @@
 angular.module('ngWig')
-  .directive('ngWig', function (ngWigToolbarProvider) {
+  .directive('ngWig', function (ngWigToolbar) {
 
     return {
       scope: {
@@ -12,7 +12,7 @@ angular.module('ngWig')
 
         scope.editMode = false;
         scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
-        scope.toolbarButtons = ngWigToolbarProvider.getToolbarButtons(attrs.buttons && string2array(attrs.buttons));
+        scope.toolbarButtons = ngWigToolbar.getToolbarButtons(attrs.buttons && string2array(attrs.buttons));
 
         function string2array(keysString){
           return keysString.split(',').map(Function.prototype.call, String.prototype.trim);
@@ -32,16 +32,16 @@ angular.module('ngWig')
           scope.$emit('execCommand', {command: command, options: options});
         };
 
-        scope.styles = [
+        scope.formats = [
           {name: 'Normal text', value: 'p'},
           {name: 'Header 1', value: 'h1'},
           {name: 'Header 2', value: 'h2'},
           {name: 'Header 3', value: 'h3'}
         ];
-
-        scope.style = scope.styles[0];
+        
+        scope.format = scope.formats[0];
       }
-    }
+    };
   }
 );
 
