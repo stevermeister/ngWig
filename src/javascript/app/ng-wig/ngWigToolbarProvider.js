@@ -1,5 +1,5 @@
 angular.module('ngWig').provider('ngWigToolbar', function () {
-    var  buttonLibrary = {
+    var buttonLibrary = {
         list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'nw-button--unordered-list'},
         list2: {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'nw-button--ordered-list'},
         bold: {title: 'Bold', command: 'bold', styleClass: 'nw-button--bold'},
@@ -9,34 +9,33 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
 
     var defaultConfig = {
         button: ['list1', 'list2', 'bold', 'italic', 'link'],
-        format: ['p', 'h1', 'h2', 'h3'],
         other: ['source']
     };
 
     function getToolbarItems(type, list) {
-      var items = [],
-          library = itemLibrary[type],
-          defaultList = defaultConfig[type] || [];
+        var items = [],
+            library = itemLibrary[type],
+            defaultList = defaultConfig[type] || [];
 
-      (list || defaultList).forEach(function (key) {
-          if (!library[key]) {
-              throw 'There is no "' + key + '" in your library. Possible variants: ' + Object.keys(library);
-          }
-          items.push(library[key]);
-      });
-      return items;
+        (list || defaultList).forEach(function (key) {
+            if (!library[key]) {
+                throw 'There is no "' + key + '" in your library. Possible variants: ' + Object.keys(library);
+            }
+            items.push(library[key]);
+        });
+        return items;
     }
 
     function addToConfig(type, name) {
-        if(Array.isArray(defaultConfig[type])) {
+        if (Array.isArray(defaultConfig[type])) {
             defaultConfig[type].push(name);
         } else {
             defaultConfig[type] = [name];
         }
     }
 
-    this.setConfig = function(config) {
-      defaultConfig  = config || {};
+    this.setConfig = function (config) {
+        defaultConfig = config || {};
     };
 
     this.addButton = function (name, options) {
@@ -51,27 +50,27 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
                 styleClass: 'nw-button--' + lowerCaseName
             };
 
-        buttonLibrary[name] = angular.extend({},defaultOptions, options);
+        buttonLibrary[name] = angular.extend({}, defaultOptions, options);
         addToConfig('button', name);
     };
 
     this.$get = function () {
-      return {
-          getToolbarButtons: function(list) {
-            var toolbarButtons = [],
-                defaultButtonsList = defaultConfig['button'] || [];
+        return {
+            getToolbarButtons: function (list) {
+                var toolbarButtons = [],
+                    defaultButtonsList = defaultConfig['button'] || [];
 
-            (list || defaultButtonsList).forEach(function(buttonKey) {
-              if(!buttonLibrary[buttonKey]) {
-                throw 'There is no "' + buttonKey + '" in your library. Possible variants: ' + Object.keys(buttonLibrary);
-              }
-              toolbarButtons.push(buttonLibrary[buttonKey]);
-            });
-            return toolbarButtons;
-          },
-          isSourceEnabled: function() {
-              return defaultConfig['other'] && !!~defaultConfig['other'].indexOf('source');
-          }
-      };
+                (list || defaultButtonsList).forEach(function (buttonKey) {
+                    if (!buttonLibrary[buttonKey]) {
+                        throw 'There is no "' + buttonKey + '" in your library. Possible variants: ' + Object.keys(buttonLibrary);
+                    }
+                    toolbarButtons.push(buttonLibrary[buttonKey]);
+                });
+                return toolbarButtons;
+            },
+            isSourceEnabled: function () {
+                return defaultConfig['other'] && !!~defaultConfig['other'].indexOf('source');
+            }
+        };
     };
 });

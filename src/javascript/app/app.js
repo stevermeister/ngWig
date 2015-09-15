@@ -9,7 +9,6 @@ angular.module('myapp', ['ngWig']).
     config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
         ngWigToolbarProvider.setConfig({
             button: ['list1', 'list2', 'bold', 'italic', 'link', 'underline'],
-            format: ['p', 'h1', 'h2', 'h3'],
             other: ['source']
         });
 }]);

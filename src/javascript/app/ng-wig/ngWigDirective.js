@@ -33,10 +33,10 @@ angular.module('ngWig')
         };
 
         scope.formats = [
-            {name: 'Normal text', value: 'p'},
-            {name: 'Header 1', value: 'h1'},
-            {name: 'Header 2', value: 'h2'},
-            {name: 'Header 3', value: 'h3'}
+          {name: 'Normal text', value: 'p'},
+          {name: 'Header 1', value: 'h1'},
+          {name: 'Header 2', value: 'h2'},
+          {name: 'Header 3', value: 'h3'}
         ];
         
         scope.format = scope.formats[0];
