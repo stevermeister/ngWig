@@ -1,4 +1,4 @@
-angular.module('ngWig').provider('ngWigToolbarProvider', function () {
+angular.module('ngWig').provider('ngWigToolbar', function () {
 
   var buttonLibrary = {
     list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'nw-button--unordered-list'},
@@ -9,6 +9,14 @@ angular.module('ngWig').provider('ngWigToolbarProvider', function () {
   };
 
   var defaultButtonsList = ['list1', 'list2', 'bold', 'italic', 'link'];
+
+  this.setButtons = function(buttons) {
+      if(!Array.isArray(buttons)) {
+          throw 'Argument "buttons" should be an array';
+      }
+
+      defaultButtonsList = buttons;
+  }
 
   this.$get = function () {
     return {

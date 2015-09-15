@@ -1,5 +1,5 @@
 angular.module('ngWig')
-  .directive('ngWig', function (ngWigToolbarProvider) {
+  .directive('ngWig', function (ngWigToolbar) {
 
     return {
       scope: {
@@ -12,7 +12,7 @@ angular.module('ngWig')
 
         scope.editMode = false;
         scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
-        scope.toolbarButtons = ngWigToolbarProvider.getToolbarButtons(attrs.buttons && string2array(attrs.buttons));
+        scope.toolbarButtons = ngWigToolbar.getToolbarButtons(attrs.buttons && string2array(attrs.buttons));
 
         function string2array(keysString){
           return keysString.split(',').map(Function.prototype.call, String.prototype.trim);
