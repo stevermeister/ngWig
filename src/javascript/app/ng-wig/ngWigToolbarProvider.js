@@ -37,22 +37,6 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
         defaultConfig = config || {};
     };
 
-    this.addButton = function (name, options) {
-        if (typeof name !== "string") {
-            throw 'Argument "name" is required and should be string';
-        }
-
-        var lowerCaseName = name.toLowerCase(),
-            defaultOptions = {
-                title: lowerCaseName[0].toUpperCase() + lowerCaseName.slice(1),
-                command: lowerCaseName,
-                styleClass: 'nw-button--' + lowerCaseName
-            };
-
-        buttonLibrary[name] = angular.extend({}, defaultOptions, options);
-        addToConfig('button', name);
-    };
-
     this.$get = function () {
         return {
             getToolbarButtons: function (list) {
