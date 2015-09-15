@@ -8,8 +8,7 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
     };
 
     var defaultConfig = {
-        button: ['list1', 'list2', 'bold', 'italic', 'link'],
-        other: ['source']
+        button: ['list1', 'list2', 'bold', 'italic', 'link']
     };
 
     function getToolbarItems(type, list) {
@@ -67,9 +66,6 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
                     toolbarButtons.push(buttonLibrary[buttonKey]);
                 });
                 return toolbarButtons;
-            },
-            isSourceEnabled: function () {
-                return defaultConfig['other'] && !!~defaultConfig['other'].indexOf('source');
             }
         };
     };

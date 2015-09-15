@@ -1,6 +1,6 @@
 <div class="ng-wig">
   <ul class="nw-toolbar">
-    <li ng-show='formats.length > 0' class="nw-toolbar__item">
+    <li class="nw-toolbar__item">
       <select class="nw-select" ng-model="format" ng-change="execCommand('formatblock', format.value)" ng-options="format.name for format in formats">
       </select>
     </li><!--
@@ -10,7 +10,7 @@
               title="{{button.title}}"
               ng-click="execCommand(button.command)"></button>
     </li><!--
-    --><li ng-show='isSourceEnabled' class="nw-toolbar__item">
+    --><li class="nw-toolbar__item">
       <button type="button" class="nw-button nw-button--source" ng-class="{ 'nw-button--active': editMode }" ng-click="toggleEditMode()"></button>
     </li>
   </ul>

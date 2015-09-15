@@ -8,7 +8,6 @@ angular.module('myapp', ['ngWig']).
 }]).
     config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
         ngWigToolbarProvider.setConfig({
-            button: ['list1', 'list2', 'bold', 'italic', 'link', 'underline'],
-            other: ['source']
+            button: ['list1', 'list2', 'bold', 'italic', 'link', 'underline']
         });
 }]);

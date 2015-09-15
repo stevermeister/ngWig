@@ -40,7 +40,6 @@ angular.module('ngWig')
         ];
         
         scope.format = scope.formats[0];
-        scope.isSourceEnabled = ngWigToolbar.isSourceEnabled();
       }
     };
   }
