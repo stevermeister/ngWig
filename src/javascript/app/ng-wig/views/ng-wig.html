@@ -5,7 +5,7 @@
       </select>
     </li><!--
     --><li class="nw-toolbar__item" ng-repeat="button in toolbarButtons">
-      <button ng-if="button.isSimple" type="button"
+      <button ng-if="!button.isComplex" type="button"
               class="nw-button {{button.styleClass}}"
               title="{{button.title}}"
               ng-click="execCommand(button.command)"></button>
