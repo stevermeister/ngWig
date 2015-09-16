@@ -1,11 +1,11 @@
 angular.module('ngWig').provider('ngWigToolbar', function () {
 
   var buttonLibrary = {
-    list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'nw-button--unordered-list'},
-    list2: {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'nw-button--ordered-list'},
-    bold: {title: 'Bold', command: 'bold', styleClass: 'nw-button--bold'},
-    italic: {title: 'Italic', command: 'italic', styleClass: 'nw-button--italic'},
-    link: {title: 'Link', command: 'createlink', styleClass: 'nw-button--link'}
+    list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'fa-list-ul'},
+    list2: {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'fa-list-ol'},
+    bold: {title: 'Bold', command: 'bold', styleClass: 'fa-bold'},
+    italic: {title: 'Italic', command: 'italic', styleClass: 'fa-italic'},
+    link: {title: 'Link', command: 'createlink', styleClass: 'fa-link'}
   };
 
   var defaultButtonsList = ['list1', 'list2', 'bold', 'italic', 'link'];
