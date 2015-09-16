@@ -32,6 +32,10 @@ angular.module('ngWig')
           var textRange = ieStyleTextSelection.createRange();
         }
 
+        if (document.queryCommandSupported && !document.queryCommandSupported(command)) {
+          throw 'The command "' + command + '" is not supported';
+        }
+
         document.execCommand(command, false, options);
 
         if (ieStyleTextSelection) {

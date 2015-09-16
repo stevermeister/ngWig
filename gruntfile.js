@@ -22,7 +22,9 @@ module.exports = function(grunt) {
     copy: {
       dev: {
         files: [
-          {src: 'bower_components/angular/angular.js', dest:'src/javascript/libs/angular.js'},
+          {src: 'bower_components/angular/angular.js', dest:'src/libs/angular/angular.js'},
+          {src: 'bower_components/fontawesome/css/font-awesome.min.css', dest: srcPath + '/libs/fontawesome/css/font-awesome.min.css'},
+          {cwd: 'bower_components/fontawesome/fonts', src: '**/*', dest: srcPath + '/libs/fontawesome/fonts', expand: true}
         ]
       },
       dist: {
@@ -50,10 +52,9 @@ module.exports = function(grunt) {
       }
     },
     clean:{
-      libs:  ['src/javascript/libs/**/*'],
+      libs:  ['src/libs/**/*'],
       bower: ['bower_components'],
-      target: ['dist/**'],
-      icons: ['svg-icons-out/**/*'],
+      target: ['dist/**']
     },
     html2js: {
       options: {
@@ -63,19 +64,6 @@ module.exports = function(grunt) {
       main: {
         src: [ srcPath + '/javascript/app/ng-wig/views/*.html'],
         dest: srcPath + '/javascript/app/templates.js'
-      }
-    },
-    grunticon: {
-      icons: {
-        files: [
-          {
-            expand: true,
-            cwd: 'svg-icons-src',
-            src: ['*.svg'],
-            dest: 'svg-icons-out'
-          }
-        ],
-        options: {}
       }
     },
     watch: {
@@ -102,5 +90,4 @@ module.exports = function(grunt) {
   grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify', 'bump:patch']);
   grunt.registerTask('upversion', ['bump:minor']);
   //grunt.registerTask('upversion', ['bump:major']);
-  grunt.registerTask('icons', ['clean:icons', 'grunticon']);
 };

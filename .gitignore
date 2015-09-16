@@ -3,5 +3,5 @@ node_modules/
 bower_components/
 src/javascript/libs/
 src/javascript/app/templates.js
-svg-icons-out/
 .sass-cache/
+src/libs/

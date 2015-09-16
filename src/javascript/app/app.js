@@ -5,4 +5,5 @@ angular.module('myapp', ['ngWig']).
     }]).
     config(['ngWigToolbarProvider', function (ngWigToolbarProvider) {
         ngWigToolbarProvider.setButtons(['list1', 'list2', 'bold', 'italic', 'link']);
+        ngWigToolbarProvider.addSimpleButton('underline', 'Underline', 'underline', 'fa-underline');
     }]);
