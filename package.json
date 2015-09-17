@@ -22,7 +22,8 @@
     "git":"https://github.com/stevermeister/ngWig"
   },
   "scripts": {
-    "start": "./node_modules/.bin/grunt start"
+    "start": "./node_modules/.bin/grunt start",
+    "devSetup": "./node_modules/.bin/bower install && ./node_modules/.bin/grunt install"
   },
   "license": "MIT"
 }
