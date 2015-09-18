@@ -1,194 +1,192 @@
 /**
- * version: 1.1.10
+ * version: 1.1.11
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
-angular.module('ngWig').directive('ngWig', function () {
+angular.module('ngWig')
+  .directive('ngWig', ["ngWigToolbar", function (ngWigToolbar) {
 
-      return {
-        scope: {
-          content: '=ngWig'
-        },
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'ng-wig/views/ng-wig.html',
-        link: function (scope, element, attrs) {
+    return {
+      scope: {
+        content: '=ngWig'
+      },
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'ng-wig/views/ng-wig.html',
+      link: function (scope, element, attrs) {
 
-          scope.originalHeight = element.outerHeight();
-          scope.editMode = false;
-          scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
-          scope.cssPath = scope.cssPath ? scope.cssPath : 'css/ng-wig.css';
+        scope.editMode = false;
+        scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
+        scope.toolbarButtons = ngWigToolbar.getToolbarButtons(attrs.buttons && string2array(attrs.buttons));
 
-          scope.toggleEditMode = function() {
-            scope.editMode = !scope.editMode;
-          };
-
-          scope.execCommand = function (command, options) {
-            if(command ==='createlink'){
-              options = prompt('Please enter the URL', 'http://');
-            }
-            scope.$emit('execCommand', {command: command, options: options});
-          };
-
-          scope.styles = [
-            {name: 'Normal text', value: 'p'},
-            {name: 'Header 1', value: 'h1'},
-            {name: 'Header 2', value: 'h2'},
-            {name: 'Header 3', value: 'h3'}
-          ];
-
-          scope.style = scope.styles[0];
+        function string2array(keysString){
+          return keysString.split(',').map(Function.prototype.call, String.prototype.trim);
         }
-      }
-    }
-);
 
-
-angular.module('ngWig').directive('ngWigEditable', function () {
-      function init(scope, $element, attrs, ctrl) {
-        var document = $element[0].ownerDocument;
-
-        $element.attr('contenteditable', true);
-
-        //model --> view
-        ctrl.$render = function () {
-          $element.html(ctrl.$viewValue || '');
+        scope.toggleEditMode = function () {
+          scope.editMode = !scope.editMode;
         };
 
-        //view --> model
-        function viewToModel() {
-          ctrl.$setViewValue($element.html());
-          //to support old angular versions
-          if(angular.version.minor < 3){
-            scope.$apply();
+        scope.execCommand = function (command, options) {
+          if (command === 'createlink') {
+            options = prompt('Please enter the URL', 'http://');
+            if(!options) {
+              return;
+            }
           }
-
-        }
-
-        $element.bind('blur keyup change paste', viewToModel);
-
-        scope.$on('execCommand', function (event, params) {
-          $element[0].focus();
-
-            var ieStyleTextSelection = document.selection,
-              command = params.command,
-              options = params.options;
-
-          if (ieStyleTextSelection) {
-            var textRange = ieStyleTextSelection.createRange();
-          }
-
-          document.execCommand(command, false, options);
-
-          if (ieStyleTextSelection) {
-            textRange.collapse(false);
-            textRange.select();
-          }
-
-          viewToModel();
-        });
-      }
-
-      return {
-        restrict: 'A',
-        require: 'ngModel',
-        replace: true,
-        link: init
+          scope.$emit('execCommand', {command: command, options: options});
+        };
       }
     }
+  }]
 );
 
-/**
- * No box-sizing, such a shame
- *
- * 1.Calculate outer height
- * @param   bool    Include margin
- * @returns Number  Height in pixels
- *
- * 2. Set outer height
- * @param   Number          Height in pixels
- * @param   bool            Include margin
- * @returns angular.element Collection
- */
-if (typeof angular.element.prototype.outerHeight !== 'function') {
 
-angular.element.prototype.outerHeight = function() {
-  function parsePixels(cssString) {
-    if (cssString.slice(-2) === 'px') {
-      return parseFloat(cssString.slice(0, -2));
+angular.module('ngWig')
+  .directive('ngWigEditable', function () {
+    function init(scope, $element, attrs, ngModelController) {
+      var document = $element[0].ownerDocument;
+
+      $element.attr('contenteditable', true);
+
+      //model --> view
+      ngModelController.$render = function () {
+        $element.html(ngModelController.$viewValue || '');
+      };
+
+      //view --> model
+      function viewToModel() {
+        ngModelController.$setViewValue($element.html());
+        //to support Angular 1.2.x
+        //if (angular.version.minor < 3) {
+        //  scope.$apply();
+        //}
+      }
+
+      $element.bind('blur keyup change paste', viewToModel);
+
+      scope.$on('execCommand', function (event, params) {
+        $element[0].focus();
+
+        var ieStyleTextSelection = document.selection,
+          command = params.command,
+          options = params.options;
+
+        if (ieStyleTextSelection) {
+          var textRange = ieStyleTextSelection.createRange();
+        }
+
+        if (document.queryCommandSupported && !document.queryCommandSupported(command)) {
+          throw 'The command "' + command + '" is not supported';
+        }
+
+        document.execCommand(command, false, options);
+
+        if (ieStyleTextSelection) {
+          textRange.collapse(false);
+          textRange.select();
+        }
+
+        viewToModel();
+      });
     }
-    return 0;
+
+    return {
+      restrict: 'A',
+      require: 'ngModel',
+      replace: true,
+      link: init
+    }
+  }
+);
+
+angular.module('ngWig')
+    .directive('ngWigPlugin', ["$compile", function ($compile) {
+        return {
+            restrict: 'E',
+            link: function(scope, element) {
+                var template = '<' + scope.button.pluginName + ' />',
+                    compiled = $compile(template)(scope);
+
+                element.replaceWith(compiled);
+            }
+        }
+    }]);
+
+angular.module('ngWig').provider('ngWigToolbar', function () {
+
+  var buttonLibrary = {
+    list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'fa-list-ul'},
+    list2: {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'fa-list-ol'},
+    bold: {title: 'Bold', command: 'bold', styleClass: 'fa-bold'},
+    italic: {title: 'Italic', command: 'italic', styleClass: 'fa-italic'},
+    link: {title: 'Link', command: 'createlink', styleClass: 'fa-link'}
+  };
+
+  var defaultButtonsList = ['list1', 'list2', 'bold', 'italic', 'link'];
+
+  this.setButtons = function(buttons) {
+    if(!angular.isArray(buttons)) {
+      throw 'Argument "buttons" should be an array';
+    }
+
+    defaultButtonsList = buttons;
   }
 
-  var includeMargin = false, height, $element = this.eq(0), element = $element[0];
-
-  if (arguments[0] === true || arguments[0] === false || arguments[0] === undefined) {
-    if (!$element.length) {
-      return 0;
+  this.addStandartButton = function (name, title, command, styleClass) {
+    if(!name || !title || !command) {
+      throw 'Arguments "name", "title" and "command" are required';
     }
 
-    includeMargin = arguments[0] && true || false;
+    styleClass = styleClass || '';
+    buttonLibrary[name] = {title: title, command: command, styleClass: styleClass}
+    defaultButtonsList.push(name);
+  };
 
-    if (element.outerHeight) {
-      height = element.outerHeight;
-    } else {
-      height = element.offsetHeight;
-    }
-    if (includeMargin) {
-      height += parsePixels($element.css('marginTop')) + parsePixels($element.css('marginBottom'));
-    }
-    return height;
-
-  } else {
-    if (!$element.length) {
-      return this;
+  this.addCustomButton = function (name, pluginName) {
+    if(!name || !pluginName) {
+      throw 'Arguments "name" and "pluginName" are required';
     }
 
-    height = parseFloat(arguments[0]);
-
-    includeMargin = arguments[1] && true || false;
-
-    if (includeMargin) {
-      height -= parsePixels($element.css('marginTop')) + parsePixels($element.css('marginBottom'));
-    }
-
-    height -= parsePixels($element.css('borderTopWidth')) + parsePixels($element.css('borderBottomWidth')) +
-        parsePixels($element.css('paddingTop')) + parsePixels($element.css('paddingBottom'));
-
-    $element.css('height', height + 'px');
-    return this;
+    buttonLibrary[name] = {pluginName: pluginName, isComplex: true}
+    defaultButtonsList.push(name);
   }
-};
 
-}
+  this.$get = function () {
+    return {
+      getToolbarButtons: function(list) {
+        var toolbarButtons = [];
+        (list || defaultButtonsList).forEach(function(buttonKey) {
+          if(!buttonLibrary[buttonKey]) {
+            throw 'There is no "' + buttonKey + '" in your library. Possible variants: ' + Object.keys(buttonLibrary);
+          }
+          toolbarButtons.push(buttonLibrary[buttonKey]);
+        });
+        return toolbarButtons;
+      }
+    };
+  };
 
+
+});
 angular.module('ngwig-app-templates', ['ng-wig/views/ng-wig.html']);
 
 angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("ng-wig/views/ng-wig.html",
     "<div class=\"ng-wig\">\n" +
     "  <ul class=\"nw-toolbar\">\n" +
-    "    <li class=\"nw-toolbar__item\">\n" +
-    "      <select class=\"nw-select\" ng-model=\"style\" ng-change=\"execCommand('formatblock', style.value)\" ng-options=\"style.name for style in styles\">\n" +
-    "      </select>\n" +
+    "    <li class=\"nw-toolbar__item\" ng-repeat=\"button in toolbarButtons\" >\n" +
+    "        <div ng-if=\"!button.isComplex\">\n" +
+    "          <button type=\"button\" class=\"nw-button\" title=\"{{button.title}}\" ng-click=\"execCommand(button.command)\">\n" +
+    "            <i class=\"fa {{button.styleClass}}\"></i>\n" +
+    "          </button>\n" +
+    "        </div>\n" +
+    "        <div ng-if=\"button.isComplex\">\n" +
+    "          <ng-wig-plugin plugin=\"{{button}}\"></ng-wig-plugin>\n" +
+    "        </div>\n" +
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--unordered-list\" title=\"Unordered List\" ng-click=\"execCommand('insertunorderedlist')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--ordered-list\" title=\"Ordered List\" ng-click=\"execCommand('insertorderedlist')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--bold\" title=\"Bold\" ng-click=\"execCommand('bold')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--italic\" title=\"Italic\" ng-click=\"execCommand('italic')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--link\" title=\"link\" ng-click=\"execCommand('createlink')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--source\" ng-class=\"{ 'nw-button--active': editMode }\" ng-click=\"toggleEditMode()\"></button>\n" +
+    "      <button type=\"button\" class=\"nw-button nw-button--source\" ng-class=\"{ 'nw-button--active': editMode }\" ng-click=\"toggleEditMode()\"><i class=\"fa fa-pencil\"></i></button>\n" +
     "    </li>\n" +
     "  </ul>\n" +
     "\n" +
