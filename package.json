@@ -1,6 +1,6 @@
 {
   "name": "ngWig",
-  "version": "0.7.9",
+  "version": "2.0.0",
   "description": "demo for ng-wig",
   "main": "index.js",
   "devDependencies": {
