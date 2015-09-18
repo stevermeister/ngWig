@@ -18,23 +18,24 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
     defaultButtonsList = buttons;
   }
 
-  this.addSimpleButton = function (name, title, command, styleClass) {
-    if (!name || !angular.isString(name)) {
-      throw 'Argument "name" is required and should be a string';
-    }
-
-    if (!title || !angular.isString(title)) {
-      throw 'Argument "title" is required and should be a string';
-    }
-
-    if (!command || !angular.isString(command)) {
-      throw 'Argument "command" is required and should be a string';
+  this.addStandartButton = function (name, title, command, styleClass) {
+    if(!name || !title || !command) {
+      throw 'Arguments "name", "title" and "command" are required';
     }
 
     styleClass = styleClass || '';
     buttonLibrary[name] = {title: title, command: command, styleClass: styleClass}
     defaultButtonsList.push(name);
   };
+
+  this.addCustomButton = function (name, pluginName) {
+    if(!name || !pluginName) {
+      throw 'Arguments "name" and "pluginName" are required';
+    }
+
+    buttonLibrary[name] = {pluginName: pluginName, isComplex: true}
+    defaultButtonsList.push(name);
+  }
 
   this.$get = function () {
     return {
