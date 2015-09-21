@@ -2,7 +2,7 @@
   <ul class="nw-toolbar">
     <li class="nw-toolbar__item" ng-repeat="button in toolbarButtons" >
         <div ng-if="!button.isComplex">
-          <button type="button" class="nw-button" title="{{button.title}}" ng-click="execCommand(button.command)">
+          <button type="button" class="nw-button" title="{{button.title}}" ng-click="execCommand(button.command)" ng-class="{ 'nw-button--active': button.isActive }">
             <i class="fa {{button.styleClass}}"></i>
           </button>
         </div>

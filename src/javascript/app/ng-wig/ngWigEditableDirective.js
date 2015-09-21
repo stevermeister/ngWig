@@ -21,6 +21,11 @@ angular.module('ngWig')
 
       $element.bind('blur keyup change paste', viewToModel);
 
+      $element.bind('click blur keyup focus', function() {
+         scope.$applyAsync(scope.updateButtonsState);
+      });
+
+
       scope.$on('execCommand', function (event, params) {
         $element[0].focus();
 

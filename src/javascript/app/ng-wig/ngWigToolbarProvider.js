@@ -16,7 +16,7 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
     }
 
     defaultButtonsList = buttons;
-  }
+  };
 
   this.addStandartButton = function (name, title, command, styleClass) {
     if(!name || !title || !command) {
@@ -33,9 +33,9 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
       throw 'Arguments "name" and "pluginName" are required';
     }
 
-    buttonLibrary[name] = {pluginName: pluginName, isComplex: true}
+    buttonLibrary[name] = {pluginName: pluginName, isComplex: true};
     defaultButtonsList.push(name);
-  }
+  };
 
   this.$get = function () {
     return {
@@ -45,7 +45,7 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
           if(!buttonLibrary[buttonKey]) {
             throw 'There is no "' + buttonKey + '" in your library. Possible variants: ' + Object.keys(buttonLibrary);
           }
-          toolbarButtons.push(buttonLibrary[buttonKey]);
+          toolbarButtons.push(angular.copy(buttonLibrary[buttonKey]));
         });
         return toolbarButtons;
       }

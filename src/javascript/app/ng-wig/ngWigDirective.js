@@ -20,6 +20,12 @@ angular.module('ngWig')
 
         scope.toggleEditMode = function () {
           scope.editMode = !scope.editMode;
+
+          if (window.getSelection().removeAllRanges) {
+            window.getSelection().removeAllRanges();
+          }
+
+          scope.updateButtonsState();
         };
 
         scope.execCommand = function (command, options) {
@@ -29,7 +35,16 @@ angular.module('ngWig')
               return;
             }
           }
-          scope.$emit('execCommand', {command: command, options: options});
+          scope.$broadcast('execCommand', {command: command, options: options});
+        };
+
+        scope.updateButtonsState = function () {
+          scope.toolbarButtons.forEach(function(button) {
+            button.isActive = false;
+            if(button.command && document.queryCommandState(button.command)) {
+              button.isActive = true;
+            }
+          });
         };
       }
     }
