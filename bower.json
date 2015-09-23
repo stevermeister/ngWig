@@ -2,8 +2,7 @@
   "name": "ngWig",
   "version": "2.0.0",
   "devDependencies": {
-    "angular": "1.4.5",
-    "fontawesome": "~4.4.0"
+    "angular": "1.4.5"
   },
   "homepage": "https://github.com/stevermeister/ngWig",
   "authors": [
