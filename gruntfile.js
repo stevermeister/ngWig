@@ -22,9 +22,7 @@ module.exports = function(grunt) {
     copy: {
       dev: {
         files: [
-          {src: 'bower_components/angular/angular.js', dest:'src/libs/angular/angular.js'},
-          {src: 'bower_components/fontawesome/css/font-awesome.min.css', dest: srcPath + '/libs/fontawesome/css/font-awesome.min.css'},
-          {cwd: 'bower_components/fontawesome/fonts', src: '**/*', dest: srcPath + '/libs/fontawesome/fonts', expand: true}
+          {src: 'bower_components/angular/angular.js', dest:'src/libs/angular/angular.js'}
         ]
       },
       dist: {
