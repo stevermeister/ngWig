@@ -1,5 +1,5 @@
 angular.module('ngWig')
-  .directive('ngWig', function ($window, ngWigToolbar) {
+  .directive('ngWig', function ($window, $document, ngWigToolbar) {
 
     return {
       scope: {
@@ -24,8 +24,6 @@ angular.module('ngWig')
           if ($window.getSelection().removeAllRanges) {
             $window.getSelection().removeAllRanges();
           }
-
-          scope.updateButtonsState();
         };
 
         scope.execCommand = function (command, options) {
@@ -38,15 +36,6 @@ angular.module('ngWig')
             }
           }
           scope.$broadcast('execCommand', {command: command, options: options});
-        };
-
-        scope.updateButtonsState = function () {
-          scope.toolbarButtons.forEach(function(button) {
-            button.isActive = false;
-            if(button.command && document.queryCommandState(button.command)) {
-              button.isActive = true;
-            }
-          });
         };
       }
     }

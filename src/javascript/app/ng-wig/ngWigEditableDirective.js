@@ -13,18 +13,17 @@ angular.module('ngWig')
       //view --> model
       function viewToModel() {
         ngModelController.$setViewValue($element.html());
-        //to support Angular 1.2.x
-        //if (angular.version.minor < 3) {
-        //  scope.$apply();
-        //}
       }
 
       $element.bind('blur keyup change paste', viewToModel);
 
-      $element.bind('click blur keyup focus', function() {
-         scope.$applyAsync(scope.updateButtonsState);
+      $element.bind('blur keyup change paste focus click', function() {
+        scope.$applyAsync();
       });
 
+      scope.isEditorActive = function () {
+        return $element[0] === document.activeElement;
+      };
 
       scope.$on('execCommand', function (event, params) {
         $element[0].focus();

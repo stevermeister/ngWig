@@ -10,6 +10,10 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
 
   var defaultButtonsList = ['list1', 'list2', 'bold', 'italic', 'link'];
 
+  var isButtonActive = function () {
+    return this.command && document.queryCommandState(this.command);
+  };
+
   this.setButtons = function(buttons) {
     if(!angular.isArray(buttons)) {
       throw 'Argument "buttons" should be an array';
@@ -45,7 +49,14 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
           if(!buttonLibrary[buttonKey]) {
             throw 'There is no "' + buttonKey + '" in your library. Possible variants: ' + Object.keys(buttonLibrary);
           }
-          toolbarButtons.push(angular.copy(buttonLibrary[buttonKey]));
+
+          var button = angular.copy(buttonLibrary[buttonKey]);
+
+          if(!angular.isFunction(button.isActive)) {
+            button.isActive = isButtonActive;
+          }
+
+          toolbarButtons.push(button);
         });
         return toolbarButtons;
       }
