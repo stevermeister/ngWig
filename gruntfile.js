@@ -50,6 +50,13 @@ module.exports = function(grunt) {
         }
       }
     },
+    cssmin: {
+      build: {
+        files: {
+          'dist/css/ng-wig.min.css': [ distPath +'/css/ng-wig.css']
+        }
+      }
+    },
     clean:{
       libs:  ['src/libs/**/*'],
       bower: ['bower_components'],
@@ -86,7 +93,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['html2js', 'express', 'watch', 'express-keepalive',]);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
-  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify', 'bump:patch']);
+  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify', 'cssmin', 'bump:patch']);
   grunt.registerTask('upversion', ['bump:minor']);
   //grunt.registerTask('upversion', ['bump:major']);
 };
