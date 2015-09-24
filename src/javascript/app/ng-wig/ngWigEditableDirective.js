@@ -12,10 +12,12 @@ angular.module('ngWig')
       //view --> model
       function viewToModel() {
         ngModelController.$setViewValue($element.html());
-        scope.$applyAsync();
       }
 
-      $element.bind('blur keyup change paste focus click', viewToModel);
+      $element.bind('blur keyup change paste focus click', function() {
+        viewToModel();
+        scope.$applyAsync();
+      });
 
       scope.isEditorActive = function () {
         return $element[0] === $document[0].activeElement;
