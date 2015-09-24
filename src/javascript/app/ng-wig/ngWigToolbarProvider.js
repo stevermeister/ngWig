@@ -18,7 +18,7 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
     defaultButtonsList = buttons;
   }
 
-  this.addStandartButton = function (name, title, command, styleClass) {
+  this.addStandardButton = function (name, title, command, styleClass) {
     if(!name || !title || !command) {
       throw 'Arguments "name", "title" and "command" are required';
     }
