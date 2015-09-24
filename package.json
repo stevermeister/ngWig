@@ -16,7 +16,8 @@
     "grunt-grunticon": "^1.2.3",
     "grunt-html2js": "~0.2.4",
     "grunt-ng-annotate": "~0.3.0",
-    "load-grunt-tasks": "~0.4.0"
+    "load-grunt-tasks": "~0.4.0",
+    "grunt-contrib-cssmin": "~0.14.0"
   },
   "repository":{
     "git":"https://github.com/stevermeister/ngWig"
