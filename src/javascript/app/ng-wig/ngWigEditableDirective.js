@@ -1,7 +1,6 @@
 angular.module('ngWig')
-  .directive('ngWigEditable', function () {
+  .directive('ngWigEditable', function ($document) {
     function init(scope, $element, attrs, ngModelController) {
-      var document = $element[0].ownerDocument;
 
       $element.attr('contenteditable', true);
 
@@ -13,18 +12,21 @@ angular.module('ngWig')
       //view --> model
       function viewToModel() {
         ngModelController.$setViewValue($element.html());
-        //to support Angular 1.2.x
-        //if (angular.version.minor < 3) {
-        //  scope.$apply();
-        //}
       }
 
-      $element.bind('blur keyup change paste', viewToModel);
+      $element.bind('blur keyup change paste focus click', function() {
+        viewToModel();
+        scope.$applyAsync();
+      });
+
+      scope.isEditorActive = function () {
+        return $element[0] === $document[0].activeElement;
+      };
 
       scope.$on('execCommand', function (event, params) {
         $element[0].focus();
 
-        var ieStyleTextSelection = document.selection,
+        var ieStyleTextSelection = $document[0].selection,
           command = params.command,
           options = params.options;
 
@@ -32,11 +34,11 @@ angular.module('ngWig')
           var textRange = ieStyleTextSelection.createRange();
         }
 
-        if (document.queryCommandSupported && !document.queryCommandSupported(command)) {
+        if ($document[0].queryCommandSupported && !$document[0].queryCommandSupported(command)) {
           throw 'The command "' + command + '" is not supported';
         }
 
-        document.execCommand(command, false, options);
+        $document[0].execCommand(command, false, options);
 
         if (ieStyleTextSelection) {
           textRange.collapse(false);
