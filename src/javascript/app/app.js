@@ -4,6 +4,6 @@ angular.module('myapp', ['ngWig', 'colorpicker.module']).
       $scope.text2 = '<p><i>This is really simple WYSIWYG for AngularJS!</i></p>';
     }]).
     config(['ngWigToolbarProvider', function (ngWigToolbarProvider) {
-        ngWigToolbarProvider.setButtons(['formats', 'list1', 'list2', 'bold', 'italic', 'link']);
+        ngWigToolbarProvider.setButtons(['formats', 'list1', 'list2', 'bold', 'italic', 'link', 'forecolor']);
         ngWigToolbarProvider.addStandardButton('underline', 'Underline', 'underline', 'fa-underline');
     }]);
