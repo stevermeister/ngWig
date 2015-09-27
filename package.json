@@ -18,6 +18,7 @@
     "grunt-ng-annotate": "~0.3.0",
     "load-grunt-tasks": "~0.4.0"
   },
+  "main": "dist/ng-wig.min.js",
   "repository":{
     "git":"https://github.com/stevermeister/ngWig"
   },
