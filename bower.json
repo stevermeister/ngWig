@@ -2,7 +2,8 @@
   "name": "ngWig",
   "version": "2.1.0",
   "devDependencies": {
-    "angular": "1.4.5"
+    "angular": "1.4.5",
+    "angular-bootstrap-colorpicker": "3.0.19"
   },
   "homepage": "https://github.com/stevermeister/ngWig",
   "authors": [
