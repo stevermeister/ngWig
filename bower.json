@@ -1,6 +1,6 @@
 {
   "name": "ngWig",
-  "version": "2.0.3",
+  "version": "2.2.0",
   "devDependencies": {
     "angular": "1.4.5",
     "fontawesome": "~4.4.0"
