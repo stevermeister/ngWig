@@ -3,7 +3,8 @@ angular.module('ngWig')
 
     return {
       scope: {
-        content: '=ngWig'
+        content: '=ngWig',
+        onPaste: '='
       },
       restrict: 'A',
       replace: true,

@@ -19,7 +19,15 @@ angular.module('ngWig')
         //}
       }
 
-      $element.bind('blur keyup change paste', viewToModel);
+      if (angular.isFunction(scope.onPaste)) {
+        $element.on('paste', function(e) {
+          scope.onPaste(e).then(function(val) {
+            $element.html(val);
+          })
+        });
+      }
+
+      $element.bind('blur keyup change', viewToModel);
 
       scope.$on('execCommand', function (event, params) {
         $element[0].focus();
@@ -49,6 +57,9 @@ angular.module('ngWig')
 
     return {
       restrict: 'A',
+      scope: {
+        onPaste: '='
+      },
       require: 'ngModel',
       replace: true,
       link: init
