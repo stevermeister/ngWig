@@ -1,5 +1,5 @@
 /**
- * version: 2.0.0
+ * version: 2.0.1
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -8,7 +8,8 @@ angular.module('ngWig')
 
     return {
       scope: {
-        content: '=ngWig'
+        content: '=ngWig',
+        onPaste: '='
       },
       restrict: 'A',
       replace: true,
@@ -63,7 +64,15 @@ angular.module('ngWig')
         //}
       }
 
-      $element.bind('blur keyup change paste', viewToModel);
+      if (angular.isFunction(scope.onPaste)) {
+        $element.on('paste', function(e) {
+          scope.onPaste(e).then(function(val) {
+            $element.html(val);
+          })
+        });
+      }
+
+      $element.bind('blur keyup change', viewToModel);
 
       scope.$on('execCommand', function (event, params) {
         $element[0].focus();
@@ -93,6 +102,9 @@ angular.module('ngWig')
 
     return {
       restrict: 'A',
+      scope: {
+        onPaste: '='
+      },
       require: 'ngModel',
       replace: true,
       link: init
