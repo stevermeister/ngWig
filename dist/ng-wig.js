@@ -1,5 +1,5 @@
 /**
- * version: 2.0.1
+ * version: 2.0.2
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -204,8 +204,8 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "\n" +
     "  <div class=\"nw-editor-container\">\n" +
     "    <div class=\"nw-editor\">\n" +
-    "      <textarea class=\"nw-editor__src\" ng-show=\"editMode\" ng-model=\"content\"></textarea>\n" +
-    "      <div ng-class=\"{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}\" class=\"nw-editor__res\" ng-model=\"content\" ng-wig-editable></div>\n" +
+    "      <textarea class=\"nw-editor__src\" ng-show=\"editMode\" ng-model=\"content\" on-paste=\"onPaste\"></textarea>\n" +
+    "      <div ng-class=\"{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}\" class=\"nw-editor__res\" ng-model=\"content\" ng-wig-editable on-paste=\"onPaste\"></div>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "</div>\n" +
