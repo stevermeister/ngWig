@@ -14,7 +14,15 @@ angular.module('ngWig')
         ngModelController.$setViewValue($element.html());
       }
 
-      $element.bind('blur keyup change paste focus click', function() {
+      if (angular.isFunction(scope.onPaste)) {
+        $element.on('paste', function(e) {
+          scope.onPaste(e).then(function(val) {
+            $element.html(val);
+          })
+        });
+      }
+
+      $element.bind('blur keyup change focus click', function() {
         viewToModel();
         scope.$applyAsync();
       });
