@@ -4,11 +4,12 @@
 angular.module('ngWig', ['ngwig-app-templates']);
 
 angular.module('ngWig')
-  .directive('ngWig', ["ngWigToolbar", function (ngWigToolbar) {
+  .directive('ngWig', ["$window", "$document", "ngWigToolbar", function ($window, $document, ngWigToolbar) {
 
     return {
       scope: {
-        content: '=ngWig'
+        content: '=ngWig',
+        onPaste: '='
       },
       restrict: 'A',
       replace: true,
@@ -25,6 +26,10 @@ angular.module('ngWig')
 
         scope.toggleEditMode = function () {
           scope.editMode = !scope.editMode;
+
+          if ($window.getSelection().removeAllRanges) {
+            $window.getSelection().removeAllRanges();
+          }
         };
 
         scope.execCommand = function (command, options) {
@@ -36,7 +41,7 @@ angular.module('ngWig')
               return;
             }
           }
-          scope.$emit('execCommand', {command: command, options: options});
+          scope.$broadcast('execCommand', {command: command, options: options});
         };
       }
     }
@@ -45,9 +50,8 @@ angular.module('ngWig')
 
 
 angular.module('ngWig')
-  .directive('ngWigEditable', function () {
+  .directive('ngWigEditable', ["$document", function ($document) {
     function init(scope, $element, attrs, ngModelController) {
-      var document = $element[0].ownerDocument;
 
       $element.attr('contenteditable', true);
 
@@ -59,18 +63,29 @@ angular.module('ngWig')
       //view --> model
       function viewToModel() {
         ngModelController.$setViewValue($element.html());
-        //to support Angular 1.2.x
-        //if (angular.version.minor < 3) {
-        //  scope.$apply();
-        //}
       }
 
-      $element.bind('blur keyup change paste', viewToModel);
+      if (angular.isFunction(scope.onPaste)) {
+        $element.on('paste', function(e) {
+          scope.onPaste(e).then(function(val) {
+            $element.html(val);
+          })
+        });
+      }
+
+      $element.bind('blur keyup change focus click', function() {
+        viewToModel();
+        scope.$applyAsync();
+      });
+
+      scope.isEditorActive = function () {
+        return $element[0] === $document[0].activeElement;
+      };
 
       scope.$on('execCommand', function (event, params) {
         $element[0].focus();
 
-        var ieStyleTextSelection = document.selection,
+        var ieStyleTextSelection = $document[0].selection,
           command = params.command,
           options = params.options;
 
@@ -78,11 +93,11 @@ angular.module('ngWig')
           var textRange = ieStyleTextSelection.createRange();
         }
 
-        if (document.queryCommandSupported && !document.queryCommandSupported(command)) {
+        if ($document[0].queryCommandSupported && !$document[0].queryCommandSupported(command)) {
           throw 'The command "' + command + '" is not supported';
         }
 
-        document.execCommand(command, false, options);
+        $document[0].execCommand(command, false, options);
 
         if (ieStyleTextSelection) {
           textRange.collapse(false);
@@ -99,7 +114,7 @@ angular.module('ngWig')
       replace: true,
       link: init
     }
-  }
+  }]
 );
 
 angular.module('ngWig')
@@ -127,15 +142,19 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
 
   var defaultButtonsList = ['list1', 'list2', 'bold', 'italic', 'link'];
 
+  var isButtonActive = function () {
+    return this.command && document.queryCommandState(this.command);
+  };
+
   this.setButtons = function(buttons) {
     if(!angular.isArray(buttons)) {
       throw 'Argument "buttons" should be an array';
     }
 
     defaultButtonsList = buttons;
-  }
+  };
 
-  this.addStandartButton = function (name, title, command, styleClass) {
+  this.addStandardButton = function (name, title, command, styleClass) {
     if(!name || !title || !command) {
       throw 'Arguments "name", "title" and "command" are required';
     }
@@ -150,9 +169,9 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
       throw 'Arguments "name" and "pluginName" are required';
     }
 
-    buttonLibrary[name] = {pluginName: pluginName, isComplex: true}
+    buttonLibrary[name] = {pluginName: pluginName, isComplex: true};
     defaultButtonsList.push(name);
-  }
+  };
 
   this.$get = function () {
     return {
@@ -162,7 +181,14 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
           if(!buttonLibrary[buttonKey]) {
             throw 'There is no "' + buttonKey + '" in your library. Possible variants: ' + Object.keys(buttonLibrary);
           }
-          toolbarButtons.push(buttonLibrary[buttonKey]);
+
+          var button = angular.copy(buttonLibrary[buttonKey]);
+
+          if(!angular.isFunction(button.isActive)) {
+            button.isActive = isButtonActive;
+          }
+
+          toolbarButtons.push(button);
         });
         return toolbarButtons;
       }
@@ -202,7 +228,7 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "  <ul class=\"nw-toolbar\">\n" +
     "    <li class=\"nw-toolbar__item\" ng-repeat=\"button in toolbarButtons\" >\n" +
     "        <div ng-if=\"!button.isComplex\">\n" +
-    "          <button type=\"button\" class=\"nw-button\" title=\"{{button.title}}\" ng-click=\"execCommand(button.command)\" ng-disabled=\"editMode\">\n" +
+    "          <button type=\"button\" class=\"nw-button\" title=\"{{button.title}}\" ng-click=\"execCommand(button.command)\" ng-class=\"{ 'nw-button--active': isEditorActive() && button.isActive() }\" ng-disabled=\"editMode\">\n" +
     "            <i class=\"fa {{button.styleClass}}\"></i>\n" +
     "          </button>\n" +
     "        </div>\n" +
@@ -217,8 +243,8 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "\n" +
     "  <div class=\"nw-editor-container\">\n" +
     "    <div class=\"nw-editor\">\n" +
-    "      <textarea class=\"nw-editor__src\" ng-show=\"editMode\" ng-model=\"content\"></textarea>\n" +
-    "      <div ng-class=\"{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}\" class=\"nw-editor__res\" ng-model=\"content\" ng-wig-editable></div>\n" +
+    "      <textarea  class=\"nw-editor__src\" ng-show=\"editMode\" ng-model=\"content\"></textarea>\n" +
+    "      <div tabindex=\"-1\" ng-class=\"{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}\" class=\"nw-editor__res\" ng-model=\"content\" ng-wig-editable on-paste=\"onPaste\"></div>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "</div>\n" +
