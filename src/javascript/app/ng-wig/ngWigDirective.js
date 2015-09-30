@@ -1,5 +1,5 @@
 angular.module('ngWig')
-  .directive('ngWig', function (ngWigToolbar) {
+  .directive('ngWig', function ($window, $document, ngWigToolbar) {
 
     return {
       scope: {
@@ -20,16 +20,22 @@ angular.module('ngWig')
 
         scope.toggleEditMode = function () {
           scope.editMode = !scope.editMode;
+
+          if ($window.getSelection().removeAllRanges) {
+            $window.getSelection().removeAllRanges();
+          }
         };
 
         scope.execCommand = function (command, options) {
+          if(scope.editMode ) return false;
+
           if (command === 'createlink') {
             options = prompt('Please enter the URL', 'http://');
             if(!options) {
               return;
             }
           }
-          scope.$emit('execCommand', {command: command, options: options});
+          scope.$broadcast('execCommand', {command: command, options: options});
         };
       }
     }

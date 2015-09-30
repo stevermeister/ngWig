@@ -22,9 +22,7 @@ module.exports = function(grunt) {
     copy: {
       dev: {
         files: [
-          {src: 'bower_components/angular/angular.js', dest:'src/libs/angular/angular.js'},
-          {src: 'bower_components/fontawesome/css/font-awesome.min.css', dest: srcPath + '/libs/fontawesome/css/font-awesome.min.css'},
-          {cwd: 'bower_components/fontawesome/fonts', src: '**/*', dest: srcPath + '/libs/fontawesome/fonts', expand: true}
+          {src: 'bower_components/angular/angular.js', dest:'src/libs/angular/angular.js'}
         ]
       },
       dist: {
@@ -38,6 +36,7 @@ module.exports = function(grunt) {
         files: {
           '<%= distPath %>/ng-wig.js': [
               srcPath + '/javascript/app/ng-wig/!(angular.element.outerHeight).js',
+              srcPath + '/javascript/app/plugins/*.js',
               srcPath + '/javascript/app/ng-wig/angular.element.outerHeight.js',
               srcPath + '/javascript/app/templates.js',
             '!src/javascript/app/**/tests/*.js']
@@ -48,6 +47,13 @@ module.exports = function(grunt) {
       build: {
         files: {
            'dist/ng-wig.min.js': [ distPath +'/ng-wig.js']
+        }
+      }
+    },
+    cssmin: {
+      build: {
+        files: {
+          'dist/css/ng-wig.min.css': [ distPath +'/css/ng-wig.css']
         }
       }
     },
@@ -87,7 +93,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['html2js', 'express', 'watch', 'express-keepalive',]);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
-  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify', 'bump:patch']);
+  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify', 'cssmin', 'bump:patch']);
   grunt.registerTask('upversion', ['bump:minor']);
   //grunt.registerTask('upversion', ['bump:major']);
 };

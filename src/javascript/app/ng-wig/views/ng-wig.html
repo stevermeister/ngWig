@@ -1,8 +1,8 @@
-<div class="ng-wig">
+<div class="ng-wig" >
   <ul class="nw-toolbar">
     <li class="nw-toolbar__item" ng-repeat="button in toolbarButtons" >
         <div ng-if="!button.isComplex">
-          <button type="button" class="nw-button" title="{{button.title}}" ng-click="execCommand(button.command)">
+          <button type="button" class="nw-button" title="{{button.title}}" ng-click="execCommand(button.command)" ng-class="{ 'nw-button--active': isEditorActive() && button.isActive() }" ng-disabled="editMode">
             <i class="fa {{button.styleClass}}"></i>
           </button>
         </div>
@@ -17,8 +17,8 @@
 
   <div class="nw-editor-container">
     <div class="nw-editor">
-      <textarea class="nw-editor__src" ng-show="editMode" ng-model="content"></textarea>
-      <div ng-class="{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}" class="nw-editor__res" ng-model="content" ng-wig-editable></div>
+      <textarea  class="nw-editor__src" ng-show="editMode" ng-model="content"></textarea>
+      <div tabindex="-1" ng-class="{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}" class="nw-editor__res" ng-model="content" ng-wig-editable></div>
     </div>
   </div>
 </div>

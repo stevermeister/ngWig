@@ -1,5 +1,5 @@
 /* -------- NG-WIG -------- */
-
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
 /**
  *
  *  RESET BOX MODEL
@@ -98,7 +98,9 @@
 }
 
 .nw-editor__res {
-  min-height: inherit;
+  min-height: 100%;
+  margin: -1px 0;
+  padding: 1px 0;
 }
 
 .nw-editor__src,
