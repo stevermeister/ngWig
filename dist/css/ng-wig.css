@@ -180,7 +180,7 @@
 }
 
 .nw-select {
-  height: 30px;
+  height: auto;
   padding: 6px;
   color: #555;
   background-color: inherit;
