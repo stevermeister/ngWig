@@ -1,5 +1,5 @@
 /**
- * version: 2.0.0
+ * version: 2.1.0
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -29,6 +29,8 @@ angular.module('ngWig')
         };
 
         scope.execCommand = function (command, options) {
+          if(scope.editMode ) return false;
+
           if (command === 'createlink') {
             options = prompt('Please enter the URL', 'http://');
             if(!options) {
@@ -178,6 +180,29 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
 
 
 });
+angular.module('ngWig')
+    .config(['ngWigToolbarProvider', function (ngWigToolbarProvider) {
+       ngWigToolbarProvider.addCustomButton('formats', 'nw-formats-button');
+    }])
+    .directive('nwFormatsButton', function() {
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<select class="nw-select" ng-model="format" ng-change="execCommand(\'formatblock\', format.value)" ng-options="format.name for format in formats" ng-disabled="editMode"></select>',
+            link: function (scope) {
+                scope.formats = [
+                    {name: 'Normal text', value: 'p'},
+                    {name: 'Header 1', value: 'h1'},
+                    {name: 'Header 2', value: 'h2'},
+                    {name: 'Header 3', value: 'h3'}
+                ];
+
+                scope.format = scope.formats[0];
+            }
+        };
+    });
+
+
 angular.module('ngwig-app-templates', ['ng-wig/views/ng-wig.html']);
 
 angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($templateCache) {
@@ -186,7 +211,7 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "  <ul class=\"nw-toolbar\">\n" +
     "    <li class=\"nw-toolbar__item\" ng-repeat=\"button in toolbarButtons\" >\n" +
     "        <div ng-if=\"!button.isComplex\">\n" +
-    "          <button type=\"button\" class=\"nw-button\" title=\"{{button.title}}\" ng-click=\"execCommand(button.command)\">\n" +
+    "          <button type=\"button\" class=\"nw-button\" title=\"{{button.title}}\" ng-click=\"execCommand(button.command)\" ng-disabled=\"editMode\">\n" +
     "            <i class=\"fa {{button.styleClass}}\"></i>\n" +
     "          </button>\n" +
     "        </div>\n" +

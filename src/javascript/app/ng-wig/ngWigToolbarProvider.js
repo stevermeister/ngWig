@@ -10,15 +10,19 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
 
   var defaultButtonsList = ['list1', 'list2', 'bold', 'italic', 'link'];
 
+  var isButtonActive = function () {
+    return this.command && document.queryCommandState(this.command);
+  };
+
   this.setButtons = function(buttons) {
     if(!angular.isArray(buttons)) {
       throw 'Argument "buttons" should be an array';
     }
 
     defaultButtonsList = buttons;
-  }
+  };
 
-  this.addStandartButton = function (name, title, command, styleClass) {
+  this.addStandardButton = function (name, title, command, styleClass) {
     if(!name || !title || !command) {
       throw 'Arguments "name", "title" and "command" are required';
     }
@@ -33,9 +37,9 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
       throw 'Arguments "name" and "pluginName" are required';
     }
 
-    buttonLibrary[name] = {pluginName: pluginName, isComplex: true}
+    buttonLibrary[name] = {pluginName: pluginName, isComplex: true};
     defaultButtonsList.push(name);
-  }
+  };
 
   this.$get = function () {
     return {
@@ -45,7 +49,14 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
           if(!buttonLibrary[buttonKey]) {
             throw 'There is no "' + buttonKey + '" in your library. Possible variants: ' + Object.keys(buttonLibrary);
           }
-          toolbarButtons.push(buttonLibrary[buttonKey]);
+
+          var button = angular.copy(buttonLibrary[buttonKey]);
+
+          if(!angular.isFunction(button.isActive)) {
+            button.isActive = isButtonActive;
+          }
+
+          toolbarButtons.push(button);
         });
         return toolbarButtons;
       }

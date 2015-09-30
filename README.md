@@ -8,7 +8,11 @@ it's just attribute directive for textarea:
 
 ##Installation
 
-ngWig could be simply installed via bower:
+ngWig could be simply installed via npm:
+
+    npm install ng-wig
+
+or via bower:
 
     bower install ng-wig
 
