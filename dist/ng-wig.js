@@ -102,9 +102,6 @@ angular.module('ngWig')
 
     return {
       restrict: 'A',
-      scope: {
-        onPaste: '='
-      },
       require: 'ngModel',
       replace: true,
       link: init
