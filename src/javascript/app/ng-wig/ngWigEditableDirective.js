@@ -16,7 +16,7 @@ angular.module('ngWig')
 
       if (angular.isFunction(scope.onPaste)) {
         $element.on('paste', function(e) {
-          scope.onPaste(e).then(function(val) {
+          scope.onPaste(e, $element.html()).then(function(val) {
             $element.html(val);
           })
         });
