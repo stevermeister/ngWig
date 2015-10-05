@@ -77,30 +77,25 @@
  *
  */
 .nw-editor {
-  display: block;
-  position: relative;
-  overflow-y: auto;
-  padding: 0 8px;
+  display: table;
   /* Default when height is not set */
-  min-height: 300px;
+  height: 300px;
   background: #fff;
   cursor: text;
-}
-
-.nw-invisible {
-  display: none;
+  width:100%;
 }
 
 .nw-editor-container {
   border: 1px solid #CCCCCC;
   border-top: none;
   border-radius: 0 0 3px 3px;
+  position: relative;
 }
 
 .nw-editor__res {
   min-height: 100%;
-  margin: -1px 0;
-  padding: 1px 0;
+  padding: 0 8px;
+  display: table-cell
 }
 
 .nw-editor__src,
@@ -111,14 +106,48 @@
   border: none;
 }
 
-.nw-editor__src {
-  resize: none;
-  display: block;
-  height: 100%;
+.nw-editor__src-container {
   position: absolute;
   left: 0;
   top: 0;
-  padding: 8px;
+  right: 0;
+  bottom: 0;
+}
+
+.nw-editor__src {
+  height: 100%;
+  resize: none;
+  padding: 0 8px;
+  margin: 0;
+}
+
+.nw-editor--fixed .nw-editor {
+  display:block;
+  overflow-y: auto;
+}
+
+.nw-editor--fixed .nw-editor__res {
+  margin: -1px 0;
+  padding: 1px 8px;
+  display:block;
+}
+
+.nw-invisible {
+  visibility: hidden;
+}
+
+.nw-editor--fixed .nw-invisible {
+  display: none;
+}
+
+.ng-submitted .nw-editor__res.ng-invalid,
+.nw-editor__res.ng-invalid.ng-touched,
+.nw-editor__src.ng-invalid{
+  border: 2px solid #FF0000;
+}
+
+.nw-editor__res.ng-invalid {
+  margin: 0;
 }
 
 
