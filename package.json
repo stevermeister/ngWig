@@ -3,7 +3,10 @@
   "version": "2.1.0",
   "author": "Stepan Suvorov",
   "contributors": [
-    {"name": "Sascha Weniger", "url": "https://github.com/sashless"}
+    {"name": "Besuhoff", "url": "https://github.com/besuhoff"},
+    {"name": "Pavel Lebedinsky", "url": "https://github.com/bolelamx"},
+    {"name": "Sascha Weniger", "url": "https://github.com/sashless"},
+    {"name": "Volodymyr Dziubak", "url": "https://github.com/Velzevul"}
   ],
   "devDependencies": {
     "bower": "~1.3.3",
