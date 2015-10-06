@@ -3,13 +3,13 @@ angular.module('ngWig')
 
     return {
       scope: {
-        content: '=ngWig',
-        name: '@'
+        content: '=ngWig'
       },
       restrict: 'A',
       replace: true,
       templateUrl: 'ng-wig/views/ng-wig.html',
       link: function (scope, element, attrs) {
+        scope.name = attrs.name;
         element.removeAttr('name');
         scope.isRequired = !!attrs.required;
         scope.editMode = false;

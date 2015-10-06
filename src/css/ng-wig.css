@@ -140,17 +140,6 @@
   display: none;
 }
 
-.ng-submitted .nw-editor__res.ng-invalid,
-.nw-editor__res.ng-invalid.ng-touched,
-.nw-editor__src.ng-invalid{
-  border: 2px solid #FF0000;
-}
-
-.nw-editor__res.ng-invalid {
-  margin: 0;
-}
-
-
 /**
  *  styling for toolbar button, has two modifiers: active and type of icon for background
  *
