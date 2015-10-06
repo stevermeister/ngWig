@@ -9,7 +9,7 @@ angular.module('ngWig')
       replace: true,
       templateUrl: 'ng-wig/views/ng-wig.html',
       link: function (scope, element, attrs) {
-        scope.name = attrs.name;
+        scope.formElementName = attrs.name;
         element.removeAttr('name');
         scope.isRequired = !!attrs.required;
         scope.editMode = false;

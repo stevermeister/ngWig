@@ -95,7 +95,7 @@
 .nw-editor__res {
   min-height: 100%;
   padding: 0 8px;
-  display: table-cell
+  display: table-cell;
 }
 
 .nw-editor__src,
@@ -104,6 +104,7 @@
   outline: none;
   box-sizing: border-box;
   border: none;
+  margin: 0;
 }
 
 .nw-editor__src-container {
@@ -118,7 +119,6 @@
   height: 100%;
   resize: none;
   padding: 0 8px;
-  margin: 0;
 }
 
 .nw-editor--fixed .nw-editor {
@@ -127,7 +127,6 @@
 }
 
 .nw-editor--fixed .nw-editor__res {
-  margin: -1px 0;
   padding: 1px 8px;
   display:block;
 }
