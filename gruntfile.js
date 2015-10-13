@@ -22,9 +22,7 @@ module.exports = function(grunt) {
     copy: {
       dev: {
         files: [
-          {src: 'bower_components/angular/angular.js', dest:'src/libs/angular/angular.js'},
-          {src: 'bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js', dest:'src/libs/bootstrap-colorpicker-module.js'},
-          {src: 'bower_components/angular-bootstrap-colorpicker/css/colorpicker.css', dest:'src/libs/colorpicker.css'}
+          {src: 'bower_components/angular/angular.js', dest:'src/libs/angular/angular.js'}
         ]
       },
       dist: {
