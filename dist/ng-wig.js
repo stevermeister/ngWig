@@ -135,13 +135,13 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
     defaultButtonsList = buttons;
   }
 
-  this.addStandartButton = function (name, title, command, styleClass) {
+  this.addStandartButton = function (name, title, command, styleClass, buttonText) {
     if(!name || !title || !command) {
       throw 'Arguments "name", "title" and "command" are required';
     }
 
     styleClass = styleClass || '';
-    buttonLibrary[name] = {title: title, command: command, styleClass: styleClass}
+    buttonLibrary[name] = {title: title, command: command, styleClass: styleClass, buttonText: buttonText}
     defaultButtonsList.push(name);
   };
 
@@ -203,7 +203,7 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "    <li class=\"nw-toolbar__item\" ng-repeat=\"button in toolbarButtons\" >\n" +
     "        <div ng-if=\"!button.isComplex\">\n" +
     "          <button type=\"button\" class=\"nw-button\" title=\"{{button.title}}\" ng-click=\"execCommand(button.command)\" ng-disabled=\"editMode\">\n" +
-    "            <i class=\"fa {{button.styleClass}}\"></i>\n" +
+    "            <i class=\"fa {{button.styleClass}}\"></i> {{button.buttonText}}\n" +
     "          </button>\n" +
     "        </div>\n" +
     "        <div ng-if=\"button.isComplex\">\n" +
