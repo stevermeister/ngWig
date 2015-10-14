@@ -1,4 +1,4 @@
-<div class="ng-wig" >
+<div class="ng-wig">
   <ul class="nw-toolbar">
     <li class="nw-toolbar__item" ng-repeat="button in toolbarButtons" >
         <div ng-if="!button.isComplex">
@@ -18,7 +18,7 @@
   <div class="nw-editor-container">
     <div class="nw-editor">
       <textarea  class="nw-editor__src" ng-show="editMode" ng-model="content"></textarea>
-      <div tabindex="-1" ng-class="{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}" class="nw-editor__res" ng-model="content" ng-wig-editable></div>
+      <div tabindex="-1" ng-class="{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}" class="nw-editor__res" ng-model="content" ng-wig-editable on-paste="onPaste"></div>
     </div>
   </div>
 </div>
