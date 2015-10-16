@@ -31,7 +31,7 @@ If you need access to the pasted content you can provide a function to be called
 $scope.onPaste = function(pasteEvent, originalTextContent){
     // here you can cancel the event
     // or just alter the pasteContent
-    var pasteContent = e.clipboardData.getData('text/plain');
+    var pasteContent = pasteEvent.clipboardData.getData('text/plain');
     // it is required to return it using a promise
     return $q.when(originalTextContent + paste.content.slice(0, 33));
 };
