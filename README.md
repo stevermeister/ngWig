@@ -33,7 +33,7 @@ $scope.onPaste = function(pasteEvent, originalTextContent){
     // or just alter the pasteContent
     var pasteContent = pasteEvent.clipboardData.getData('text/plain');
     // it is required to return it using a promise
-    return $q.when(originalTextContent + paste.content.slice(0, 33));
+    return $q.when(originalTextContent + pasteContent.slice(0, 33));
 };
 ```
     <textarea ng-wig="text1" on-paste="onPaste" class="editor1"></textarea>
