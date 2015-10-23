@@ -19,6 +19,11 @@
       height: 200px;
       min-height: 0;
     }
+
+    .nw-editor__res.ng-invalid.ng-touched,
+    .nw-editor__src.ng-invalid{
+      border: 2px solid #FF0000;
+    }
   </style>
 </head>
 <body ng-controller="demoController" ng-cloak>
@@ -26,7 +31,9 @@
 <textarea ng-wig="text1" class="editor1"></textarea>
 
 <h1>One more</h1>
-<textarea ng-wig="text2" class="editor2"></textarea>
+<form name="myForm" novalidate>
+  <textarea ng-wig="text2" buttons="formats, bold, italic" name="editor" required class="editor2 nw-editor--fixed"></textarea>
+</form>
 
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script src="ng-wig.js"></script>

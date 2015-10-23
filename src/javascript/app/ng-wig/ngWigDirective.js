@@ -10,9 +10,10 @@ angular.module('ngWig')
       replace: true,
       templateUrl: 'ng-wig/views/ng-wig.html',
       link: function (scope, element, attrs) {
-
+        scope.formElementName = attrs.name;
+        element.removeAttr('name');
+        scope.isRequired = !!attrs.required;
         scope.editMode = false;
-        scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
         scope.toolbarButtons = ngWigToolbar.getToolbarButtons(attrs.buttons && string2array(attrs.buttons));
 
         function string2array(keysString){
