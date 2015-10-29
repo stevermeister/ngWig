@@ -53,6 +53,7 @@
 .nw-toolbar__item {
   display: inline-block;
   vertical-align: top;
+  margin: 0;
 
   border-right: 1px solid #DEDEDE;
 }
@@ -165,7 +166,38 @@
   border: none;
   border-radius: 2px;
 
+  font-size: 0;
+
   cursor: pointer;
+}
+
+.nw-button:before {
+  font-size: 12px;
+  font-family: FontAwesome;
+}
+
+.nw-button.bold:before {
+  content: '\f032';
+}
+
+.nw-button.italic:before {
+  content: '\f033';
+}
+
+.nw-button.list-ul:before {
+  content: '\f0ca';
+}
+
+.nw-button.list-ol:before {
+  content: '\f0cb';
+}
+
+.nw-button.link:before {
+  content: '\f0c1';
+}
+
+.nw-button.nw-button--source:before {
+  content: '\f040';
 }
 
 .nw-button:focus {
