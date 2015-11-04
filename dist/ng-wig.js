@@ -1,5 +1,5 @@
 /**
- * version: 2.2.0
+ * version: 2.2.1
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -15,9 +15,10 @@ angular.module('ngWig')
       replace: true,
       templateUrl: 'ng-wig/views/ng-wig.html',
       link: function (scope, element, attrs) {
-
+        scope.formElementName = attrs.name;
+        element.removeAttr('name');
+        scope.isRequired = !!attrs.required;
         scope.editMode = false;
-        scope.autoexpand = !('autoexpand' in attrs) || attrs['autoexpand'] !== 'off';
         scope.toolbarButtons = ngWigToolbar.getToolbarButtons(attrs.buttons && string2array(attrs.buttons));
 
         function string2array(keysString){
@@ -143,11 +144,11 @@ angular.module('ngWig')
 angular.module('ngWig').provider('ngWigToolbar', function () {
 
   var buttonLibrary = {
-    list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'fa-list-ul'},
-    list2: {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'fa-list-ol'},
-    bold: {title: 'Bold', command: 'bold', styleClass: 'fa-bold'},
-    italic: {title: 'Italic', command: 'italic', styleClass: 'fa-italic'},
-    link: {title: 'Link', command: 'createlink', styleClass: 'fa-link'}
+    list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'list-ul'},
+    list2: {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'list-ol'},
+    bold: {title: 'Bold', command: 'bold', styleClass: 'bold'},
+    italic: {title: 'Italic', command: 'italic', styleClass: 'italic'},
+    link: {title: 'Link', command: 'createlink', styleClass: 'link'}
   };
 
   var defaultButtonsList = ['list1', 'list2', 'bold', 'italic', 'link'];
@@ -209,6 +210,24 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
 });
 angular.module('ngWig')
     .config(['ngWigToolbarProvider', function (ngWigToolbarProvider) {
+       ngWigToolbarProvider.addCustomButton('forecolor', 'nw-forecolor-button');
+    }])
+    .directive('nwForecolorButton', function() {
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<button colorpicker ng-model="fontcolor" ng-disabled="editMode" colorpicker-position="right" class="nw-button" title="Font Color"><i class="fa fa-font"></i></button>',
+            link: function (scope) {
+                scope.$on("colorpicker-selected", function ($event, color) {
+                    scope.execCommand('foreColor', color.value);
+                });
+            }
+        };
+    });
+
+
+angular.module('ngWig')
+    .config(['ngWigToolbarProvider', function (ngWigToolbarProvider) {
        ngWigToolbarProvider.addCustomButton('formats', 'nw-formats-button');
     }])
     .directive('nwFormatsButton', function() {
@@ -238,8 +257,8 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "  <ul class=\"nw-toolbar\">\n" +
     "    <li class=\"nw-toolbar__item\" ng-repeat=\"button in toolbarButtons\" >\n" +
     "        <div ng-if=\"!button.isComplex\">\n" +
-    "          <button type=\"button\" class=\"nw-button\" title=\"{{button.title}}\" ng-click=\"execCommand(button.command)\" ng-class=\"{ 'nw-button--active': isEditorActive() && button.isActive() }\" ng-disabled=\"editMode\">\n" +
-    "            <i class=\"fa {{button.styleClass}}\"></i>\n" +
+    "          <button type=\"button\" class=\"nw-button {{button.styleClass}}\" title=\"{{button.title}}\" ng-click=\"execCommand(button.command)\" ng-class=\"{ 'nw-button--active': isEditorActive() && button.isActive() }\" ng-disabled=\"editMode\">\n" +
+    "            {{ button.title }}\n" +
     "          </button>\n" +
     "        </div>\n" +
     "        <div ng-if=\"button.isComplex\">\n" +
@@ -247,14 +266,18 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "        </div>\n" +
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--source\" ng-class=\"{ 'nw-button--active': editMode }\" ng-click=\"toggleEditMode()\"><i class=\"fa fa-pencil\"></i></button>\n" +
+    "      <button type=\"button\" class=\"nw-button nw-button--source\" ng-class=\"{ 'nw-button--active': editMode }\" ng-click=\"toggleEditMode()\">\n" +
+    "        Edit HTML\n" +
+    "      </button>\n" +
     "    </li>\n" +
     "  </ul>\n" +
     "\n" +
     "  <div class=\"nw-editor-container\">\n" +
+    "    <div class=\"nw-editor__src-container\" ng-show=\"editMode\">\n" +
+    "      <textarea ng-required=\"isRequired\" class=\"nw-editor__src\" ng-model=\"content\"></textarea>\n" +
+    "    </div>\n" +
     "    <div class=\"nw-editor\">\n" +
-    "      <textarea  class=\"nw-editor__src\" ng-show=\"editMode\" ng-model=\"content\"></textarea>\n" +
-    "      <div tabindex=\"-1\" ng-class=\"{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}\" class=\"nw-editor__res\" ng-model=\"content\" ng-wig-editable on-paste=\"onPaste\"></div>\n" +
+    "      <div name=\"{{formElementName}}\" ng-required=\"isRequired\" tabindex=\"-1\" ng-class=\"{'nw-invisible': editMode}\" class=\"nw-editor__res\" ng-model=\"content\" ng-wig-editable on-paste=\"onPaste\"></div>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "</div>\n" +

@@ -53,6 +53,7 @@
 .nw-toolbar__item {
   display: inline-block;
   vertical-align: top;
+  margin: 0;
 
   border-right: 1px solid #DEDEDE;
 }
@@ -77,30 +78,25 @@
  *
  */
 .nw-editor {
-  display: block;
-  position: relative;
-  overflow-y: auto;
-  padding: 0 8px;
+  display: table;
   /* Default when height is not set */
-  min-height: 300px;
+  height: 300px;
   background: #fff;
   cursor: text;
-}
-
-.nw-invisible {
-  display: none;
+  width:100%;
 }
 
 .nw-editor-container {
   border: 1px solid #CCCCCC;
   border-top: none;
   border-radius: 0 0 3px 3px;
+  position: relative;
 }
 
 .nw-editor__res {
   min-height: 100%;
-  margin: -1px 0;
-  padding: 1px 0;
+  padding: 0 8px;
+  display: table-cell;
 }
 
 .nw-editor__src,
@@ -109,18 +105,40 @@
   outline: none;
   box-sizing: border-box;
   border: none;
+  margin: 0;
 }
 
-.nw-editor__src {
-  resize: none;
-  display: block;
-  height: 100%;
+.nw-editor__src-container {
   position: absolute;
   left: 0;
   top: 0;
-  padding: 8px;
+  right: 0;
+  bottom: 0;
 }
 
+.nw-editor__src {
+  height: 100%;
+  resize: none;
+  padding: 0 8px;
+}
+
+.nw-editor--fixed .nw-editor {
+  display:block;
+  overflow-y: auto;
+}
+
+.nw-editor--fixed .nw-editor__res {
+  padding: 1px 8px;
+  display:block;
+}
+
+.nw-invisible {
+  visibility: hidden;
+}
+
+.nw-editor--fixed .nw-invisible {
+  display: none;
+}
 
 /**
  *  styling for toolbar button, has two modifiers: active and type of icon for background
@@ -148,7 +166,38 @@
   border: none;
   border-radius: 2px;
 
+  font-size: 0;
+
   cursor: pointer;
+}
+
+.nw-button:before {
+  font-size: 12px;
+  font-family: FontAwesome;
+}
+
+.nw-button.bold:before {
+  content: '\f032';
+}
+
+.nw-button.italic:before {
+  content: '\f033';
+}
+
+.nw-button.list-ul:before {
+  content: '\f0ca';
+}
+
+.nw-button.list-ol:before {
+  content: '\f0cb';
+}
+
+.nw-button.link:before {
+  content: '\f0c1';
+}
+
+.nw-button.nw-button--source:before {
+  content: '\f040';
 }
 
 .nw-button:focus {
