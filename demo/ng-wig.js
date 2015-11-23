@@ -1,5 +1,5 @@
 /**
- * version: 2.2.1
+ * version: 2.3.1
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -17,7 +17,9 @@ angular.module('ngWig')
       link: function (scope, element, attrs) {
         scope.formElementName = attrs.name;
         element.removeAttr('name');
+
         scope.isRequired = !!attrs.required;
+        scope.isSourceModeAllowed = Object.keys(attrs).indexOf('sourceModeAllowed') !== -1 ? true : false;
         scope.editMode = false;
         scope.toolbarButtons = ngWigToolbar.getToolbarButtons(attrs.buttons && string2array(attrs.buttons));
 
@@ -208,47 +210,6 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
 
 
 });
-angular.module('ngWig')
-    .config(['ngWigToolbarProvider', function (ngWigToolbarProvider) {
-       ngWigToolbarProvider.addCustomButton('forecolor', 'nw-forecolor-button');
-    }])
-    .directive('nwForecolorButton', function() {
-        return {
-            restrict: 'E',
-            replace: true,
-            template: '<button colorpicker ng-model="fontcolor" ng-disabled="editMode" colorpicker-position="right" class="nw-button" title="Font Color"><i class="fa fa-font"></i></button>',
-            link: function (scope) {
-                scope.$on("colorpicker-selected", function ($event, color) {
-                    scope.execCommand('foreColor', color.value);
-                });
-            }
-        };
-    });
-
-
-angular.module('ngWig')
-    .config(['ngWigToolbarProvider', function (ngWigToolbarProvider) {
-       ngWigToolbarProvider.addCustomButton('formats', 'nw-formats-button');
-    }])
-    .directive('nwFormatsButton', function() {
-        return {
-            restrict: 'E',
-            replace: true,
-            template: '<select class="nw-select" ng-model="format" ng-change="execCommand(\'formatblock\', format.value)" ng-options="format.name for format in formats" ng-disabled="editMode"></select>',
-            link: function (scope) {
-                scope.formats = [
-                    {name: 'Normal text', value: 'p'},
-                    {name: 'Header 1', value: 'h1'},
-                    {name: 'Header 2', value: 'h2'},
-                    {name: 'Header 3', value: 'h3'}
-                ];
-
-                scope.format = scope.formats[0];
-            }
-        };
-    });
-
-
 angular.module('ngwig-app-templates', ['ng-wig/views/ng-wig.html']);
 
 angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($templateCache) {
@@ -266,7 +227,7 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "        </div>\n" +
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--source\" ng-class=\"{ 'nw-button--active': editMode }\" ng-click=\"toggleEditMode()\">\n" +
+    "      <button type=\"button\" class=\"nw-button nw-button--source\" ng-class=\"{ 'nw-button--active': editMode }\" ng-show=\"isSourceModeAllowed\" ng-click=\"toggleEditMode()\">\n" +
     "        Edit HTML\n" +
     "      </button>\n" +
     "    </li>\n" +
