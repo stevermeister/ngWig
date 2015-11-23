@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         files: {
           '<%= distPath %>/ng-wig.js': [
               srcPath + '/javascript/app/ng-wig/!(angular.element.outerHeight).js',
-              srcPath + '/javascript/app/plugins/*.js',
+              srcPath + '/javascript/app/plugins/formats.js',
               srcPath + '/javascript/app/ng-wig/angular.element.outerHeight.js',
               srcPath + '/javascript/app/templates.js',
             '!src/javascript/app/**/tests/*.js']

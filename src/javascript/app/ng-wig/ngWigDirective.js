@@ -12,7 +12,9 @@ angular.module('ngWig')
       link: function (scope, element, attrs) {
         scope.formElementName = attrs.name;
         element.removeAttr('name');
+
         scope.isRequired = !!attrs.required;
+        scope.isSourceModeAllowed = Object.keys(attrs).indexOf('sourceModeAllowed') !== -1 ? true : false;
         scope.editMode = false;
         scope.toolbarButtons = ngWigToolbar.getToolbarButtons(attrs.buttons && string2array(attrs.buttons));
 
