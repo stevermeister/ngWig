@@ -28,6 +28,10 @@ If you need access to the pasted content you can provide a function to be called
 
 ```js
 // in your controller
+var doSomething = function(pasteContent){
+    return pasteContent.slice(0, 33);
+};
+
 $scope.onPaste = function(pasteEvent, originalTextContent){
     // here you can cancel the event
     // or just alter the pasteContent
@@ -35,7 +39,7 @@ $scope.onPaste = function(pasteEvent, originalTextContent){
     // here you can return the new content using a promise
     return $q.when(originalTextContent + paste.content.slice(0, 33));
     // or just paste
-    //document.execCommand('insertHTML', false, doSomethingWithHtml(html));
+    //document.execCommand('insertHTML', false, doSomething(pasteContent));
 };
 ```
     <textarea ng-wig="text1" on-paste="onPaste" class="editor1"></textarea>
