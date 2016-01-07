@@ -196,6 +196,10 @@
   content: '\f0c1';
 }
 
+.nw-button.font-color:before {
+  content: '\f031';
+}
+
 .nw-button.nw-button--source:before {
   content: '\f040';
 }
