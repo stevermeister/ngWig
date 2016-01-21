@@ -1,77 +1,78 @@
-angular.module('ngWig')
-  .directive('ngWigEditable', function ($document) {
-    function init(scope, $element, attrs, ngModelController) {
+'use strict';
 
-      $element.attr('contenteditable', true);
+function directive($document) {
+  function init(scope, element, attrs, ngModelController) {
+    element.attr('contenteditable', true);
 
-      //model --> view
-      ngModelController.$render = function () {
-        $element.html(ngModelController.$viewValue || '');
-      };
+    //model --> view
+    ngModelController.$render = function () {
+      element.html(ngModelController.$viewValue || '');
+    };
 
-      //view --> model
-      function viewToModel() {
-        ngModelController.$setViewValue($element.html());
-      }
+    //view --> model
+    function viewToModel() {
+      ngModelController.$setViewValue(element.html());
+    }
 
-      var eventsToBind = [
-        'blur',
-        'keyup',
-        'change',
-        'focus',
-        'click'
-      ];
+    var eventsToBind = [
+      'blur',
+      'keyup',
+      'change',
+      'focus',
+      'click'
+    ];
 
-      if (angular.isFunction(scope.onPaste)) {
-        $element.on('paste', function(e) {
-          scope.onPaste(e, $element.html()).then(function(val) {
-            $element.html(val);
-          })
+    if (angular.isFunction(scope.onPaste)) {
+      element.on('paste', function(e) {
+        scope.onPaste(e, element.html()).then(function(val) {
+          element.html(val);
         });
-      }else{
-        eventsToBind.push('paste');
-      }
-
-      $element.bind(eventsToBind.join(' '), function() {
-        viewToModel();
-        scope.$applyAsync();
       });
+    }else{
+      eventsToBind.push('paste');
+    }
 
-      scope.isEditorActive = function () {
-        return $element[0] === $document[0].activeElement;
-      };
+    element.bind(eventsToBind.join(' '), function() {
+      viewToModel();
+      scope.$applyAsync();
+    });
 
-      scope.$on('execCommand', function (event, params) {
-        $element[0].focus();
+    scope.isEditorActive = function () {
+      return element[0] === $document[0].activeElement;
+    };
 
-        var ieStyleTextSelection = $document[0].selection,
+    scope.$on('execCommand', function (event, params) {
+      element[0].focus();
+
+      var ieStyleTextSelection = $document[0].selection,
           command = params.command,
           options = params.options;
 
-        if (ieStyleTextSelection) {
-          var textRange = ieStyleTextSelection.createRange();
-        }
+      if ($document[0].queryCommandSupported && !$document[0].queryCommandSupported(command)) {
+        throw 'The command "' + command + '" is not supported';
+      }
 
-        if ($document[0].queryCommandSupported && !$document[0].queryCommandSupported(command)) {
-          throw 'The command "' + command + '" is not supported';
-        }
+      $document[0].execCommand(command, false, options);
 
-        $document[0].execCommand(command, false, options);
+      if (ieStyleTextSelection && textRange) {
+        var textRange = ieStyleTextSelection.createRange();
+        textRange.collapse(false);
+        textRange.select();
+      }
 
-        if (ieStyleTextSelection) {
-          textRange.collapse(false);
-          textRange.select();
-        }
-
-        viewToModel();
-      });
-    }
-
-    return {
-      restrict: 'A',
-      require: 'ngModel',
-      replace: true,
-      link: init
-    }
+      viewToModel();
+    });
   }
-);
+
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    replace: true,
+    link: init
+  };
+}
+
+directive.$inject = ['$document'];
+
+angular.module('ngWig')
+  .directive('ngWigEditable', directive);

@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('ngWig')
     .config(['ngWigToolbarProvider', function (ngWigToolbarProvider) {
        ngWigToolbarProvider.addCustomButton('formats', 'nw-formats-button');
@@ -19,4 +21,3 @@ angular.module('ngWig')
             }
         };
     });
-
