@@ -6,7 +6,7 @@ angular.module('ngWig')
         return {
             restrict: 'E',
             replace: true,
-            template: '<select class="nw-select" ng-model="format" ng-change="execCommand(\'formatblock\', format.value)" ng-options="format.name for format in formats" ng-disabled="editMode"></select>',
+            template: '<select class="nw-select" ng-model="format" ng-change="execCommand(\'formatblock\', format.value)" ng-options="format.name for format in formats" ng-disabled="editMode || isDisabled"></select>',
             link: function (scope) {
                 scope.formats = [
                     {name: 'Normal text', value: 'p'},
