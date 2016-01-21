@@ -65,6 +65,10 @@ angular.module('ngWig')
 
         viewToModel();
       });
+	  
+	  scope.$on('nw-disabled', function(event, isDisabled) {
+		  $element.attr('contenteditable', !isDisabled);
+	  });
     }
 
     return {

@@ -45,6 +45,7 @@ angular.module('ngWig')
 		if (attrs.ngDisabled != null) {
 			scope.$watch(function() { return !!$parse(attrs.ngDisabled)(scope); }, function(isDisabled) {
 				scope.isDisabled = isDisabled;
+				scope.$broadcast('nw-disabled', isDisabled);
 			});	
 		}
       }
