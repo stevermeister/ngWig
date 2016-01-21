@@ -217,6 +217,13 @@
   background-color: #EEEEEE;
 }
 
+.nw-button:disabled {
+  cursor: default;
+}
+.nw-button:disabled:hover {
+  opacity: 0.5;
+}
+
 /**
  *  styling & formatting of content inside contenteditable div
  *
