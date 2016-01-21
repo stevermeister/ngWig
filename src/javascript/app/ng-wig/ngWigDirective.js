@@ -42,9 +42,11 @@ angular.module('ngWig')
           scope.$broadcast('execCommand', {command: command, options: options});
         };
 		
-		scope.$watch(function() { return !!$parse(attrs.ngDisabled)(scope); }, function(isDisabled) {
-			scope.isDisabled = isDisabled;
-		});
+		if (attrs.ngDisabled != null) {
+			scope.$watch(function() { return !!$parse(attrs.ngDisabled)(scope); }, function(isDisabled) {
+				scope.isDisabled = isDisabled;
+			});	
+		}
       }
     }
   }
