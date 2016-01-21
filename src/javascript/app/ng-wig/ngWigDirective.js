@@ -4,7 +4,8 @@ angular.module('ngWig')
     return {
       scope: {
         content: '=ngWig',
-        onPaste: '='
+        onPaste: '=',
+        editMode: '&'
       },
       restrict: 'A',
       replace: true,
@@ -15,19 +16,21 @@ angular.module('ngWig')
 
         scope.isRequired = !!attrs.required;
         scope.isSourceModeAllowed = Object.keys(attrs).indexOf('sourceModeAllowed') !== -1 ? true : false;
-        scope.editMode = false;
+        scope.editMode = scope.editMode();
         scope.toolbarButtons = ngWigToolbar.getToolbarButtons(attrs.buttons && string2array(attrs.buttons));
 
         function string2array(keysString){
           return keysString.split(',').map(Function.prototype.call, String.prototype.trim);
         }
 
-        scope.toggleEditMode = function () {
-          scope.editMode = !scope.editMode;
-
+        scope.$watch('editMode', function(){
           if ($window.getSelection().removeAllRanges) {
             $window.getSelection().removeAllRanges();
           }
+        });
+
+        scope.toggleEditMode = function () {
+          scope.editMode = !scope.editMode;
         };
 
         scope.execCommand = function (command, options) {
@@ -45,4 +48,3 @@ angular.module('ngWig')
     }
   }
 );
-
