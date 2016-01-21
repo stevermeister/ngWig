@@ -1,0 +1,12 @@
+{
+  "undef": true,
+  "unused": true,
+  "strict": true,
+  "browser": true,
+  "browserify": true,
+  "node": true,
+  "esnext": true,
+  "predef": [
+            "angular", "prompt"
+            ]
+}
