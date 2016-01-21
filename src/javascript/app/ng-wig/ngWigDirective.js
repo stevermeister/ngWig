@@ -1,5 +1,5 @@
 angular.module('ngWig')
-  .directive('ngWig', function ($window, $document, ngWigToolbar) {
+  .directive('ngWig', function ($window, $document, $parse, ngWigToolbar) {
 
     return {
       scope: {
@@ -41,6 +41,10 @@ angular.module('ngWig')
           }
           scope.$broadcast('execCommand', {command: command, options: options});
         };
+		
+		scope.$watch(function() { return !!$parse(attrs.ngDisabled)(scope); }, function(isDisabled) {
+			scope.isDisabled = isDisabled;
+		});
       }
     }
   }
