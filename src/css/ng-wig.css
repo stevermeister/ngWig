@@ -247,5 +247,9 @@
   border: 0;
 }
 
+.nw-select:disabled {
+	opacity: 0.5;
+}
+
 .nw-select:focus { outline: none; }
 
