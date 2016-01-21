@@ -140,7 +140,7 @@
   display: none;
 }
 
-.nw-editor:disabled {
+.nw-editor.nw-disabled {
 	cursor: default;
 }
 

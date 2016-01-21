@@ -21,7 +21,7 @@
     <div class="nw-editor__src-container" ng-show="editMode">
       <textarea ng-required="isRequired" ng-disabled="isDisabled" class="nw-editor__src" ng-model="content"></textarea>
     </div>
-    <div class="nw-editor" ng-disabled="isDisabled">
+    <div class="nw-editor" ng-class="{ 'nw-disabled': isDisabled }">
       <div name="{{formElementName}}" ng-required="isRequired" tabindex="-1" ng-class="{'nw-invisible': editMode}" class="nw-editor__res" ng-model="content" ng-wig-editable on-paste="onPaste"></div>
     </div>
   </div>
