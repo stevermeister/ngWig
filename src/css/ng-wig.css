@@ -140,6 +140,10 @@
   display: none;
 }
 
+.nw-editor:disabled {
+	cursor: default;
+}
+
 /**
  *  styling for toolbar button, has two modifiers: active and type of icon for background
  *
