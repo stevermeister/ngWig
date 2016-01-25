@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('ngWig').provider('ngWigToolbar', function () {
 
   var buttonLibrary = {
@@ -28,7 +30,7 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
     }
 
     styleClass = styleClass || '';
-    buttonLibrary[name] = {title: title, command: command, styleClass: styleClass}
+    buttonLibrary[name] = {title: title, command: command, styleClass: styleClass};
     defaultButtonsList.push(name);
   };
 

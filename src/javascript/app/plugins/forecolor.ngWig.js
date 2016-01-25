@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('ngWig')
     .config(['ngWigToolbarProvider', function (ngWigToolbarProvider) {
        ngWigToolbarProvider.addCustomButton('forecolor', 'nw-forecolor-button');
@@ -14,4 +16,3 @@ angular.module('ngWig')
             }
         };
     });
-
