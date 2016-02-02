@@ -140,6 +140,10 @@
   display: none;
 }
 
+.nw-editor.nw-disabled {
+	cursor: default;
+}
+
 /**
  *  styling for toolbar button, has two modifiers: active and type of icon for background
  *
@@ -217,6 +221,13 @@
   background-color: #EEEEEE;
 }
 
+.nw-button:disabled {
+  cursor: default;
+}
+.nw-button:disabled:hover {
+  opacity: 0.5;
+}
+
 /**
  *  styling & formatting of content inside contenteditable div
  *
@@ -238,6 +249,10 @@
   color: #555;
   background-color: inherit;
   border: 0;
+}
+
+.nw-select:disabled {
+	opacity: 0.5;
 }
 
 .nw-select:focus { outline: none; }

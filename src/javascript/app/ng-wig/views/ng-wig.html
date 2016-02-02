@@ -2,7 +2,7 @@
   <ul class="nw-toolbar">
     <li class="nw-toolbar__item" ng-repeat="button in toolbarButtons" >
         <div ng-if="!button.isComplex">
-          <button type="button" class="nw-button {{button.styleClass}}" title="{{button.title}}" ng-click="execCommand(button.command)" ng-class="{ 'nw-button--active': isEditorActive() && button.isActive() }" ng-disabled="editMode">
+          <button type="button" class="nw-button {{button.styleClass}}" title="{{button.title}}" ng-click="execCommand(button.command)" ng-class="{ 'nw-button--active': isEditorActive() && button.isActive() }" ng-disabled="editMode || isDisabled">
             {{ button.title }}
           </button>
         </div>
@@ -11,7 +11,7 @@
         </div>
     </li><!--
     --><li class="nw-toolbar__item">
-      <button type="button" class="nw-button nw-button--source" title="Edit HTML" ng-class="{ 'nw-button--active': editMode }" ng-show="isSourceModeAllowed" ng-click="toggleEditMode()">
+      <button type="button" class="nw-button nw-button--source" title="Edit HTML" ng-class="{ 'nw-button--active': editMode }" ng-show="isSourceModeAllowed" ng-click="toggleEditMode()" ng-disabled="isDisabled">
         Edit HTML
       </button>
     </li>
@@ -19,9 +19,9 @@
 
   <div class="nw-editor-container">
     <div class="nw-editor__src-container" ng-show="editMode">
-      <textarea ng-required="isRequired" class="nw-editor__src" ng-model="content"></textarea>
+      <textarea ng-required="isRequired" ng-disabled="isDisabled" class="nw-editor__src" ng-model="content"></textarea>
     </div>
-    <div class="nw-editor">
+    <div class="nw-editor" ng-class="{ 'nw-disabled': isDisabled }">
       <div name="{{formElementName}}" ng-required="isRequired" tabindex="-1" ng-class="{'nw-invisible': editMode}" class="nw-editor__res" ng-model="content" ng-wig-editable on-paste="onPaste"></div>
     </div>
   </div>

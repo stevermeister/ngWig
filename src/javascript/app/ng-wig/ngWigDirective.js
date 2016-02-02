@@ -41,6 +41,13 @@ angular.module('ngWig')
           }
           scope.$broadcast('execCommand', {command: command, options: options});
         };
+		
+		if (attrs.ngDisabled != null || attrs.disabled != null) {
+			scope.$watch(function() { return !!attrs.disabled; }, function(isDisabled) {
+				scope.isDisabled = isDisabled;
+				scope.$broadcast('nw-disabled', isDisabled);
+			});	
+		}
       }
     }
   }

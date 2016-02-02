@@ -36,6 +36,9 @@
     <form name="myForm" novalidate>
         <textarea ng-wig="text2" on-paste="onPaste" buttons="formats, bold, italic" name="editor" required class="editor2 nw-editor--fixed"></textarea>
     </form>
+	
+    <h1>Disabled WYSIWYG</h1>
+    <textarea ng-wig="text3" on-paste="onPaste" class="editor1" source-mode-allowed ng-disabled="true"></textarea>
 
 </div>
 <script src="libs/angular/angular.js"></script>
