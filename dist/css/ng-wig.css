@@ -140,6 +140,10 @@
   display: none;
 }
 
+.nw-editor.nw-disabled {
+	cursor: default;
+}
+
 /**
  *  styling for toolbar button, has two modifiers: active and type of icon for background
  *
@@ -196,6 +200,10 @@
   content: '\f0c1';
 }
 
+.nw-button.font-color:before {
+  content: '\f031';
+}
+
 .nw-button.nw-button--source:before {
   content: '\f040';
 }
@@ -211,6 +219,13 @@
 
 .nw-button--active {
   background-color: #EEEEEE;
+}
+
+.nw-button:disabled {
+  cursor: default;
+}
+.nw-button:disabled:hover {
+  opacity: 0.5;
 }
 
 /**
@@ -234,6 +249,10 @@
   color: #555;
   background-color: inherit;
   border: 0;
+}
+
+.nw-select:disabled {
+	opacity: 0.5;
 }
 
 .nw-select:focus { outline: none; }

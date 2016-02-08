@@ -1,5 +1,5 @@
 /**
- * version: 2.3.3
+ * version: 2.3.4
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -46,6 +46,13 @@ angular.module('ngWig')
           }
           scope.$broadcast('execCommand', {command: command, options: options});
         };
+		
+		if (attrs.ngDisabled != null || attrs.disabled != null) {
+			scope.$watch(function() { return !!attrs.disabled; }, function(isDisabled) {
+				scope.isDisabled = isDisabled;
+				scope.$broadcast('nw-disabled', isDisabled);
+			});	
+		}
       }
     }
   }]
@@ -119,6 +126,10 @@ angular.module('ngWig')
 
         viewToModel();
       });
+	  
+	  scope.$on('nw-disabled', function(event, isDisabled) {
+		  $element.attr('contenteditable', !isDisabled);
+	  });
     }
 
     return {
@@ -218,7 +229,7 @@ angular.module('ngWig')
         return {
             restrict: 'E',
             replace: true,
-            template: '<select class="nw-select" ng-model="format" ng-change="execCommand(\'formatblock\', format.value)" ng-options="format.name for format in formats" ng-disabled="editMode"></select>',
+            template: '<select class="nw-select" ng-model="format" ng-change="execCommand(\'formatblock\', format.value)" ng-options="format.name for format in formats" ng-disabled="editMode || isDisabled"></select>',
             link: function (scope) {
                 scope.formats = [
                     {name: 'Normal text', value: 'p'},
@@ -241,7 +252,7 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "  <ul class=\"nw-toolbar\">\n" +
     "    <li class=\"nw-toolbar__item\" ng-repeat=\"button in toolbarButtons\" >\n" +
     "        <div ng-if=\"!button.isComplex\">\n" +
-    "          <button type=\"button\" class=\"nw-button {{button.styleClass}}\" title=\"{{button.title}}\" ng-click=\"execCommand(button.command)\" ng-class=\"{ 'nw-button--active': isEditorActive() && button.isActive() }\" ng-disabled=\"editMode\">\n" +
+    "          <button type=\"button\" class=\"nw-button {{button.styleClass}}\" title=\"{{button.title}}\" ng-click=\"execCommand(button.command)\" ng-class=\"{ 'nw-button--active': isEditorActive() && button.isActive() }\" ng-disabled=\"editMode || isDisabled\">\n" +
     "            {{ button.title }}\n" +
     "          </button>\n" +
     "        </div>\n" +
@@ -250,7 +261,7 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "        </div>\n" +
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--source\" ng-class=\"{ 'nw-button--active': editMode }\" ng-show=\"isSourceModeAllowed\" ng-click=\"toggleEditMode()\">\n" +
+    "      <button type=\"button\" class=\"nw-button nw-button--source\" title=\"Edit HTML\" ng-class=\"{ 'nw-button--active': editMode }\" ng-show=\"isSourceModeAllowed\" ng-click=\"toggleEditMode()\" ng-disabled=\"isDisabled\">\n" +
     "        Edit HTML\n" +
     "      </button>\n" +
     "    </li>\n" +
@@ -258,9 +269,9 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "\n" +
     "  <div class=\"nw-editor-container\">\n" +
     "    <div class=\"nw-editor__src-container\" ng-show=\"editMode\">\n" +
-    "      <textarea ng-required=\"isRequired\" class=\"nw-editor__src\" ng-model=\"content\"></textarea>\n" +
+    "      <textarea ng-required=\"isRequired\" ng-disabled=\"isDisabled\" class=\"nw-editor__src\" ng-model=\"content\"></textarea>\n" +
     "    </div>\n" +
-    "    <div class=\"nw-editor\">\n" +
+    "    <div class=\"nw-editor\" ng-class=\"{ 'nw-disabled': isDisabled }\">\n" +
     "      <div name=\"{{formElementName}}\" ng-required=\"isRequired\" tabindex=\"-1\" ng-class=\"{'nw-invisible': editMode}\" class=\"nw-editor__res\" ng-model=\"content\" ng-wig-editable on-paste=\"onPaste\"></div>\n" +
     "    </div>\n" +
     "  </div>\n" +
