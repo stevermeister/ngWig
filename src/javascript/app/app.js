@@ -9,6 +9,10 @@ angular.module('myapp', ['ngWig']).
         console.log(content);
 
         return $q.when('Override the paste event and add it to the content ' + content.slice(0, 33));
+      };
+
+      $scope.onChange = function(message) {
+        console.log('on change message:', message);
       }
     }]).
     config(['ngWigToolbarProvider', function (ngWigToolbarProvider) {
