@@ -41,13 +41,22 @@ angular.module('ngWig')
           }
           scope.$broadcast('execCommand', {command: command, options: options});
         };
-		
-		if (attrs.ngDisabled != null || attrs.disabled != null) {
-			scope.$watch(function() { return !!attrs.disabled; }, function(isDisabled) {
-				scope.isDisabled = isDisabled;
-				scope.$broadcast('nw-disabled', isDisabled);
-			});	
-		}
+
+        if (attrs.ngDisabled != null || attrs.disabled != null) {
+          scope.$watch(function() { return !!attrs.disabled; }, function(isDisabled) {
+            scope.isDisabled = isDisabled;
+            scope.$broadcast('nw-disabled', isDisabled);
+          });
+        }
+
+        scope.$watch(
+          function() {
+            return scope.content;
+          }, function(newValue, oldValue){
+            if(newValue !== undefined && oldValue !== undefined && attrs.nwChange) {
+              scope.$parent.$eval(attrs.nwChange);
+            }
+          }, true);
       }
     }
   }
