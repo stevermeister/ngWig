@@ -1,12 +1,20 @@
-angular.module('ngWig')
-    .directive('ngWigPlugin', function ($compile) {
-        return {
-            restrict: 'E',
-            link: function(scope, element) {
-                var template = '<' + scope.button.pluginName + ' />',
-                    compiled = $compile(template)(scope);
+var bindings = {
+  plugin: '<',
+  execCommand: '=',
+  editMode: '=',
+  disabled: '='
+};
 
-                element.replaceWith(compiled);
-            }
-        }
-    });
+
+angular.module('ngWig')
+  .component('ngWigPlugin', {
+    bindings,
+    controller: function($scope, $element, $compile) {
+      $element.replaceWith($compile('<' + this.plugin.pluginName +' ' +
+        'plugin=' + '"$ctrl.plugin"' +
+        'exec-command=' + '"$ctrl.execCommand"' +
+        'edit-mode=' + '"$ctrl.editMode"' +
+        'disabled=' + '"$ctrl.disabled"' +
+        '/>')($scope));
+    }
+  });
