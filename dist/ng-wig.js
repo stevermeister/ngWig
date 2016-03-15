@@ -1,5 +1,5 @@
 /**
- * version: 2.3.4
+ * version: 2.3.5
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -142,18 +142,14 @@ angular.module('ngWig')
 );
 
 angular.module('ngWig')
-    .directive('ngWigPlugin', ["$compile", function ($compile) {
-        return {
-            restrict: 'E',
-            link: function(scope, element) {
-                var template = '<' + scope.button.pluginName + ' />',
-                    compiled = $compile(template)(scope);
-
-                element.replaceWith(compiled);
-            }
-        }
-    }]);
-
+  .component('ngWigPlugin', {
+    bindings: {
+      plugin: '<'
+    },
+    controller: function($element, $compile) {
+      $element.replaceWith($compile('<' + this.plugin.pluginName + ' />')(this));
+    }
+  });
 angular.module('ngWig').provider('ngWigToolbar', function () {
 
   var buttonLibrary = {
