@@ -1,5 +1,5 @@
 /**
- * version: 2.3.6
+ * version: 2.3.7
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -146,8 +146,8 @@ angular.module('ngWig')
     bindings: {
       plugin: '<'
     },
-    controller: function($element, $compile) {
-      $element.replaceWith($compile('<' + this.plugin.pluginName + ' />')(this));
+    controller: function($scope, $element, $compile) {
+      $element.replaceWith($compile('<' + this.plugin.pluginName + ' />')($scope));
     }
   });
 angular.module('ngWig').provider('ngWigToolbar', function () {
