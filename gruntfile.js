@@ -10,15 +10,6 @@ module.exports = function(grunt) {
 
     distPath: distPath,
 
-    express: {
-      server: {
-        options: {
-          server: 'server.js',
-          port: Number(process.env.PORT || 3000),
-          livereload: true
-        }
-      }
-    },
     copy: {
       dev: {
         files: [
@@ -91,7 +82,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', ['start']);
-  grunt.registerTask('start', ['html2js', 'express', 'watch', 'express-keepalive',]);
+  grunt.registerTask('start', ['html2js', 'watch']);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
   grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify', 'cssmin', 'bump:patch']);
   grunt.registerTask('upversion', ['bump:minor']);
