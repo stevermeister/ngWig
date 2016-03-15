@@ -29,9 +29,10 @@
 <h1>One more</h1>
 <textarea ng-wig="text2" class="editor2"></textarea>
 
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.19/js/bootstrap-colorpicker-module.min.js"></script>
 <script src="ng-wig.js"></script>
+<script src="plugins/forecolor.ngWig.js"></script>
 <script>
   angular.module('myapp', ['ngWig', 'colorpicker.module']).
       controller('demoController', ['$scope', '$log', function($scope, $log) {

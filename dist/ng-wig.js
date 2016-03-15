@@ -1,5 +1,5 @@
 /**
- * version: 2.3.5
+ * version: 2.3.6
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -253,7 +253,7 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
     "          </button>\n" +
     "        </div>\n" +
     "        <div ng-if=\"button.isComplex\">\n" +
-    "          <ng-wig-plugin plugin=\"{{button}}\"></ng-wig-plugin>\n" +
+    "          <ng-wig-plugin plugin=\"button\"></ng-wig-plugin>\n" +
     "        </div>\n" +
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
