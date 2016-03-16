@@ -1,6 +1,6 @@
 {
   "name": "ngWig",
-  "version": "2.3.10",
+  "version": "2.3.11",
   "devDependencies": {
     "angular": "1.5.0"
   },

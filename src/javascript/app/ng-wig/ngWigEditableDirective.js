@@ -26,7 +26,7 @@ angular.module('ngWig')
         $element.on('paste', function(e) {
           scope.onPaste(e, $element.html()).then(function(val) {
             $element.html(val);
-          })
+          });
         });
       }else{
         eventsToBind.push('paste');

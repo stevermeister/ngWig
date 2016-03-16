@@ -34,6 +34,17 @@ module.exports = function(grunt) {
         }
       }
     },
+    babel: {
+      options: {
+        sourceMap: true,
+        presets: ['es2015']
+      },
+      dist: {
+        files: {
+          'dist/ng-wig.js': [ distPath +'/ng-wig.js']
+        }
+      }
+    },
     uglify: {
       build: {
         files: {
@@ -84,7 +95,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['html2js', 'watch']);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
-  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify', 'cssmin', 'bump:patch']);
+  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin', 'bump:patch']);
   grunt.registerTask('upversion', ['bump:minor']);
   //grunt.registerTask('upversion', ['bump:major']);
 };
