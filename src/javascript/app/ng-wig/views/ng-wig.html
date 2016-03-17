@@ -34,17 +34,19 @@
 
   <div class="nw-editor-container">
     <div class="nw-editor__src-container" ng-show="$ctrl.editMode">
-      <textarea ng-required="$ctrl.required" ng-disabled="$ctrl.disabled" class="nw-editor__src" ng-model="$ctrl.content"></textarea>
+      <textarea ng-model="$ctrl.content"
+                ng-required="$ctrl.required"
+                ng-disabled="$ctrl.disabled"
+                class="nw-editor__src"></textarea>
     </div>
     <div class="nw-editor" ng-class="{ 'nw-disabled': $ctrl.disabled }">
-      <div name="{{$ctrl.name}}"
-           ng-required="$ctrl.required"
-           tabindex="-1"
-           ng-class="{'nw-invisible': $ctrl.editMode}"
-           class="nw-editor__res"
-           ng-model="$ctrl.content"
-           ng-wig-editable
-           on-paste="$ctrl.onPaste"></div>
+      <ng-wig-editable name="{{$ctrl.name}}"
+                       ng-required="$ctrl.required"
+                       edit-mode="$ctrl.editMode"
+                       ng-model="$ctrl.content"
+                       on-paste="$ctrl.onPaste"
+                       ng-disabled="$ctrl.disabled">
+      </ng-wig-editable>
     </div>
   </div>
 </div>

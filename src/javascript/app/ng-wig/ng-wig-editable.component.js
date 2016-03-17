@@ -1,18 +1,30 @@
 angular.module('ngWig')
-  .directive('ngWigEditable', function ($document) {
-    function init(scope, $element, attrs, ngModelController) {
+  .component('ngWigEditable', {
+    bindings: {
+      onPaste: '=',
+      name: '@',
+      required: '<',
+      editMode: '<',
+      ngModel: '='
+    },
+    template: `<div tabindex="-1" ng-class="{'nw-invisible': $ctrl.editMode}" class="nw-editor__res" contenteditable></div>`,
+    require: {
+      ngModelController: '^ngModel'
+    },
+    controller: function($document, $scope, $element) {
 
-      $element.attr('contenteditable', true);
+      var $container = $element.find('div');
 
-      //model --> view
-      ngModelController.$render = function () {
-        $element.html(ngModelController.$viewValue || '');
+      this.$onInit = () => {
+        //model --> view
+        this.ngModelController.$render = () => $container.html(this.ngModelController.$viewValue || '');
+
+        $container.bind(eventsToBind.join(' '), () => {
+          //view --> model
+          this.ngModelController.$setViewValue($container.html());
+          $scope.$applyAsync();
+        });
       };
-
-      //view --> model
-      function viewToModel() {
-        ngModelController.$setViewValue($element.html());
-      }
 
       var eventsToBind = [
         'blur',
@@ -22,27 +34,18 @@ angular.module('ngWig')
         'click'
       ];
 
-      if (angular.isFunction(scope.onPaste)) {
-        $element.on('paste', function(e) {
-          scope.onPaste(e, $element.html()).then(function(val) {
-            $element.html(val);
-          });
+      if (angular.isFunction(this.onPaste)) {
+        $container.on('paste', (e) => {
+          this.onPaste(e, $container.html()).then((val) => $container.html(val));
         });
-      }else{
+      } else {
         eventsToBind.push('paste');
       }
 
-      $element.bind(eventsToBind.join(' '), function() {
-        viewToModel();
-        scope.$applyAsync();
-      });
+      this.isEditorActive = () => $container[0] === $document[0].activeElement;
 
-      scope.isEditorActive = function () {
-        return $element[0] === $document[0].activeElement;
-      };
-
-      scope.$on('execCommand', function (event, params) {
-        $element[0].focus();
+      $scope.$on('execCommand', (event, params) => {
+        $container[0].focus();
 
         var ieStyleTextSelection = $document[0].selection,
           command = params.command,
@@ -63,19 +66,9 @@ angular.module('ngWig')
           textRange.select();
         }
 
-        viewToModel();
-      });
-	  
-	  scope.$on('nw-disabled', function(event, isDisabled) {
-		  $element.attr('contenteditable', !isDisabled);
-	  });
-    }
 
-    return {
-      restrict: 'A',
-      require: 'ngModel',
-      replace: true,
-      link: init
+      });
+
+      $scope.$on('nw-disabled', (event, isDisabled) => $container.attr('contenteditable', !isDisabled));
     }
-  }
-);
+  });

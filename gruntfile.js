@@ -30,8 +30,7 @@ module.exports = function(grunt) {
               srcPath + '/javascript/app/ng-wig/ng-wig.js',
               srcPath + '/javascript/app/ng-wig/*.js',
               srcPath + '/javascript/app/plugins/formats.ngWig.js',
-              srcPath + '/javascript/app/templates.js',
-            '!src/javascript/app/**/tests/*.js']
+              srcPath + '/javascript/app/templates.js']
         }
       }
     },
