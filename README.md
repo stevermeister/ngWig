@@ -47,14 +47,8 @@ or via bower:
 - Set buttons - https://plnkr.co/edit/9Fjqwnf74jJAKNx2cMYI?p=preview
 - Setup generic buttons - https://plnkr.co/edit/XteWPwo0eQ1gz4L6cpDr?p=preview
 - Add standard buttons - https://plnkr.co/edit/Avi90RnnoTPGWzosQHQo?p=preview
-- OnPaste Hook - 
+- OnPaste Hook - https://plnkr.co/edit/dsvfoDZw8CPVrNo9R6Bv?p=preview
 
-
-
-
-
-```
-    <ng-wig ng-model="text1" on-paste="onPaste"></ng-wig>
 
 ## Contribution (Development Setup)
 
