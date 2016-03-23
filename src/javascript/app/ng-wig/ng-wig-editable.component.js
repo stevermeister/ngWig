@@ -34,13 +34,9 @@ angular.module('ngWig')
         'click'
       ];
 
-      if (this.onPaste) {
-        $container.on('paste', (event) => {
-          this.onPaste({$event: event, content: this.ngModel}).then((val) => $container.html(val));
-        });
-      } else {
-        eventsToBind.push('paste');
-      }
+      $container.on('paste', (event) => {
+        this.onPaste(event).then((val) => $container.html(val));
+      });
 
       this.isEditorActive = () => $container[0] === $document[0].activeElement;
 

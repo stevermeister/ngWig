@@ -5,7 +5,7 @@ angular.module('ngWig')
       onPaste: '&'
     },
     templateUrl: 'ng-wig/views/ng-wig.html',
-    controller: function($scope, $element, $attrs, $window, $document, ngWigToolbar) {
+    controller: function($scope, $element, $q, $attrs, $window, $document, ngWigToolbar) {
 
       //TODO: clean-up this attrs solution
       this.name = $attrs.name;
@@ -22,6 +22,17 @@ angular.module('ngWig')
           $scope.$broadcast('nw-disabled', isDisabled);
         });
       }
+      
+      this.onPastePromise = (event) => {
+
+        let pasteContent = (event.originalEvent || event).clipboardData.getData('text/plain');
+
+        if(!this.onPaste){
+          return $q.resolve(pasteContent);
+        }
+        
+        return $q.resolve(this.onPaste({$event: event, pasteContent: pasteContent}));
+      };
 
       this.toggleEditMode = () => {
         this.editMode = !this.editMode;
