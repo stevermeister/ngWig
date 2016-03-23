@@ -34,9 +34,9 @@ angular.module('ngWig')
         'click'
       ];
 
-      if (angular.isFunction(this.onPaste)) {
-        $container.on('paste', (e) => {
-          this.onPaste(e, $container.html()).then((val) => $container.html(val));
+      if (this.onPaste) {
+        $container.on('paste', (event) => {
+          this.onPaste({$event: event, content: this.ngModel}).then((val) => $container.html(val));
         });
       } else {
         eventsToBind.push('paste');
