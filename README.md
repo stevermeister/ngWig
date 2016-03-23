@@ -1,10 +1,18 @@
 ngWig
 =====
 
+##Dependancies
+
+*it's only AngularJS! No jQuery or other WYSIWYG monsters*
+
+ - ng-wig2+ - Angular1.3+
+ - ng-wig3+ - Angular1.5+
+
+
 ##Usage
 it's just attribute directive for textarea:
 
-    <textarea ng-wig="text1" class="editor1"></textarea>
+    <ng-wig ng-model="text1"></ng-wig>
 
 ##Installation
 
@@ -16,13 +24,28 @@ or via bower:
 
     bower install ng-wig
 
+##CDN
+
+
+
+
 More information on [ngWig site](http://stevermeister.github.io/ngWig/)
 
 [Demo] (http://stevermeister.github.io/ngWig/demo/)  
 
 [![Screenshot] (http://stevermeister.github.io/ngWig/images/ng-wig-demo.png)](http://stevermeister.github.io/ngWig/demo/)
 
-##OnPaste Hook
+
+##Examples
+
+- Quick start - https://plnkr.co/edit/IaTeHRUdWU1WUJnUiftl?p=preview
+- Disabled - https://plnkr.co/edit/og1wRflbWfqyC8S4edzs?p=preview
+- Edit Source option - https://plnkr.co/edit/JVOI2l2gnZMKORMWjAEZ?p=preview
+- ngModel sync - https://plnkr.co/edit/8owI0CDjoos8DArlc10g?p=preview
+- Set buttons - https://plnkr.co/edit/9Fjqwnf74jJAKNx2cMYI?p=preview
+- Setup generic buttons ???- https://plnkr.co/edit/clNHorPs4pyIPKhy1uLH?p=preview
+- Add standard buttons - 
+- OnPaste Hook - 
 
 If you need access to the pasted content you can provide a function to be called when `paste` event is fired.
 
@@ -42,9 +65,12 @@ $scope.onPaste = function(pasteEvent, originalTextContent){
     //document.execCommand('insertHTML', false, doSomething(pasteContent));
 };
 ```
-    <textarea ng-wig="text1" on-paste="onPaste" class="editor1"></textarea>
+    <ng-wig ng-model="text1" on-paste="onPaste"></ng-wig>
 
-## Development Setup
+## Contribution (Development Setup)
 
     npm install
     npm run devSetup
+    
+    
+## Creating plugins
