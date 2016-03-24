@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * version: 2.3.17
+ * version: 2.3.18
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -17,7 +17,7 @@ angular.module('ngWig').component('ngWigEditable', {
   require: {
     ngModelController: '^ngModel'
   },
-  controller: ["$document", "$scope", "$element", function ($document, $scope, $element) {
+  controller: ["$timeout", "$document", "$scope", "$element", function ($timeout, $document, $scope, $element) {
     var _this = this;
 
     var $container = $element.find('div');
@@ -28,24 +28,20 @@ angular.module('ngWig').component('ngWigEditable', {
         return $container.html(_this.ngModelController.$viewValue || '');
       };
 
-      $container.bind(eventsToBind.join(' '), function () {
+      $container.bind('blur keyup change focus click', function () {
         //view --> model
         _this.ngModelController.$setViewValue($container.html());
         $scope.$applyAsync();
       });
     };
 
-    var eventsToBind = ['blur', 'keyup', 'change', 'focus', 'click'];
-
-    if (this.onPaste) {
-      $container.on('paste', function (event) {
-        _this.onPaste({ $event: event, content: _this.ngModel }).then(function (val) {
-          return $container.html(val);
-        });
+    $container.on('paste', function (event) {
+      var pasteContent = (event.originalEvent || event).clipboardData.getData('text/plain');
+      event.preventDefault();
+      _this.onPaste(event, pasteContent).then(function (pasteText) {
+        pasteHtmlAtCaret(pasteText);
       });
-    } else {
-      eventsToBind.push('paste');
-    }
+    });
 
     this.isEditorActive = function () {
       return $container[0] === $document[0].activeElement;
@@ -79,6 +75,42 @@ angular.module('ngWig').component('ngWigEditable', {
     });
   }]
 });
+
+//TODO: put contenteditable helper into service
+function pasteHtmlAtCaret(html) {
+  var sel, range;
+  if (window.getSelection) {
+    sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount) {
+      range = sel.getRangeAt(0);
+      range.deleteContents();
+
+      // Range.createContextualFragment() would be useful here but is
+      // non-standard and not supported in all browsers (IE9, for one)
+      var el = document.createElement("div");
+      el.innerHTML = html;
+      var frag = document.createDocumentFragment(),
+          node,
+          lastNode;
+      while (node = el.firstChild) {
+        lastNode = frag.appendChild(node);
+      }
+      range.insertNode(frag);
+
+      // Preserve the selection
+      if (lastNode) {
+        range = range.cloneRange();
+        range.setStartAfter(lastNode);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    }
+  } else if (document.selection && document.selection.type != "Control") {
+    // IE < 9
+    document.selection.createRange().pasteHTML(html);
+  }
+}
 angular.module('ngWig').component('ngWigPlugin', {
   bindings: {
     plugin: '<',
@@ -161,7 +193,7 @@ angular.module('ngWig').component('ngWig', {
     onPaste: '&'
   },
   templateUrl: 'ng-wig/views/ng-wig.html',
-  controller: ["$scope", "$element", "$attrs", "$window", "$document", "ngWigToolbar", function ($scope, $element, $attrs, $window, $document, ngWigToolbar) {
+  controller: ["$scope", "$element", "$q", "$attrs", "$window", "$document", "ngWigToolbar", function ($scope, $element, $q, $attrs, $window, $document, ngWigToolbar) {
     var _this2 = this;
 
     //TODO: clean-up this attrs solution
@@ -179,6 +211,14 @@ angular.module('ngWig').component('ngWig', {
         $scope.$broadcast('nw-disabled', isDisabled);
       });
     }
+
+    this.onPastePromise = function (event, pasteContent) {
+      if (!$attrs.onPaste) {
+        return $q.resolve(pasteContent);
+      }
+
+      return $q.resolve(_this2.onPaste({ $event: event, pasteContent: pasteContent }));
+    };
 
     this.toggleEditMode = function () {
       _this2.editMode = !_this2.editMode;
@@ -227,6 +267,6 @@ angular.module('ngWig').config(['ngWigToolbarProvider', function (ngWigToolbarPr
 angular.module('ngwig-app-templates', ['ng-wig/views/ng-wig.html']);
 
 angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function ($templateCache) {
-  $templateCache.put("ng-wig/views/ng-wig.html", "<div class=\"ng-wig\">\n" + "  <ul class=\"nw-toolbar\">\n" + "    <li class=\"nw-toolbar__item\" ng-repeat=\"button in $ctrl.toolbarButtons\">\n" + "        <div ng-if=\"!button.isComplex\">\n" + "          <button type=\"button\"\n" + "                  class=\"nw-button {{button.styleClass}}\"\n" + "                  title=\"{{button.title}}\"\n" + "                  ng-click=\"$ctrl.execCommand(button.command)\"\n" + "                  ng-class=\"{ 'nw-button--active': isEditorActive() && button.isActive() }\"\n" + "                  ng-disabled=\"$ctrl.editMode || $ctrl.disabled\">\n" + "            {{ button.title }}\n" + "          </button>\n" + "        </div>\n" + "        <div ng-if=\"button.isComplex\">\n" + "          <ng-wig-plugin\n" + "              exec-command=\"$ctrl.execCommand\"\n" + "              plugin=\"button\"\n" + "              editMode=\"$ctrl.editMode\"\n" + "              disabled=\"$ctrl.disabled\"></ng-wig-plugin>\n" + "        </div>\n" + "    </li><!--\n" + "    --><li class=\"nw-toolbar__item\">\n" + "      <button type=\"button\"\n" + "              class=\"nw-button nw-button--source\"\n" + "              title=\"Edit HTML\"\n" + "              ng-class=\"{ 'nw-button--active': $ctrl.editMode }\"\n" + "              ng-if=\"$ctrl.isSourceModeAllowed\"\n" + "              ng-click=\"$ctrl.toggleEditMode()\"\n" + "              ng-disabled=\"$ctrl.disabled\">\n" + "        Edit HTML\n" + "      </button>\n" + "    </li>\n" + "  </ul>\n" + "\n" + "  <div class=\"nw-editor-container\">\n" + "    <div class=\"nw-editor__src-container\" ng-show=\"$ctrl.editMode\">\n" + "      <textarea ng-model=\"$ctrl.content\"\n" + "                ng-required=\"$ctrl.required\"\n" + "                ng-disabled=\"$ctrl.disabled\"\n" + "                class=\"nw-editor__src\"></textarea>\n" + "    </div>\n" + "    <div class=\"nw-editor\" ng-class=\"{ 'nw-disabled': $ctrl.disabled }\">\n" + "      <ng-wig-editable name=\"{{$ctrl.name}}\"\n" + "                       ng-required=\"$ctrl.required\"\n" + "                       edit-mode=\"$ctrl.editMode\"\n" + "                       ng-model=\"$ctrl.content\"\n" + "                       on-paste=\"$ctrl.onPaste\"\n" + "                       ng-disabled=\"$ctrl.disabled\">\n" + "      </ng-wig-editable>\n" + "    </div>\n" + "  </div>\n" + "</div>\n" + "");
+  $templateCache.put("ng-wig/views/ng-wig.html", "<div class=\"ng-wig\">\n" + "  <ul class=\"nw-toolbar\">\n" + "    <li class=\"nw-toolbar__item\" ng-repeat=\"button in $ctrl.toolbarButtons\">\n" + "        <div ng-if=\"!button.isComplex\">\n" + "          <button type=\"button\"\n" + "                  class=\"nw-button {{button.styleClass}}\"\n" + "                  title=\"{{button.title}}\"\n" + "                  ng-click=\"$ctrl.execCommand(button.command)\"\n" + "                  ng-class=\"{ 'nw-button--active': isEditorActive() && button.isActive() }\"\n" + "                  ng-disabled=\"$ctrl.editMode || $ctrl.disabled\">\n" + "            {{ button.title }}\n" + "          </button>\n" + "        </div>\n" + "        <div ng-if=\"button.isComplex\">\n" + "          <ng-wig-plugin\n" + "              exec-command=\"$ctrl.execCommand\"\n" + "              plugin=\"button\"\n" + "              editMode=\"$ctrl.editMode\"\n" + "              disabled=\"$ctrl.disabled\"></ng-wig-plugin>\n" + "        </div>\n" + "    </li><!--\n" + "    --><li class=\"nw-toolbar__item\">\n" + "      <button type=\"button\"\n" + "              class=\"nw-button nw-button--source\"\n" + "              title=\"Edit HTML\"\n" + "              ng-class=\"{ 'nw-button--active': $ctrl.editMode }\"\n" + "              ng-if=\"$ctrl.isSourceModeAllowed\"\n" + "              ng-click=\"$ctrl.toggleEditMode()\"\n" + "              ng-disabled=\"$ctrl.disabled\">\n" + "        Edit HTML\n" + "      </button>\n" + "    </li>\n" + "  </ul>\n" + "\n" + "  <div class=\"nw-editor-container\">\n" + "    <div class=\"nw-editor__src-container\" ng-show=\"$ctrl.editMode\">\n" + "      <textarea ng-model=\"$ctrl.content\"\n" + "                ng-required=\"$ctrl.required\"\n" + "                ng-disabled=\"$ctrl.disabled\"\n" + "                class=\"nw-editor__src\"></textarea>\n" + "    </div>\n" + "    <div class=\"nw-editor\" ng-class=\"{ 'nw-disabled': $ctrl.disabled }\">\n" + "      <ng-wig-editable name=\"{{$ctrl.name}}\"\n" + "                       ng-required=\"$ctrl.required\"\n" + "                       edit-mode=\"$ctrl.editMode\"\n" + "                       ng-model=\"$ctrl.content\"\n" + "                       on-paste=\"$ctrl.onPastePromise\"\n" + "                       ng-disabled=\"$ctrl.disabled\">\n" + "      </ng-wig-editable>\n" + "    </div>\n" + "  </div>\n" + "</div>\n" + "");
 }]);
 //# sourceMappingURL=ng-wig.js.map
