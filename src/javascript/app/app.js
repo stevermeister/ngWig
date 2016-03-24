@@ -3,7 +3,7 @@ angular.module('myapp', ['ngWig']).run(($rootScope, $q) => {
   $rootScope.text2 = '<p><i>This is really simple WYSIWYG for AngularJS!</i></p>';
   $rootScope.text3 = '<p><i>Text in disabled editor</i></p>';
   $rootScope.onPaste = (e, pasteContent) => {
-    return $q.when(pasteContent.slice(30));
+    return $q.when(pasteContent.slice(0, 30));
   };
 }).config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
   ngWigToolbarProvider.setButtons(['formats', 'list1', 'list2', 'bold', 'italic', 'link']);

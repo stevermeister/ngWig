@@ -11,7 +11,7 @@ angular.module('ngWig')
     require: {
       ngModelController: '^ngModel'
     },
-    controller: function($document, $scope, $element) {
+    controller: function($timeout, $document, $scope, $element) {
 
       var $container = $element.find('div');
 
@@ -19,23 +19,19 @@ angular.module('ngWig')
         //model --> view
         this.ngModelController.$render = () => $container.html(this.ngModelController.$viewValue || '');
 
-        $container.bind(eventsToBind.join(' '), () => {
+        $container.bind('blur keyup change focus click', () => {
           //view --> model
           this.ngModelController.$setViewValue($container.html());
           $scope.$applyAsync();
         });
       };
 
-      var eventsToBind = [
-        'blur',
-        'keyup',
-        'change',
-        'focus',
-        'click'
-      ];
-
       $container.on('paste', (event) => {
-        this.onPaste(event).then((val) => $container.html(val));
+        let pasteContent = (event.originalEvent || event).clipboardData.getData('text/plain');
+        event.preventDefault();
+        this.onPaste(event, pasteContent).then((pasteText) => {
+          pasteHtmlAtCaret(pasteText);
+        });
       });
 
       this.isEditorActive = () => $container[0] === $document[0].activeElement;
@@ -68,3 +64,38 @@ angular.module('ngWig')
       $scope.$on('nw-disabled', (event, isDisabled) => $container.attr('contenteditable', !isDisabled));
     }
   });
+
+
+//TODO: put contenteditable helper into service
+function pasteHtmlAtCaret(html) {
+  var sel, range;
+  if (window.getSelection) {
+    sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount) {
+      range = sel.getRangeAt(0);
+      range.deleteContents();
+
+      // Range.createContextualFragment() would be useful here but is
+      // non-standard and not supported in all browsers (IE9, for one)
+      var el = document.createElement("div");
+      el.innerHTML = html;
+      var frag = document.createDocumentFragment(), node, lastNode;
+      while ( (node = el.firstChild) ) {
+        lastNode = frag.appendChild(node);
+      }
+      range.insertNode(frag);
+
+      // Preserve the selection
+      if (lastNode) {
+        range = range.cloneRange();
+        range.setStartAfter(lastNode);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    }
+  } else if (document.selection && document.selection.type != "Control") {
+    // IE < 9
+    document.selection.createRange().pasteHTML(html);
+  }
+}

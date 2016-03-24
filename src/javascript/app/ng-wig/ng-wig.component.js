@@ -23,11 +23,8 @@ angular.module('ngWig')
         });
       }
       
-      this.onPastePromise = (event) => {
-
-        let pasteContent = (event.originalEvent || event).clipboardData.getData('text/plain');
-
-        if(!this.onPaste){
+      this.onPastePromise = (event, pasteContent) => {
+        if(!$attrs.onPaste){
           return $q.resolve(pasteContent);
         }
         
