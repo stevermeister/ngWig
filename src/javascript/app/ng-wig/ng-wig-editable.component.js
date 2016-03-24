@@ -5,13 +5,14 @@ angular.module('ngWig')
       name: '@',
       required: '<',
       editMode: '<',
-      ngModel: '='
+      ngModel: '=',
+      ngDisabled: '<'
     },
     template: `<div tabindex="-1" ng-class="{'nw-invisible': $ctrl.editMode}" class="nw-editor__res" contenteditable></div>`,
     require: {
       ngModelController: '^ngModel'
     },
-    controller: function($timeout, $document, $scope, $element) {
+    controller: function($document, $scope, $element) {
 
       var $container = $element.find('div');
 
@@ -57,11 +58,9 @@ angular.module('ngWig')
           textRange.collapse(false);
           textRange.select();
         }
-
-
       });
 
-      $scope.$on('nw-disabled', (event, isDisabled) => $container.attr('contenteditable', !isDisabled));
+      $scope.$watch('$ctrl.ngDisabled', (isDisabled) => $container.attr('contenteditable', !isDisabled));
     }
   });
 
