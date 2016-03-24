@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * version: 2.3.18
+ * version: 2.3.19
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 
@@ -11,13 +11,14 @@ angular.module('ngWig').component('ngWigEditable', {
     name: '@',
     required: '<',
     editMode: '<',
-    ngModel: '='
+    ngModel: '=',
+    ngDisabled: '<'
   },
   template: '<div tabindex="-1" ng-class="{\'nw-invisible\': $ctrl.editMode}" class="nw-editor__res" contenteditable></div>',
   require: {
     ngModelController: '^ngModel'
   },
-  controller: ["$timeout", "$document", "$scope", "$element", function ($timeout, $document, $scope, $element) {
+  controller: ["$document", "$scope", "$element", function ($document, $scope, $element) {
     var _this = this;
 
     var $container = $element.find('div');
@@ -70,7 +71,7 @@ angular.module('ngWig').component('ngWigEditable', {
       }
     });
 
-    $scope.$on('nw-disabled', function (event, isDisabled) {
+    $scope.$watch('$ctrl.ngDisabled', function (isDisabled) {
       return $container.attr('contenteditable', !isDisabled);
     });
   }]
