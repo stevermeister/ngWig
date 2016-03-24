@@ -26,29 +26,29 @@
     }
   </style>
 </head>
-<body ng-controller="demoController" ng-cloak>
+<body>
 <div class="container">
 
     <h1>One simple WYSIWYG</h1>
-    <textarea ng-wig="text1" on-paste="onPaste" class="editor1" source-mode-allowed></textarea>
+    <ng-wig ng-model="text1" class="editor1" source-mode-allowed></ng-wig>
 
     <h1>One more</h1>
     <form name="myForm" novalidate>
-        <textarea ng-wig="text2" on-paste="onPaste" buttons="formats, bold, italic" name="editor" required class="editor2 nw-editor--fixed"></textarea>
+        <ng-wig ng-model="text2" on-paste="onPaste($event, pasteContent)" buttons="formats, bold, italic" name="editor" required class="editor2 nw-editor--fixed"></ng-wig>
     </form>
 	
     <h1>Disabled WYSIWYG</h1>
-    <textarea ng-wig="text3" on-paste="onPaste" class="editor1" source-mode-allowed ng-disabled="true"></textarea>
+    <ng-wig ng-model="text3" class="editor1" source-mode-allowed ng-disabled="true"></ng-wig>
 
 </div>
 <script src="libs/angular/angular.js"></script>
 <script src="javascript/app/app.js"></script>
 <script src="javascript/app/templates.js"></script>
 <script src="javascript/app/ng-wig/ng-wig.js"></script>
-<script src="javascript/app/ng-wig/ngWigDirective.js"></script>
-<script src="javascript/app/ng-wig/ngWigEditableDirective.js"></script>
-<script src="javascript/app/ng-wig/ngWigToolbarProvider.js"></script>
-<script src="javascript/app/ng-wig/ngWigPluginDirective.js"></script>
+<script src="javascript/app/ng-wig/ng-wig.component.js"></script>
+<script src="javascript/app/ng-wig/ng-wig-editable.component.js"></script>
+<script src="javascript/app/ng-wig/ng-wig-toolbar.provider.js"></script>
+<script src="javascript/app/ng-wig/ng-wig-plugin-adapter.component.js"></script>
 <script src="javascript/app/plugins/formats.ngWig.js"></script>
 </body>
 </html>

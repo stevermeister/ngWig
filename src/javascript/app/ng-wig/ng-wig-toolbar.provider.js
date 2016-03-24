@@ -63,5 +63,4 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
     };
   };
 
-
 });

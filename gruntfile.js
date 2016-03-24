@@ -19,6 +19,7 @@ module.exports = function(grunt) {
       dist: {
         files: [
           {src: srcPath + '/css/ng-wig.css', dest: distPath + '/css/ng-wig.css'},
+          {expand: true, cwd: srcPath + '/javascript/app/', src: ['plugins/*.js'], dest: distPath}
         ]
       }
     },
@@ -26,11 +27,21 @@ module.exports = function(grunt) {
       app1: {
         files: {
           '<%= distPath %>/ng-wig.js': [
-              srcPath + '/javascript/app/ng-wig/!(angular.element.outerHeight).js',
+              srcPath + '/javascript/app/ng-wig/ng-wig.js',
+              srcPath + '/javascript/app/ng-wig/*.js',
               srcPath + '/javascript/app/plugins/formats.ngWig.js',
-              srcPath + '/javascript/app/ng-wig/angular.element.outerHeight.js',
-              srcPath + '/javascript/app/templates.js',
-            '!src/javascript/app/**/tests/*.js']
+              srcPath + '/javascript/app/templates.js']
+        }
+      }
+    },
+    babel: {
+      options: {
+        sourceMap: true,
+        presets: ['es2015']
+      },
+      dist: {
+        files: {
+          'dist/ng-wig.js': [ distPath +'/ng-wig.js']
         }
       }
     },
@@ -84,7 +95,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['html2js', 'watch']);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
-  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'uglify', 'cssmin', 'bump:patch']);
+  grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin', 'bump:patch']);
   grunt.registerTask('upversion', ['bump:minor']);
   //grunt.registerTask('upversion', ['bump:major']);
 };

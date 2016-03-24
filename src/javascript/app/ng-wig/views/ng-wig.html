@@ -1,28 +1,52 @@
 <div class="ng-wig">
   <ul class="nw-toolbar">
-    <li class="nw-toolbar__item" ng-repeat="button in toolbarButtons" >
+    <li class="nw-toolbar__item" ng-repeat="button in $ctrl.toolbarButtons">
         <div ng-if="!button.isComplex">
-          <button type="button" class="nw-button {{button.styleClass}}" title="{{button.title}}" ng-click="execCommand(button.command)" ng-class="{ 'nw-button--active': isEditorActive() && button.isActive() }" ng-disabled="editMode || isDisabled">
+          <button type="button"
+                  class="nw-button {{button.styleClass}}"
+                  title="{{button.title}}"
+                  ng-click="$ctrl.execCommand(button.command)"
+                  ng-class="{ 'nw-button--active': isEditorActive() && button.isActive() }"
+                  ng-disabled="$ctrl.editMode || $ctrl.disabled">
             {{ button.title }}
           </button>
         </div>
         <div ng-if="button.isComplex">
-          <ng-wig-plugin plugin="{{button}}"></ng-wig-plugin>
+          <ng-wig-plugin
+              exec-command="$ctrl.execCommand"
+              plugin="button"
+              editMode="$ctrl.editMode"
+              disabled="$ctrl.disabled"></ng-wig-plugin>
         </div>
     </li><!--
     --><li class="nw-toolbar__item">
-      <button type="button" class="nw-button nw-button--source" title="Edit HTML" ng-class="{ 'nw-button--active': editMode }" ng-show="isSourceModeAllowed" ng-click="toggleEditMode()" ng-disabled="isDisabled">
+      <button type="button"
+              class="nw-button nw-button--source"
+              title="Edit HTML"
+              ng-class="{ 'nw-button--active': $ctrl.editMode }"
+              ng-if="$ctrl.isSourceModeAllowed"
+              ng-click="$ctrl.toggleEditMode()"
+              ng-disabled="$ctrl.disabled">
         Edit HTML
       </button>
     </li>
   </ul>
 
   <div class="nw-editor-container">
-    <div class="nw-editor__src-container" ng-show="editMode">
-      <textarea ng-required="isRequired" ng-disabled="isDisabled" class="nw-editor__src" ng-model="content"></textarea>
+    <div class="nw-editor__src-container" ng-show="$ctrl.editMode">
+      <textarea ng-model="$ctrl.content"
+                ng-required="$ctrl.required"
+                ng-disabled="$ctrl.disabled"
+                class="nw-editor__src"></textarea>
     </div>
-    <div class="nw-editor" ng-class="{ 'nw-disabled': isDisabled }">
-      <div name="{{formElementName}}" ng-required="isRequired" tabindex="-1" ng-class="{'nw-invisible': editMode}" class="nw-editor__res" ng-model="content" ng-wig-editable on-paste="onPaste"></div>
+    <div class="nw-editor" ng-class="{ 'nw-disabled': $ctrl.disabled }">
+      <ng-wig-editable name="{{$ctrl.name}}"
+                       ng-required="$ctrl.required"
+                       edit-mode="$ctrl.editMode"
+                       ng-model="$ctrl.content"
+                       on-paste="$ctrl.onPastePromise"
+                       ng-disabled="$ctrl.disabled">
+      </ng-wig-editable>
     </div>
   </div>
 </div>
