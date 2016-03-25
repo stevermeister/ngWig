@@ -33,6 +33,7 @@ angular.module('ngWig').component('ngWigEditable', {
 
       $container.bind('blur keyup change focus click', function () {
         //view --> model
+        _this.ngModelController.$setValidity('required', !!$container.html());
         _this.ngModelController.$setViewValue($container.html());
         $scope.$applyAsync();
       });

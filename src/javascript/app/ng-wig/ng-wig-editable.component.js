@@ -21,6 +21,7 @@ angular.module('ngWig')
 
         $container.bind('blur keyup change focus click', () => {
           //view --> model
+          this.ngModelController.$setValidity('required', !!$container.html() );
           this.ngModelController.$setViewValue($container.html());
           $scope.$applyAsync();
         });
