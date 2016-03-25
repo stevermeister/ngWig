@@ -10,6 +10,9 @@ ngWig
 
 
 ##Usage
+
+    angular.module('yourApp', ['ngWig'])
+
 it's just attribute directive for textarea:
 
     <ng-wig ng-model="text1"></ng-wig>
@@ -40,14 +43,57 @@ or via bower:
 
 ##Examples
 
-- Quick start - https://plnkr.co/edit/IaTeHRUdWU1WUJnUiftl?p=preview
-- Disabled - https://plnkr.co/edit/og1wRflbWfqyC8S4edzs?p=preview
-- Edit Source option - https://plnkr.co/edit/JVOI2l2gnZMKORMWjAEZ?p=preview
-- ngModel sync - https://plnkr.co/edit/8owI0CDjoos8DArlc10g?p=preview
-- Set buttons - https://plnkr.co/edit/9Fjqwnf74jJAKNx2cMYI?p=preview
-- Setup generic buttons - https://plnkr.co/edit/XteWPwo0eQ1gz4L6cpDr?p=preview
-- Add standard buttons - https://plnkr.co/edit/Avi90RnnoTPGWzosQHQo?p=preview
-- OnPaste Hook - https://plnkr.co/edit/dsvfoDZw8CPVrNo9R6Bv?p=preview
+### Quick start ([plunker](https://plnkr.co/edit/IaTeHRUdWU1WUJnUiftl?p=preview))
+  ```<ng-wig ng-model="text1"></ng-wig>```    
+  
+###Disabled ([plunker](https://plnkr.co/edit/og1wRflbWfqyC8S4edzs?p=preview)) 
+
+  ```<ng-wig ng-model="text1" ng-disabled="true"></ng-wig>```
+
+###Edit Source option ([plunker](https://plnkr.co/edit/JVOI2l2gnZMKORMWjAEZ?p=preview)) 
+
+  ```<ng-wig ng-model="text1" source-mode-allowed></ng-wig>```
+
+###ngModel sync ([plunker](https://plnkr.co/edit/8owI0CDjoos8DArlc10g?p=preview))  
+
+  ```  <ng-wig ng-model="text1"></ng-wig>
+       <ng-wig ng-model="text1"></ng-wig>``` 
+
+###Set buttons ([plunker](https://plnkr.co/edit/9Fjqwnf74jJAKNx2cMYI?p=preview))  
+
+  ```<ng-wig ng-model="text1" buttons="formats, bold, italic"></ng-wig>``` 
+
+###Setup generic buttons ([plunker](https://plnkr.co/edit/XteWPwo0eQ1gz4L6cpDr?p=preview))  
+
+    .config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
+      ngWigToolbarProvider.setButtons(['bold', 'italic']);
+    }]);
+
+###Add standard buttons ([plunker](https://plnkr.co/edit/Avi90RnnoTPGWzosQHQo?p=preview)) 
+ 
+    .config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
+      ngWigToolbarProvider.addStandardButton('underline', 'Underline', 'underline', 'fa-underline');
+    }]);
+ 
+###Add custom buttons (plugin) ([plunker](https://plnkr.co/edit/vAKfMFRt9DAbUXSmUEFA?p=preview)) 
+
+ 
+    angular.module('ngWig').config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
+     ngWigToolbarProvider.addCustomButton('forecolor', 'nw-forecolor-button');
+    }])
+    .component('nwForecolorButton', {
+      template: '<button colorpicker ng-model="fontcolor" ng-disabled="editMode" colorpicker-position="right" class="nw-button font-color" title="Font Color" ng-disabled="isDisabled">Font Color</button>',
+      controller: function($scope) {
+        $scope.$on('colorpicker-selected', function($event, color) {
+          $scope.$broadcast('execCommand', {command: 'foreColor', options: color.value});
+        });
+      }
+    });
+ 
+###OnPaste Hook ([plunker](https://plnkr.co/edit/dsvfoDZw8CPVrNo9R6Bv?p=preview))  
+
+    ```<ng-wig ng-model="text1" on-paste="onPaste($event, pasteContent)"></ng-wig>```    
+    
 
 
 ## Contribution (Development Setup)
