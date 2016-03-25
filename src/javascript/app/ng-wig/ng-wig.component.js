@@ -10,7 +10,7 @@ angular.module('ngWig')
       //TODO: clean-up this attrs solution
       this.name = $attrs.name;
       $element.removeAttr('name');
-      this.required = !!$attrs.required;
+      this.required = 'required' in $attrs;
       this.isSourceModeAllowed = Object.keys($attrs).indexOf('sourceModeAllowed') !== -1 ? true : false;
       this.editMode = false;
       this.toolbarButtons = ngWigToolbar.getToolbarButtons($attrs.buttons && string2array($attrs.buttons));
