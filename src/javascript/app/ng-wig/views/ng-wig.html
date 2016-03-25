@@ -6,7 +6,7 @@
                   class="nw-button {{button.styleClass}}"
                   title="{{button.title}}"
                   ng-click="$ctrl.execCommand(button.command)"
-                  ng-class="{ 'nw-button--active': isEditorActive() && button.isActive() }"
+                  ng-class="{ 'nw-button--active': $ctrl.isEditorActive() && button.isActive() }"
                   ng-disabled="$ctrl.editMode || $ctrl.disabled">
             {{ button.title }}
           </button>
