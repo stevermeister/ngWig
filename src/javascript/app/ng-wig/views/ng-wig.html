@@ -41,7 +41,6 @@
     </div>
     <div class="nw-editor" ng-class="{ 'nw-disabled': $ctrl.disabled }">
       <ng-wig-editable name="{{$ctrl.name}}"
-                       ng-required="$ctrl.required"
                        edit-mode="$ctrl.editMode"
                        ng-model="$ctrl.content"
                        on-paste="$ctrl.onPastePromise"

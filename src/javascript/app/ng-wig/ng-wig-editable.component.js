@@ -3,7 +3,6 @@ angular.module('ngWig')
     bindings: {
       onPaste: '=',
       name: '@',
-      required: '<',
       editMode: '<',
       ngModel: '=',
       ngDisabled: '<'
