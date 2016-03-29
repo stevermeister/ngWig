@@ -6,7 +6,7 @@
                   class="nw-button {{button.styleClass}}"
                   title="{{button.title}}"
                   ng-click="$ctrl.execCommand(button.command)"
-                  ng-class="{ 'nw-button--active': $ctrl.isEditorActive() && button.isActive() }"
+                  ng-class="{ 'nw-button--active': !$ctrl.disabled && $ctrl.isEditorActive() && button.isActive() }"
                   ng-disabled="$ctrl.editMode || $ctrl.disabled">
             {{ button.title }}
           </button>
@@ -40,12 +40,15 @@
                 class="nw-editor__src"></textarea>
     </div>
     <div class="nw-editor" ng-class="{ 'nw-disabled': $ctrl.disabled }">
-      <ng-wig-editable name="{{$ctrl.name}}"
-                       edit-mode="$ctrl.editMode"
-                       ng-model="$ctrl.content"
-                       on-paste="$ctrl.onPastePromise"
-                       ng-disabled="$ctrl.disabled">
-      </ng-wig-editable>
+      <div id="ng-wig-editable"
+           name="{{$ctrl.name}}"
+           tabindex="-1"
+           class="nw-editor__res"
+           ng-class="{'nw-invisible': $ctrl.editMode}"
+           ng-model="$ctrl.content"
+           ng-disabled="$ctrl.disabled"
+           contenteditable>
+      </div>
     </div>
   </div>
 </div>
