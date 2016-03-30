@@ -14,9 +14,6 @@ angular.module('ngWig')
       var $container = angular.element($element[0].querySelector('#ng-wig-editable'));
 
       //TODO: clean-up this attrs solution
-      this.name = $attrs.name;
-      $element.removeAttr('name');
-
       this.required = 'required' in $attrs;
       this.isSourceModeAllowed = 'sourceModeAllowed' in $attrs;
       this.editMode = false;
@@ -51,7 +48,6 @@ angular.module('ngWig')
 
         $container.bind('blur keyup change focus click', () => {
           //view --> model
-          this.ngModelController.$setValidity('required', !!$container.html() );
           this.ngModelController.$setViewValue($container.html());
           $scope.$applyAsync();
         });
