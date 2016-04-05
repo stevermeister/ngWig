@@ -1,7 +1,7 @@
 ngWig
 =====
 
-##Dependancies
+##Dependencies
 
 *it's only AngularJS! No jQuery or other WYSIWYG monsters*
 
