@@ -208,6 +208,10 @@
   content: '\f040';
 }
 
+.nw-button.clear-styles:before {
+  content: '\f12d';
+}
+
 .nw-button:focus {
   outline: none;
 }
