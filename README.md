@@ -94,7 +94,9 @@ or via bower:
 
     ```<ng-wig ng-model="text1" on-paste="onPaste($event, pasteContent)"></ng-wig>```    
     
-
+###Clear Styles button (plugin) ([plunker](https://plnkr.co/edit/j8FtcMAVkLSztZ6V0ION?p=preview)) 
+<br>
+<br>
 
 ## Contribution (Development Setup)
 

@@ -58,7 +58,13 @@ angular.module('ngWig')
           return;
         }
 
-        let pasteContent = (event.originalEvent || event).clipboardData.getData('text/plain');
+        let pasteContent;
+        if (window.clipboardData && window.clipboardData.getData) { // IE  
+          pasteContent = window.clipboardData.getData('Text');
+        }
+        else{
+          pasteContent = (event.originalEvent || event).clipboardData.getData('text/plain');
+        }
         event.preventDefault();
         $q.when(this.onPaste({$event: event, pasteContent: pasteContent})).then((pasteText) => {
           pasteHtmlAtCaret(pasteText);
