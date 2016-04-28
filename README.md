@@ -36,7 +36,7 @@ or via bower:
     https://cdn.rawgit.com/stevermeister/ngWig/master/dist/css/ng-wig.css
 
 
-[Demo] (http://stevermeister.github.io/ngWig/demo/)  
+[Demo] (http://stevermeister.github.io/ngWig/demo/)
 
 [![Screenshot] (http://stevermeister.github.io/ngWig/images/ng-wig-demo.png)](http://stevermeister.github.io/ngWig/demo/)
 
@@ -44,40 +44,40 @@ or via bower:
 ##Examples
 
 ### Quick start ([plunker](https://plnkr.co/edit/IaTeHRUdWU1WUJnUiftl?p=preview))
-  ```<ng-wig ng-model="text1"></ng-wig>```    
-  
-###Disabled ([plunker](https://plnkr.co/edit/og1wRflbWfqyC8S4edzs?p=preview)) 
+  ```<ng-wig ng-model="text1"></ng-wig>```
+
+###Disabled ([plunker](https://plnkr.co/edit/og1wRflbWfqyC8S4edzs?p=preview))
 
   ```<ng-wig ng-model="text1" ng-disabled="true"></ng-wig>```
 
-###Edit Source option ([plunker](https://plnkr.co/edit/JVOI2l2gnZMKORMWjAEZ?p=preview)) 
+###Edit Source option ([plunker](https://plnkr.co/edit/JVOI2l2gnZMKORMWjAEZ?p=preview))
 
   ```<ng-wig ng-model="text1" source-mode-allowed></ng-wig>```
 
-###ngModel sync ([plunker](https://plnkr.co/edit/8owI0CDjoos8DArlc10g?p=preview))  
+###ngModel sync ([plunker](https://plnkr.co/edit/8owI0CDjoos8DArlc10g?p=preview))
 
   ```  <ng-wig ng-model="text1"></ng-wig>
-       <ng-wig ng-model="text1"></ng-wig>``` 
+       <ng-wig ng-model="text1"></ng-wig>```
 
-###Set buttons ([plunker](https://plnkr.co/edit/9Fjqwnf74jJAKNx2cMYI?p=preview))  
+###Set buttons ([plunker](https://plnkr.co/edit/9Fjqwnf74jJAKNx2cMYI?p=preview))
 
-  ```<ng-wig ng-model="text1" buttons="formats, bold, italic"></ng-wig>``` 
+  ```<ng-wig ng-model="text1" buttons="formats, bold, italic"></ng-wig>```
 
-###Setup generic buttons ([plunker](https://plnkr.co/edit/XteWPwo0eQ1gz4L6cpDr?p=preview))  
+###Setup generic buttons ([plunker](https://plnkr.co/edit/XteWPwo0eQ1gz4L6cpDr?p=preview))
 
     .config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
       ngWigToolbarProvider.setButtons(['bold', 'italic']);
     }]);
 
-###Add standard buttons ([plunker](https://plnkr.co/edit/Avi90RnnoTPGWzosQHQo?p=preview)) 
- 
+###Add standard buttons ([plunker](https://plnkr.co/edit/Avi90RnnoTPGWzosQHQo?p=preview))
+
     .config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
       ngWigToolbarProvider.addStandardButton('underline', 'Underline', 'underline', 'fa-underline');
     }]);
- 
-###Add custom buttons (plugin) ([plunker](https://plnkr.co/edit/vAKfMFRt9DAbUXSmUEFA?p=preview)) 
 
- 
+###Add custom buttons (plugin) ([plunker](https://plnkr.co/edit/vAKfMFRt9DAbUXSmUEFA?p=preview))
+
+
     angular.module('ngWig').config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
      ngWigToolbarProvider.addCustomButton('forecolor', 'nw-forecolor-button');
     }])
@@ -85,16 +85,16 @@ or via bower:
       template: '<button colorpicker ng-model="fontcolor" ng-disabled="editMode" colorpicker-position="right" class="nw-button font-color" title="Font Color" ng-disabled="isDisabled">Font Color</button>',
       controller: function($scope) {
         $scope.$on('colorpicker-selected', function($event, color) {
-          $scope.$broadcast('execCommand', {command: 'foreColor', options: color.value});
+          $scope.$emit('execCommand', {command: 'foreColor', options: color.value});
         });
       }
     });
- 
-###OnPaste Hook ([plunker](https://plnkr.co/edit/dsvfoDZw8CPVrNo9R6Bv?p=preview))  
 
-    ```<ng-wig ng-model="text1" on-paste="onPaste($event, pasteContent)"></ng-wig>```    
-    
-###Clear Styles button (plugin) ([plunker](https://plnkr.co/edit/j8FtcMAVkLSztZ6V0ION?p=preview)) 
+###OnPaste Hook ([plunker](https://plnkr.co/edit/dsvfoDZw8CPVrNo9R6Bv?p=preview))
+
+    ```<ng-wig ng-model="text1" on-paste="onPaste($event, pasteContent)"></ng-wig>```
+
+###Clear Styles button (plugin) ([plunker](https://plnkr.co/edit/j8FtcMAVkLSztZ6V0ION?p=preview))
 <br>
 <br>
 
@@ -102,6 +102,6 @@ or via bower:
 
     npm install
     npm run devSetup
-    
-    
+
+
 ## Creating plugins

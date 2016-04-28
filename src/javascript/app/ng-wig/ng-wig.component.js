@@ -59,7 +59,7 @@ angular.module('ngWig')
         }
 
         let pasteContent;
-        if (window.clipboardData && window.clipboardData.getData) { // IE  
+        if (window.clipboardData && window.clipboardData.getData) { // IE
           pasteContent = window.clipboardData.getData('Text');
         }
         else{
@@ -72,6 +72,7 @@ angular.module('ngWig')
       });
 
       $scope.$on('execCommand', (event, params) => {
+        event.stopPropagation();
         $container[0].focus();
 
         var ieStyleTextSelection = $document[0].selection,
