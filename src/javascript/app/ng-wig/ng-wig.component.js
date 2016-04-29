@@ -2,6 +2,7 @@ angular.module('ngWig')
   .component('ngWig', {
     bindings: {
       content: '=ngModel',
+      options: '<?',
       onPaste: '&',
       buttons: '@'
     },
