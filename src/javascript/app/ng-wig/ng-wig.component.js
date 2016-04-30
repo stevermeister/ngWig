@@ -4,7 +4,9 @@ angular.module('ngWig')
       content: '=ngModel',
       options: '<?',
       onPaste: '&',
-      buttons: '@'
+      buttons: '@',
+      beforeExecCommand: '&',
+      afterExecCommand: '&'
     },
     require: {
       ngModelController: 'ngModel'
@@ -40,7 +42,9 @@ angular.module('ngWig')
             return;
           }
         }
+        this.beforeExecCommand({command: command, options: options});
         $scope.$broadcast('execCommand', {command: command, options: options});
+        this.afterExecCommand({command: command, options: options});
       };
 
       this.$onInit = () => {
