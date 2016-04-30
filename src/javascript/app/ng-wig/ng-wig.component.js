@@ -73,7 +73,7 @@ angular.module('ngWig')
       });
 
       $scope.$on('execCommand', (event, params) => {
-        event.stopPropagation();
+        event.stopPropagation && event.stopPropagation();
         $container[0].focus();
 
         var ieStyleTextSelection = $document[0].selection,
