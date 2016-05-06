@@ -2,8 +2,11 @@ angular.module('ngWig')
   .component('ngWig', {
     bindings: {
       content: '=ngModel',
+      options: '<?',
       onPaste: '&',
-      buttons: '@'
+      buttons: '@',
+      beforeExecCommand: '&',
+      afterExecCommand: '&'
     },
     require: {
       ngModelController: 'ngModel'
@@ -39,7 +42,9 @@ angular.module('ngWig')
             return;
           }
         }
+        this.beforeExecCommand({command: command, options: options});
         $scope.$broadcast('execCommand', {command: command, options: options});
+        this.afterExecCommand({command: command, options: options});
       };
 
       this.$onInit = () => {
@@ -59,7 +64,7 @@ angular.module('ngWig')
         }
 
         let pasteContent;
-        if (window.clipboardData && window.clipboardData.getData) { // IE  
+        if (window.clipboardData && window.clipboardData.getData) { // IE
           pasteContent = window.clipboardData.getData('Text');
         }
         else{
@@ -72,6 +77,7 @@ angular.module('ngWig')
       });
 
       $scope.$on('execCommand', (event, params) => {
+        event.stopPropagation && event.stopPropagation();
         $container[0].focus();
 
         var ieStyleTextSelection = $document[0].selection,

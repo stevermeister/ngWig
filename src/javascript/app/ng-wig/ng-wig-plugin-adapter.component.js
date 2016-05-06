@@ -4,7 +4,8 @@ angular.module('ngWig')
       plugin: '<',
       execCommand: '=',
       editMode: '=',
-      disabled: '='
+      disabled: '=',
+      options: '<'
     },
     controller: function($scope, $element, $compile) {
       $element.replaceWith($compile('<' + this.plugin.pluginName + ' ' +
@@ -12,6 +13,7 @@ angular.module('ngWig')
         'exec-command=' + '"$ctrl.execCommand"' +
         'edit-mode=' + '"$ctrl.editMode"' +
         'disabled=' + '"$ctrl.disabled"' +
+        'options=' + '"$ctrl.options"' +
         '/>')($scope));
     }
   });
