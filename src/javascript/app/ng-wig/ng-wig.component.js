@@ -77,26 +77,24 @@ angular.module('ngWig')
       });
 
       $scope.$on('execCommand', (event, params) => {
+        let selection = $document[0].getSelection().toString();
+        let command = params.command;
+        let options = params.options;
+
         event.stopPropagation && event.stopPropagation();
+
         $container[0].focus();
-
-        var ieStyleTextSelection = $document[0].selection,
-          command = params.command,
-          options = params.options;
-
-        if (ieStyleTextSelection) {
-          var textRange = ieStyleTextSelection.createRange();
-        }
 
         if ($document[0].queryCommandSupported && !$document[0].queryCommandSupported(command)) {
           throw 'The command "' + command + '" is not supported';
         }
 
-        $document[0].execCommand(command, false, options);
-
-        if (ieStyleTextSelection) {
-          textRange.collapse(false);
-          textRange.select();
+        // use insertHtml for `createlink` command to account for IE/Edge purposes, in case there is no selection
+        if(command === 'createlink' && selection === ''){
+          $document[0].execCommand('insertHtml', false, '<a href="' + options + '">' + options + '</a>');
+        }
+        else{
+          $document[0].execCommand(command, false, options);
         }
       });
 
