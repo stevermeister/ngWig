@@ -77,9 +77,9 @@ angular.module('ngWig')
       });
 
       $scope.$on('execCommand', (event, params) => {
-        var selection = $document[0].getSelection().toString();
-        var command = params.command;
-        var options = params.options;
+        let selection = $document[0].getSelection().toString();
+        let command = params.command;
+        let options = params.options;
 
         event.stopPropagation && event.stopPropagation();
 
