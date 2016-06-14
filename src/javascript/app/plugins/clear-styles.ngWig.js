@@ -3,7 +3,11 @@ angular.module('ngWig')
     ngWigToolbarProvider.addCustomButton('clear-styles', 'nw-clear-styles-button');
   }])
   .component('nwClearStylesButton', {
-    template: '<button ng-click="$ctrl.clearStyles($event)" ng-disabled="editMode" class="nw-button clear-styles" title="Clear Styles" ng-disabled="isDisabled">Clear Styles</button>',
+    bindings: {
+      editMode: '=',
+      disabled: '='
+    },
+    template: '<button ng-click="$ctrl.clearStyles($event)" ng-disabled="$ctrl.editMode || $ctrl.disabled" class="nw-button clear-styles" title="Clear Styles">Clear Styles</button>',
     controller: function() {
       this.clearStyles = function(e){
           // find the ngWig element that hosts the plugin
