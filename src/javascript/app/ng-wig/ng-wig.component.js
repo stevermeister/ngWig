@@ -36,7 +36,7 @@ angular.module('ngWig')
       this.execCommand = (command, options) => {
         if (this.editMode) return false;
 
-        if (command === 'createlink') {
+        if (command === 'createlink' || command === 'insertImage') {
           options = $window.prompt('Please enter the URL', 'http://');
           if (!options) {
             return;
