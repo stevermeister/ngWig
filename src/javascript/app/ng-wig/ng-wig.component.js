@@ -49,7 +49,7 @@ angular.module('ngWig')
 
       this.$onInit = () => {
         //model --> view
-        this.ngModelController.$render = () => $container.html(this.ngModelController.$viewValue || '');
+        this.ngModelController.$render = () => $container.html(this.ngModelController.$viewValue || '<p></p>');
 
         $container.bind('blur keyup change focus click', () => {
           //view --> model
