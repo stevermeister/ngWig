@@ -82,28 +82,39 @@ or via bower:
       ngWigToolbarProvider.addStandardButton('underline', 'Underline', 'underline', 'fa-underline');
     }]);
 
-###Add custom buttons (plugin) ([plunker](https://plnkr.co/edit/vAKfMFRt9DAbUXSmUEFA?p=preview))
+###Add custom button (plugin) ([plunker](https://plnkr.co/edit/Ik2fmPzDu6ecifUqVICv?p=preview))
 
+- Javascript:
 
-    angular.module('ngWig').config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
-     ngWigToolbarProvider.addCustomButton('forecolor', 'nw-forecolor-button');
-    }])
-    .component('nwForecolorButton', {
-      template: '<button colorpicker ng-model="fontcolor" ng-disabled="editMode" colorpicker-position="right" class="nw-button font-color" title="Font Color" ng-disabled="isDisabled">Font Color</button>',
-      controller: function($scope) {
-        $scope.$on('colorpicker-selected', function($event, color) {
-          $scope.$emit('execCommand', {command: 'foreColor', options: color.value});
+        angular.module('ngWig').config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
+            ngWigToolbarProvider.addCustomButton('my-custom', 'nw-my-custom-button');
+        }])
+        .component('nwMyCustomButton', {
+            template: '<button class="nw-button my-custom" title="My Custom Button" ng-click="$ctrl.click()">My Custom Button</button>',
+            controller: function() {
+                this.click = function(){
+                    alert('My Custom Button');
+                };
+            }
         });
-      }
-    });
+
+- CSS:
+        .nw-button.my-custom:before {
+            content: '\f1b3';
+        }
 
 ###OnPaste Hook ([plunker](https://plnkr.co/edit/dsvfoDZw8CPVrNo9R6Bv?p=preview))
 
-    ```<ng-wig ng-model="text1" on-paste="onPaste($event, pasteContent)"></ng-wig>```
+        <ng-wig ng-model="text1" on-paste="onPaste($event, pasteContent)"></ng-wig>
 
-###Clear Styles button (plugin) ([plunker](https://plnkr.co/edit/j8FtcMAVkLSztZ6V0ION?p=preview))
-<br>
-<br>
+###Formats (plugin) ([plunker](https://plnkr.co/edit/TgKThPQjlG4ctzGYk6Kq?p=preview))
+        <ng-wig ng-model="text1" buttons="formats"></ng-wig>
+
+###Forecolor (plugin) ([plunker](https://plnkr.co/edit/2hmkjBJHs7tTyOU7TDIH?p=preview))
+        <ng-wig ng-model="text1" buttons="forecolor"></ng-wig>
+
+###Clear Styles (plugin) ([plunker](https://plnkr.co/edit/j8FtcMAVkLSztZ6V0ION?p=preview))
+        <ng-wig ng-model="text1" buttons="clear-styles"></ng-wig>
 
 ## Contribution (Development Setup)
 
