@@ -99,6 +99,7 @@ or via bower:
         });
 
 - CSS:
+
         .nw-button.my-custom:before {
             content: '\f1b3';
         }
