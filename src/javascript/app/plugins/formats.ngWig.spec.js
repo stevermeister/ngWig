@@ -5,12 +5,15 @@ describe('component: nwFormatsButton', () => {
     var editMode;
     var disabled;
     var formats;
+    var ngWigToolbar;
 
     beforeEach(module('ngWig'));
 
-    beforeEach(inject((_$componentController_, _$rootScope_) => {
+    beforeEach(inject((_$componentController_, _$rootScope_, _ngWigToolbar_) => {
         scope = _$rootScope_.$new();
         
+        ngWigToolbar = _ngWigToolbar_;
+
         execCommand = 'fakeCmd()';
         editMode = false;
         disabled = false;
@@ -42,5 +45,11 @@ describe('component: nwFormatsButton', () => {
 
     it('should set a format by default',() => {
         expect(component.format).toEqual(formats[0]);
+    });
+
+    it('should be added to the button list', () => {
+        var filteredButtons = ngWigToolbar.getToolbarButtons().filter(button => button.pluginName === 'nw-formats-button');
+        
+        expect(filteredButtons.length).toEqual(1);
     });
 });

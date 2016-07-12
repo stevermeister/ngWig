@@ -5,13 +5,15 @@ describe('component: nwForecolorButton', () => {
     var editMode;
     var disabled;
     var mocks;
+    var ngWigToolbar;
 
     beforeEach(module('ngWig'));
 
-    beforeEach(inject((_$componentController_, _$rootScope_) => {
+    beforeEach(inject((_$componentController_, _$rootScope_, _ngWigToolbar_) => {
         scope = _$rootScope_.$new();
-
         mocks = { name: "fontcolor.color", value: "#ff0000" };
+
+        ngWigToolbar = _ngWigToolbar_;
         
         execCommand = 'fakeCmd()';
         editMode = false;
@@ -38,5 +40,11 @@ describe('component: nwForecolorButton', () => {
         scope.$emit('colorpicker-selected', mocks);
 
         expect(component.execCommand).toHaveBeenCalledWith('foreColor', mocks.value);
+    });
+
+    it('should be added to the button list', () => {
+        var filteredButtons = ngWigToolbar.getToolbarButtons().filter(button => button.pluginName === 'nw-forecolor-button');
+        
+        expect(filteredButtons.length).toEqual(1);
     });
 });
