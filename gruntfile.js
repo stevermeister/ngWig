@@ -89,6 +89,11 @@ module.exports = function(grunt) {
         tagMessage: 'Version %VERSION%',
         push: false
       }
+    },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js'
+      }
     }
   });
 
