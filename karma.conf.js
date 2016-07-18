@@ -13,23 +13,30 @@ module.exports = function (config) {
             './node_modules/angular/angular.js',
             './node_modules/angular-mocks/angular-mocks.js',
 
-            './src/javascript/app/templates.js',
             './src/javascript/app/ng-wig/ng-wig.js',
-            './src/javascript/app/ng-wig/ng-wig-toolbar.provider.js',
-            './src/javascript/app/ng-wig/ng-wig.component.js',
-            './src/javascript/app/ng-wig/ng-wig-plugin-adapter.component.js',
-            './src/javascript/app/plugins/*.js'
+            './src/javascript/app/**/!(ng-wig|app).js'
         ],
         
         proxies: {
             '/': 'http://localhost:8888/'
         },
+
+        // preprocess matching files before serving them to the browser
+        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+        preprocessors: {
+            'src/javascript/app/**/!(*spec).js': 'coverage'
+        },
         
         // test results reporter to use
         // possible values: 'dots', 'progress', 'coverage'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress'],
+        reporters: ['progress', 'coverage'],
         
+        coverageReporter: {
+            type: 'lcov',
+            dir: 'test/coverage'
+        },
+
         // web server port
         port: 9876,
         

@@ -27,11 +27,11 @@ describe('component: nwForecolorButton', () => {
     });
 
     it('should expose editMode', () => {
-        expect(component.editMode).toEqual(false);
+        expect(component.editMode).toEqual(editMode);
     });
 
     it('should expose disabled', () => {
-        expect(component.disabled).toEqual(false);
+        expect(component.disabled).toEqual(disabled);
     });
 
     it('should call foreColor execCommand', function(){
