@@ -32,6 +32,14 @@ module.exports = function(grunt) {
               srcPath + '/javascript/app/plugins/formats.ngWig.js',
               srcPath + '/javascript/app/templates.js']
         }
+      },
+      plugins: {
+        files: [{
+           expand: true,
+           cwd: srcPath + '/javascript/app/plugins/',
+           src: ['*.js'],
+           dest: distPath + '/plugins'
+        }]
       }
     },
     babel: {
@@ -43,6 +51,14 @@ module.exports = function(grunt) {
         files: {
           'dist/ng-wig.js': [ distPath +'/ng-wig.js']
         }
+      },
+      plugins: {
+        files: [{
+           expand: true,
+           cwd: distPath + '/plugins/',
+           src: ['*.js'],
+           dest: distPath + '/plugins'
+        }]
       }
     },
     uglify: {
@@ -50,6 +66,15 @@ module.exports = function(grunt) {
         files: {
            'dist/ng-wig.min.js': [ distPath +'/ng-wig.js']
         }
+      },
+      plugins: {
+        files: [{
+           expand: true,
+           cwd: distPath + '/plugins/',
+           src: ['*.js'],
+           dest: distPath + '/plugins',
+           ext: ['.ngWig.min.js']
+        }]
       }
     },
     cssmin: {
