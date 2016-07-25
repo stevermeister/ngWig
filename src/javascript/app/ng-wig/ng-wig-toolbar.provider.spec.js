@@ -1,7 +1,7 @@
-describe('provider: ngWigToolbar', function () {
-    var toolbarProvider;
+describe('provider: ngWigToolbar', () => {
+    let toolbarProvider;
     
-    beforeEach(function () {
+    beforeEach(() => {
         module('ngWig', (_ngWigToolbarProvider_) => {
             toolbarProvider = _ngWigToolbarProvider_;
         });

@@ -1,26 +1,24 @@
 describe('component: ngWig', () => {
-    var component;
-    var componentController;
-    var controller;
-    var scope;
-    var content;
-    var options;
-    var buttons;
-    var beforeExecCommand;
-    var afterExecCommand;
-    var element;
-    var attrs;
-    var pasteSpy;
-    var beforeExecSpy;
-    var afterExecSpy;
-    var mocks;
-    var window;
-    var compile;
+    let component;
+    let controller;
+    let scope;
+    let content;
+    let options;
+    let buttons;
+    let beforeExecCommand;
+    let afterExecCommand;
+    let element;
+    let attrs;
+    let pasteSpy;
+    let beforeExecSpy;
+    let afterExecSpy;
+    let mocks;
+    let window;
+    let compile;
 
     beforeEach(module('ngWig'));
 
     beforeEach(inject((_$componentController_, _$rootScope_, _$window_, _$compile_, _ngWigToolbar_) => {
-        componentController = _$componentController_;
         window = _$window_;
         compile = _$compile_;
 
@@ -28,7 +26,7 @@ describe('component: ngWig', () => {
 
         content = 'Fake text';
         element = angular.element('<div></div>');
-        attrs = { $observe: new Function() };
+        attrs = { $observe: () => {} };
         options = ['Option 1', 'Option 2'];
         buttons = 'button1,button2';
         pasteSpy = jasmine.createSpy('pasteSpy');
@@ -48,15 +46,15 @@ describe('component: ngWig', () => {
         spyOn(window, 'prompt');
         spyOn(scope, '$broadcast');
 
-        component = componentController('ngWig', 
+        component = _$componentController_('ngWig', 
                                             { $scope: scope, $element: element, $attrs: attrs }, 
                                             { content: content, options: options, buttons: buttons, onPaste: pasteSpy, beforeExecCommand: beforeExecSpy, afterExecCommand: afterExecSpy }
                                             );
     }));
 
     function getCompiledElement(template) {
-        var element = angular.element(template || '<ng-wig ng-model="text1"><ng-wig>');
-        var compiledElement = compile(element)(scope);
+        let element = angular.element(template || '<ng-wig ng-model="text1"><ng-wig>');
+        let compiledElement = compile(element)(scope);
         
         scope.$digest();
 
@@ -77,19 +75,19 @@ describe('component: ngWig', () => {
         expect(component.buttons).toEqual(buttons);
     });
 
-    it('should call onPaste', function(){
+    it('should call onPaste', () => {
         component.onPaste();
 
         expect(pasteSpy).toHaveBeenCalled();
     });
 
-    it('should call beforeExecCommand', function(){
+    it('should call beforeExecCommand', () => {
         component.beforeExecCommand();
 
         expect(beforeExecSpy).toHaveBeenCalled();
     });
 
-    it('should call afterExecCommand', function(){
+    it('should call afterExecCommand', () => {
         component.afterExecCommand();
 
         expect(afterExecSpy).toHaveBeenCalled();

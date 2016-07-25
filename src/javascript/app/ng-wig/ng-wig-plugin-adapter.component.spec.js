@@ -1,14 +1,14 @@
 describe('component: ngWigPlugin', () => {
-    var component;
-    var scope;
-    var plugin;
-    var execCommand;
-    var editMode;
-    var disabled;
-    var options;
-    var content;
-    var element;
-    var compile;
+    let component;
+    let scope;
+    let plugin;
+    let execCommand;
+    let editMode;
+    let disabled;
+    let options;
+    let content;
+    let element;
+    let compile;
 
     beforeEach(module('ngWig'));
 
@@ -60,7 +60,7 @@ describe('component: ngWigPlugin', () => {
     });
 
     it('should replace with the plugin template', () => {
-        var pluginElement = compile('<' + component.plugin.pluginName + ' ' +
+        let pluginElement = compile('<' + component.plugin.pluginName + ' ' +
         'plugin=' + '"$ctrl.plugin"' +
         'exec-command=' + '"$ctrl.execCommand"' +
         'edit-mode=' + '"$ctrl.editMode"' +
