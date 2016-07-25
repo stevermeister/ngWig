@@ -1,5 +1,7 @@
 describe('component: ngWig', () => {
     var component;
+    var componentController;
+    var controller;
     var scope;
     var content;
     var options;
@@ -13,11 +15,14 @@ describe('component: ngWig', () => {
     var afterExecSpy;
     var mocks;
     var window;
+    var compile;
 
     beforeEach(module('ngWig'));
 
-    beforeEach(inject((_$componentController_, _$rootScope_, _$window_, _ngWigToolbar_) => {
+    beforeEach(inject((_$componentController_, _$rootScope_, _$window_, _$compile_, _ngWigToolbar_) => {
+        componentController = _$componentController_;
         window = _$window_;
+        compile = _$compile_;
 
         scope = _$rootScope_.$new();
 
@@ -43,11 +48,22 @@ describe('component: ngWig', () => {
         spyOn(window, 'prompt');
         spyOn(scope, '$broadcast');
 
-        component = _$componentController_('ngWig', 
+        component = componentController('ngWig', 
                                             { $scope: scope, $element: element, $attrs: attrs }, 
                                             { content: content, options: options, buttons: buttons, onPaste: pasteSpy, beforeExecCommand: beforeExecSpy, afterExecCommand: afterExecSpy }
                                             );
     }));
+
+    function getCompiledElement(template) {
+        var element = angular.element(template || '<ng-wig ng-model="text1"><ng-wig>');
+        var compiledElement = compile(element)(scope);
+        
+        scope.$digest();
+
+        controller = element.controller('ngWig');
+        
+        return compiledElement;
+    }
 
     it('should expose content', () => {
         expect(component.content).toEqual(content);
@@ -167,6 +183,43 @@ describe('component: ngWig', () => {
             component.execCommand('fakeCmd');
 
             expect(window.prompt).not.toHaveBeenCalled();
+        });
+    });
+
+    it('should fail if ngModel is not provided', () => {
+        expect(() => { getCompiledElement('<ng-wig><ng-wig>') }).toThrow();
+    });
+
+    describe('$onInit function', () => {
+        let ngWigElement;
+
+        it('should exist', () => {
+            expect(component.$onInit).not.toBe(null);
+        });
+
+        describe('$render function', () => {
+            beforeEach(() => {
+                element = getCompiledElement();
+                ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
+
+                spyOn(controller.ngModelController, '$setViewValue');
+            });
+
+            it('should render a paragraph element if ngModel value does not exist', () => {
+                expect(ngWigElement.html()).toEqual('<p></p>');
+            });
+
+            it('should the model value on blur event', () => {
+                ngWigElement.triggerHandler('blur');
+
+                expect(controller.ngModelController.$setViewValue).toHaveBeenCalledWith('<p></p>');
+            });
+
+            it('should the model value on blur event', () => {
+                ngWigElement.triggerHandler('blur');
+
+                expect(controller.ngModelController.$setViewValue).toHaveBeenCalledWith('<p></p>');
+            });
         });
     });
 });
