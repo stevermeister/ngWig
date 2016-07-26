@@ -43,8 +43,6 @@ describe('component: ngWig', () => {
 
         spyOn(_ngWigToolbar_, 'getToolbarButtons').and.returnValue(mocks);
         spyOn(window.getSelection(), 'removeAllRanges');
-        spyOn(window, 'prompt');
-        spyOn(scope, '$broadcast');
 
         component = _$componentController_('ngWig', 
                                             { $scope: scope, $element: element, $attrs: attrs }, 
@@ -138,6 +136,10 @@ describe('component: ngWig', () => {
     });
 
     describe('execCommand function', () => {
+        beforeEach(() => {
+            spyOn(scope, '$broadcast');
+        });
+        
         it('should exist', () => {
             expect(component.execCommand).not.toBe(null);
         });
@@ -166,26 +168,46 @@ describe('component: ngWig', () => {
         });
 
         it('should show a prompt when the command name is createlink', () => {
+            spyOn(window, 'prompt').and.returnValue('http://fakeLink');
             component.execCommand('createlink');
 
             expect(window.prompt).toHaveBeenCalledWith('Please enter the URL', 'http://');
         });
 
         it('should show a prompt when the command name is insertImage', () => {
+            spyOn(window, 'prompt').and.returnValue('http://fakeImage');
             component.execCommand('insertImage');
 
             expect(window.prompt).toHaveBeenCalledWith('Please enter the URL', 'http://');
         });
 
-        it('should not show a prompt', () => {
+        it('should not show a prompt when the command is not createlink or insertImage', () => {
+            spyOn(window, 'prompt');
             component.execCommand('fakeCmd');
 
             expect(window.prompt).not.toHaveBeenCalled();
+        });
+
+        it('should return if the prompt is cancelled', () => {
+            spyOn(window, 'prompt').and.returnValue(undefined);
+            component.execCommand('createlink');
+
+            expect(beforeExecSpy).not.toHaveBeenCalled();
+            expect(scope.$broadcast).not.toHaveBeenCalled();
+            expect(afterExecSpy).not.toHaveBeenCalled();
         });
     });
 
     it('should fail if ngModel is not provided', () => {
         expect(() => { getCompiledElement('<ng-wig><ng-wig>') }).toThrow();
+    });
+
+    it('should set disabled property', () => {
+        element = getCompiledElement('<ng-wig disabled="true" ng-model="text1"></ng-wig>');
+        ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
+        
+        expect(controller.disabled).toEqual('true');
+        expect(ngWigElement.attr('contenteditable')).toEqual('false');
     });
 
     describe('$onInit function', () => {
@@ -207,14 +229,32 @@ describe('component: ngWig', () => {
                 expect(ngWigElement.html()).toEqual('<p></p>');
             });
 
-            it('should the model value on blur event', () => {
+            it('should update the model value on blur event', () => {
                 ngWigElement.triggerHandler('blur');
 
                 expect(controller.ngModelController.$setViewValue).toHaveBeenCalledWith('<p></p>');
             });
 
-            it('should the model value on blur event', () => {
-                ngWigElement.triggerHandler('blur');
+            it('should update the model value on keyup event', () => {
+                ngWigElement.triggerHandler('keyup');
+
+                expect(controller.ngModelController.$setViewValue).toHaveBeenCalledWith('<p></p>');
+            });
+
+            it('should update the model value on change event', () => {
+                ngWigElement.triggerHandler('change');
+
+                expect(controller.ngModelController.$setViewValue).toHaveBeenCalledWith('<p></p>');
+            });
+
+            it('should update the model value on focus event', () => {
+                ngWigElement.triggerHandler('focus');
+
+                expect(controller.ngModelController.$setViewValue).toHaveBeenCalledWith('<p></p>');
+            });
+
+            it('should update the model value on click event', () => {
+                ngWigElement.triggerHandler('click');
 
                 expect(controller.ngModelController.$setViewValue).toHaveBeenCalledWith('<p></p>');
             });
