@@ -15,12 +15,7 @@ describe('provider: ngWigToolbar', () => {
         });
 
         it('should throw an error if buttons are not provided', () => {
-            try {
-                toolbarProvider.setButtons();
-            }
-            catch(ex){
-                expect(ex).toEqual('Argument "buttons" should be an array');
-            }
+            expect(() => { toolbarProvider.setButtons() }).toThrow('Argument "buttons" should be an array');
         });
 
         it('should not throw an error if buttons are provided', () => {
@@ -33,31 +28,12 @@ describe('provider: ngWigToolbar', () => {
             expect(toolbarProvider.addStandardButton).toBeDefined();
         });
 
-        it('should throw an error if name is not provided', () => {
-            try {
-                toolbarProvider.addStandardButton();
-            }
-            catch(ex){
-                expect(ex).toEqual('Arguments "name", "title" and "command" are required');
-            }
-        });
-
-        it('should throw an error if title is not provided', () => {
-            try {
-                toolbarProvider.addStandardButton('button1');
-            }
-            catch(ex){
-                expect(ex).toEqual('Arguments "name", "title" and "command" are required');
-            }
-        });
-
-        it('should throw an error if command is not provided', () => {
-            try {
-                toolbarProvider.addStandardButton('button1', 'My button');
-            }
-            catch(ex){
-                expect(ex).toEqual('Arguments "name", "title" and "command" are required');
-            }
+        it('should throw an error if name/title/command is not provided', () => {
+            let errorMsg = 'Arguments "name", "title" and "command" are required';
+            
+            expect(() => toolbarProvider.addStandardButton()).toThrow(errorMsg);
+            expect(() => toolbarProvider.addStandardButton('button1')).toThrow(errorMsg);
+            expect(() => toolbarProvider.addStandardButton('button1', 'My button')).toThrow(errorMsg);
         });
 
         it('should not throw an error if name, title and command are provided', () => {
@@ -70,22 +46,11 @@ describe('provider: ngWigToolbar', () => {
             expect(toolbarProvider.addCustomButton).toBeDefined();
         });
 
-        it('should throw an error if name is not provided', () => {
-            try {
-                toolbarProvider.addCustomButton();
-            }
-            catch(ex){
-                expect(ex).toEqual('Arguments "name" and "pluginName" are required');
-            }
-        });
+        it('should throw an error if name/plugin is not provided', () => {
+            let errorMsg = 'Arguments "name" and "pluginName" are required';
 
-        it('should throw an error if pluginName is not provided', () => {
-            try {
-                toolbarProvider.addCustomButton('button1');
-            }
-            catch(ex){
-                expect(ex).toEqual('Arguments "name" and "pluginName" are required');
-            }
+            expect(() => { toolbarProvider.addCustomButton() }).toThrow(errorMsg);
+            expect(() => { toolbarProvider.addCustomButton('button1') }).toThrow(errorMsg);
         });
         
         it('should not throw an error if name and pluginName are provided', () => {
@@ -104,12 +69,9 @@ describe('provider: ngWigToolbar', () => {
             }));
 
             it('should throw an error if provided buttons have not been added first', () => {
-                try {
-                    toolbarProvider.$get().getToolbarButtons(['button1']);
-                }
-                catch(ex){
-                    expect(ex).toEqual('There is no "button1" in your library. Possible variants: list1,list2,bold,italic,link,clear-styles,forecolor,formats');
-                }
+                expect(() => {
+                    toolbarProvider.$get().getToolbarButtons(['button1'])
+                }).toThrow('There is no "button1" in your library. Possible variants: list1,list2,bold,italic,link,clear-styles,forecolor,formats');
             });
             
             it('should return 8 buttons by default', () => {

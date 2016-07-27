@@ -52,9 +52,9 @@
     "git": "https://github.com/stevermeister/ngWig"
   },
   "scripts": {
-    "start": "./node_modules/.bin/grunt start",
-    "devSetup": "./node_modules/.bin/bower install && ./node_modules/.bin/grunt install",
-    "test": "./node_modules/.bin/grunt karma:unit"
+    "start": "grunt start",
+    "devSetup": "bower install && grunt install",
+    "test": "grunt karma:unit"
   },
   "license": "MIT"
 }
