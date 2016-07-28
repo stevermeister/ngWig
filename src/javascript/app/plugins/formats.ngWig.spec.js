@@ -1,11 +1,16 @@
 describe('component: nwFormatsButton', () => {
-    var component;
-    var scope;
-    var execCommand;
-    var editMode;
-    var disabled;
-    var formats;
-    var ngWigToolbar;
+    let component;
+    let scope;
+    let execCommand = 'fakeCmd()';
+    let editMode = false;
+    let disabled = false;
+    let formats = [
+             { name: 'Normal text', value: '<p>' },
+             { name: 'Header 1', value: '<h1>' },
+             { name: 'Header 2', value: '<h2>' },
+             { name: 'Header 3', value: '<h3>' }
+        ];
+    let ngWigToolbar;
 
     beforeEach(module('ngWig'));
 
@@ -13,16 +18,6 @@ describe('component: nwFormatsButton', () => {
         scope = _$rootScope_.$new();
         
         ngWigToolbar = _ngWigToolbar_;
-
-        execCommand = 'fakeCmd()';
-        editMode = false;
-        disabled = false;
-        formats = [
-             { name: 'Normal text', value: '<p>' },
-             { name: 'Header 1', value: '<h1>' },
-             { name: 'Header 2', value: '<h2>' },
-             { name: 'Header 3', value: '<h3>' }
-        ];
 
         component = _$componentController_('nwFormatsButton', { $scope: scope }, { execCommand: execCommand, editMode: editMode, disabled: disabled });
     }));
@@ -48,7 +43,7 @@ describe('component: nwFormatsButton', () => {
     });
 
     it('should be added to the button list', () => {
-        var filteredButtons = ngWigToolbar.getToolbarButtons().filter(button => button.pluginName === 'nw-formats-button');
+        let filteredButtons = ngWigToolbar.getToolbarButtons().filter(button => button.pluginName === 'nw-formats-button');
         
         expect(filteredButtons.length).toEqual(1);
     });

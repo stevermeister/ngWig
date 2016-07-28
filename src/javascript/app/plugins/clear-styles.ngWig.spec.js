@@ -1,10 +1,10 @@
 describe('component: nwClearStylesButton', () => {
-    var component;
-    var scope;
-    var execCommand;
-    var editMode;
-    var disabled;
-    var ngWigToolbar;
+    let component;
+    let scope;
+    let execCommand;
+    let editMode = false;
+    let disabled = false;
+    let ngWigToolbar;
 
     beforeEach(module('ngWig'));
 
@@ -12,9 +12,6 @@ describe('component: nwClearStylesButton', () => {
         scope = _$rootScope_.$new();
         
         ngWigToolbar = _ngWigToolbar_;
-
-        editMode = false;
-        disabled = false;
 
         component = _$componentController_('nwClearStylesButton', { $scope: scope }, { editMode: editMode, disabled: disabled });
     }));
@@ -32,7 +29,7 @@ describe('component: nwClearStylesButton', () => {
     });
 
     it('should be added to the button list', () => {
-        var filteredButtons = ngWigToolbar.getToolbarButtons().filter(button => button.pluginName === 'nw-clear-styles-button');
+        let filteredButtons = ngWigToolbar.getToolbarButtons().filter(button => button.pluginName === 'nw-clear-styles-button');
         
         expect(filteredButtons.length).toEqual(1);
     });

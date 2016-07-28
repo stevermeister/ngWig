@@ -2,47 +2,40 @@ describe('component: ngWig', () => {
     let component;
     let controller;
     let scope;
-    let content;
-    let options;
-    let buttons;
+    let content = 'Fake text';
+    let options = ['Option 1', 'Option 2'];
+    let buttons = 'button1,button2';
     let beforeExecCommand;
     let afterExecCommand;
-    let element;
-    let attrs;
+    let element = angular.element('<div></div>');
+    let attrs = { $observe: () => {} };
     let pasteSpy;
     let beforeExecSpy;
     let afterExecSpy;
-    let mocks;
-    let window;
+    let mocks = {
+        list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'list-ul'},
+        list2: {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'list-ol'},
+        bold: {title: 'Bold', command: 'bold', styleClass: 'bold'},
+        italic: {title: 'Italic', command: 'italic', styleClass: 'italic'},
+        link: {title: 'Link', command: 'createlink', styleClass: 'link'}
+    };
+    let mockWindow;
     let compile;
 
     beforeEach(module('ngWig'));
 
     beforeEach(inject((_$componentController_, _$rootScope_, _$window_, _$compile_, _ngWigToolbar_) => {
-        window = _$window_;
+        mockWindow = _$window_;
         compile = _$compile_;
 
         scope = _$rootScope_.$new();
-
-        content = 'Fake text';
-        element = angular.element('<div></div>');
-        attrs = { $observe: () => {} };
-        options = ['Option 1', 'Option 2'];
-        buttons = 'button1,button2';
+        
         pasteSpy = jasmine.createSpy('pasteSpy');
         beforeExecSpy = jasmine.createSpy('beforeExecSpy');
         afterExecSpy = jasmine.createSpy('afterExecSpy');
 
-        mocks = {
-            list1: {title: 'Unordered List', command: 'insertunorderedlist', styleClass: 'list-ul'},
-            list2: {title: 'Ordered List', command: 'insertorderedlist', styleClass: 'list-ol'},
-            bold: {title: 'Bold', command: 'bold', styleClass: 'bold'},
-            italic: {title: 'Italic', command: 'italic', styleClass: 'italic'},
-            link: {title: 'Link', command: 'createlink', styleClass: 'link'}
-        };
-
         spyOn(_ngWigToolbar_, 'getToolbarButtons').and.returnValue(mocks);
-        spyOn(window.getSelection(), 'removeAllRanges');
+        spyOn(mockWindow.getSelection(), 'removeAllRanges');
 
         component = _$componentController_('ngWig', 
                                             { $scope: scope, $element: element, $attrs: attrs }, 
@@ -131,7 +124,7 @@ describe('component: ngWig', () => {
         it('should remove all ranges from the selection', () => {
             component.toggleEditMode();
 
-            expect(window.getSelection().removeAllRanges).toHaveBeenCalled();
+            expect(mockWindow.getSelection().removeAllRanges).toHaveBeenCalled();
         });
     });
 
@@ -168,28 +161,28 @@ describe('component: ngWig', () => {
         });
 
         it('should show a prompt when the command name is createlink', () => {
-            spyOn(window, 'prompt').and.returnValue('http://fakeLink');
+            spyOn(mockWindow, 'prompt').and.returnValue('http://fakeLink');
             component.execCommand('createlink');
 
-            expect(window.prompt).toHaveBeenCalledWith('Please enter the URL', 'http://');
+            expect(mockWindow.prompt).toHaveBeenCalledWith('Please enter the URL', 'http://');
         });
 
         it('should show a prompt when the command name is insertImage', () => {
-            spyOn(window, 'prompt').and.returnValue('http://fakeImage');
+            spyOn(mockWindow, 'prompt').and.returnValue('http://fakeImage');
             component.execCommand('insertImage');
 
-            expect(window.prompt).toHaveBeenCalledWith('Please enter the URL', 'http://');
+            expect(mockWindow.prompt).toHaveBeenCalledWith('Please enter the URL', 'http://');
         });
 
         it('should not show a prompt when the command is not createlink or insertImage', () => {
-            spyOn(window, 'prompt');
+            spyOn(mockWindow, 'prompt');
             component.execCommand('fakeCmd');
 
-            expect(window.prompt).not.toHaveBeenCalled();
+            expect(mockWindow.prompt).not.toHaveBeenCalled();
         });
 
         it('should return if the prompt is cancelled', () => {
-            spyOn(window, 'prompt').and.returnValue(undefined);
+            spyOn(mockWindow, 'prompt').and.returnValue(undefined);
             component.execCommand('createlink');
 
             expect(beforeExecSpy).not.toHaveBeenCalled();

@@ -1,23 +1,18 @@
 describe('component: nwForecolorButton', () => {
-    var component;
-    var scope;
-    var execCommand;
-    var editMode;
-    var disabled;
-    var mocks;
-    var ngWigToolbar;
+    let component;
+    let scope;
+    let execCommand = 'fakeCmd()';
+    let editMode = false;
+    let disabled = false;
+    let mocks = { name: "fontcolor.color", value: "#ff0000" };
+    let ngWigToolbar;
 
     beforeEach(module('ngWig'));
 
     beforeEach(inject((_$componentController_, _$rootScope_, _ngWigToolbar_) => {
         scope = _$rootScope_.$new();
-        mocks = { name: "fontcolor.color", value: "#ff0000" };
 
         ngWigToolbar = _ngWigToolbar_;
-        
-        execCommand = 'fakeCmd()';
-        editMode = false;
-        disabled = false;
 
         component = _$componentController_('nwForecolorButton', { $scope: scope }, { execCommand: execCommand, editMode: editMode, disabled: disabled });
     }));
@@ -34,7 +29,7 @@ describe('component: nwForecolorButton', () => {
         expect(component.disabled).toEqual(disabled);
     });
 
-    it('should call foreColor execCommand', function(){
+    it('should call foreColor execCommand', () => {
         spyOn(component, 'execCommand');
 
         scope.$emit('colorpicker-selected', mocks);
@@ -43,7 +38,7 @@ describe('component: nwForecolorButton', () => {
     });
 
     it('should be added to the button list', () => {
-        var filteredButtons = ngWigToolbar.getToolbarButtons().filter(button => button.pluginName === 'nw-forecolor-button');
+        let filteredButtons = ngWigToolbar.getToolbarButtons().filter(button => button.pluginName === 'nw-forecolor-button');
         
         expect(filteredButtons.length).toEqual(1);
     });

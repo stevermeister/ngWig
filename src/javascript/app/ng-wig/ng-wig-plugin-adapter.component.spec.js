@@ -1,13 +1,16 @@
 describe('component: ngWigPlugin', () => {
     let component;
     let scope;
-    let plugin;
-    let execCommand;
-    let editMode;
-    let disabled;
-    let options;
-    let content;
-    let element;
+    let plugin = {
+        name: 'myPlugin',
+        pluginName: 'my-plugin'
+    };
+    let execCommand = 'fakeCmd()';
+    let editMode = false;
+    let disabled = false;
+    let options = ['Option 1', 'Option 2'];
+    let content = 'Fake text';
+    let element = angular.element('<div></div>');
     let compile;
 
     beforeEach(module('ngWig'));
@@ -15,17 +18,6 @@ describe('component: ngWigPlugin', () => {
     beforeEach(inject((_$componentController_, _$rootScope_, _$compile_) => {
         scope = _$rootScope_.$new();
         compile = _$compile_;
-
-        plugin = {
-            name: 'myPlugin',
-            pluginName: 'my-plugin'
-        };
-        editMode = false;
-        disabled = false;
-        options = ['Option 1', 'Option 2'];
-        content = 'Fake text';
-        element = angular.element('<div></div>');
-        execCommand = 'fakeCmd()';
 
         spyOn(element, 'replaceWith');
         
