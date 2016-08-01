@@ -114,6 +114,16 @@ module.exports = function(grunt) {
         tagMessage: 'Version %VERSION%',
         push: false
       }
+    },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        autoWatch: false,
+        singleRun: true
+      },
+      continuous: {
+        configFile: 'karma.conf.js'
+      }
     }
   });
 
