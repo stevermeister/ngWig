@@ -30,7 +30,7 @@ or via bower:
 ##CDN
 
     https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.1/ng-wig.min.js
-    
+
     https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.1/ng-wig.js
 
     https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.1/css/ng-wig.css
@@ -60,6 +60,10 @@ or via bower:
 ###Edit Source option ([plunker](https://plnkr.co/edit/JVOI2l2gnZMKORMWjAEZ?p=preview))
 
   ```<ng-wig ng-model="text1" source-mode-allowed></ng-wig>```
+
+###Placeholder
+
+  ```<ng-wig ng-model="text1" placeholder="'Enter content here.'"></ng-wig>```
 
 ###ngModel sync ([plunker](https://plnkr.co/edit/8owI0CDjoos8DArlc10g?p=preview))
 

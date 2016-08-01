@@ -6,7 +6,8 @@ angular.module('ngWig')
       onPaste: '&',
       buttons: '@',
       beforeExecCommand: '&',
-      afterExecCommand: '&'
+      afterExecCommand: '&',
+      placeholder: '<?'
     },
     require: {
       ngModelController: 'ngModel'
@@ -49,10 +50,11 @@ angular.module('ngWig')
 
       this.$onInit = () => {
         //model --> view
-        this.ngModelController.$render = () => $container.html(this.ngModelController.$viewValue || '<p></p>');
+        this.ngModelController.$render = () =>  $attrs.placeholder === '' ? $container.html(this.ngModelController.$viewValue || '<p></p>') : $container.empty();
 
         $container.bind('blur keyup change focus click', () => {
           //view --> model
+          if ($container.html().length && !$container.text().trim().length) $container.empty();
           this.ngModelController.$setViewValue($container.html());
           $scope.$applyAsync();
         });
