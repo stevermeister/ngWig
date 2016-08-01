@@ -11,7 +11,7 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
   var defaultButtonsList = ['list1', 'list2', 'bold', 'italic', 'link'];
 
   var isButtonActive = function () {
-    return this.command && document.queryCommandState(this.command);
+    return this.command !== undefined && document.queryCommandState(this.command);
   };
 
   this.setButtons = function(buttons) {
@@ -51,11 +51,7 @@ angular.module('ngWig').provider('ngWigToolbar', function () {
           }
 
           var button = angular.copy(buttonLibrary[buttonKey]);
-
-          if(!angular.isFunction(button.isActive)) {
-            button.isActive = isButtonActive;
-          }
-
+          button.isActive = isButtonActive;
           toolbarButtons.push(button);
         });
         return toolbarButtons;
