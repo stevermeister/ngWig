@@ -61,9 +61,9 @@ or via bower:
 
   ```<ng-wig ng-model="text1" source-mode-allowed></ng-wig>```
 
-###Placeholder
+###Placeholder ([plunker](https://plnkr.co/edit/yXZkpyHcb47rbXfTHs31?p=preview))
 
-  ```<ng-wig ng-model="text1" placeholder="'Enter content here.'"></ng-wig>```
+  ```<ng-wig ng-model="text1" placeholder="'Enter instructions here.'"></ng-wig>```
 
 ###ngModel sync ([plunker](https://plnkr.co/edit/8owI0CDjoos8DArlc10g?p=preview))
 
