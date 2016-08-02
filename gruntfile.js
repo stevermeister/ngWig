@@ -28,9 +28,11 @@ module.exports = function(grunt) {
         files: {
           '<%= distPath %>/ng-wig.js': [
               srcPath + '/javascript/app/ng-wig/ng-wig.js',
-              srcPath + '/javascript/app/ng-wig/*.js',
-              srcPath + '/javascript/app/plugins/formats.ngWig.js',
-              srcPath + '/javascript/app/templates.js']
+              srcPath + '/javascript/app/ng-wig/ng-wig.component.js',
+              srcPath + '/javascript/app/ng-wig/ng-wig-toolbar.provider.js',
+              srcPath + '/javascript/app/ng-wig/ng-wig-plugin-adapter.component.js',
+              srcPath + '/javascript/app/templates.js'
+            ]
         }
       },
       plugins: {
@@ -131,6 +133,7 @@ module.exports = function(grunt) {
   grunt.registerTask('start', ['html2js', 'watch']);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
   grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin', 'bump:patch']);
+  grunt.registerTask('devBuild', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin']);
   grunt.registerTask('upversion', ['bump:minor']);
   //grunt.registerTask('upversion', ['bump:major']);
 };
