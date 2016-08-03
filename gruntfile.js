@@ -19,7 +19,11 @@ module.exports = function(grunt) {
       dist: {
         files: [
           {src: srcPath + '/css/ng-wig.css', dest: distPath + '/css/ng-wig.css'},
-          {expand: true, cwd: srcPath + '/javascript/app/', src: ['plugins/*.js'], dest: distPath}
+          {expand: true, cwd: srcPath + '/javascript/app/', src: [
+            'plugins/clear-styles.ngWig.js',
+            'plugins/forecolor.ngWig.js',
+            'plugins/formats.ngWig.js'
+          ], dest: distPath}
         ]
       }
     },
@@ -39,7 +43,11 @@ module.exports = function(grunt) {
         files: [{
            expand: true,
            cwd: srcPath + '/javascript/app/plugins/',
-           src: ['*.js'],
+           src: [
+             'clear-styles.ngWig.js',
+             'forecolor.ngWig.js',
+             'formats.ngWig.js'
+           ],
            dest: distPath + '/plugins'
         }]
       }
@@ -73,7 +81,11 @@ module.exports = function(grunt) {
         files: [{
            expand: true,
            cwd: distPath + '/plugins/',
-           src: ['*.js'],
+           src: [
+             'clear-styles.ngWig.js',
+             'forecolor.ngWig.js',
+             'formats.ngWig.js'
+           ],
            dest: distPath + '/plugins',
            ext: ['.ngWig.min.js']
         }]
