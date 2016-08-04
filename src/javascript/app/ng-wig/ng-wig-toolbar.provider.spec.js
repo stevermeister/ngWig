@@ -84,10 +84,32 @@ describe('provider: ngWigToolbar', () => {
                 expect(toolbarProvider.$get().getToolbarButtons(['button1']).length).toEqual(1);
             });
 
-            it('should add isActive function to a button', () => {
-                toolbarProvider.addCustomButton('button1', 'my-button');
+            describe('isActive function', () => {
+                it('should be set to a button', () => {
+                    toolbarProvider.addCustomButton('button1', 'my-button');
 
-                expect(toolbarProvider.$get().getToolbarButtons(['button1'])[0].isActive).toBeDefined();
+                    expect(toolbarProvider.$get().getToolbarButtons(['button1'])[0].isActive).toBeDefined();
+                });
+
+                it('should return false if there is no command', () => {
+                    toolbarProvider.addCustomButton('button1', 'my-button');
+
+                    expect(toolbarProvider.$get().getToolbarButtons(['button1'])[0].isActive()).toEqual(false);
+                });
+
+                it('should return false if queryCommandState returns false', () => {
+                    spyOn(document, 'queryCommandState').and.returnValue(false);
+                    toolbarProvider.addStandardButton('button1', 'my-button', 'fakeCmd');
+
+                    expect(toolbarProvider.$get().getToolbarButtons(['button1'])[0].isActive()).toEqual(false);
+                });
+
+                it('should return true', () => {
+                    spyOn(document, 'queryCommandState').and.returnValue(true);
+                    toolbarProvider.addStandardButton('button1', 'my-button', 'fakeCmd');
+
+                    expect(toolbarProvider.$get().getToolbarButtons(['button1'])[0].isActive()).toEqual(true);
+                });
             });
         });
     });
