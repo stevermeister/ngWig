@@ -7,7 +7,7 @@ angular.module('ngWig')
       buttons: '@',
       beforeExecCommand: '&',
       afterExecCommand: '&' ,
-      placeholder: '<?'
+      placeholder: '@?'
     },
     require: {
       ngModelController: 'ngModel'
