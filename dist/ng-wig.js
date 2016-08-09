@@ -93,6 +93,12 @@ angular.module('ngWig').component('ngWig', {
       });
     });
 
+    $scope.$watch(function () {
+      return _this.ngModelController.$viewValue;
+    }, function (nVal, oVal) {
+      if (nVal !== oVal && Boolean(_this.placeholder)) $container.html(_this.ngModelController.$viewValue);
+    });
+
     $scope.$on('execCommand', function (event, params) {
       var selection = $document[0].getSelection().toString();
       var command = params.command;

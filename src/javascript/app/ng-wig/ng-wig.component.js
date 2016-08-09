@@ -79,6 +79,10 @@ angular.module('ngWig')
         });
       });
 
+      $scope.$watch(() => this.ngModelController.$viewValue, (nVal, oVal) => {
+        if (nVal !== oVal && Boolean(this.placeholder)) $container.html(this.ngModelController.$viewValue);
+      });
+
       $scope.$on('execCommand', (event, params) => {
         let selection = $document[0].getSelection().toString();
         let command = params.command;
