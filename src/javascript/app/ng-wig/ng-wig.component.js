@@ -51,7 +51,10 @@ angular.module('ngWig')
 
       this.$onInit = () => {
         let placeholder = Boolean(this.placeholder);
-        this.ngModelController.$render = () =>  !placeholder ? $container.html(this.ngModelController.$viewValue || '<p></p>') : $container.empty();
+        this.ngModelController.$render = () => this.ngModelController && this.ngModelController.$viewValue
+          ? $container.html(this.ngModelController.$viewValue)
+          : placeholder ? $container.empty()
+          : $container.html('<p></p>');
 
         $container.bind('blur keyup change focus click', () => {
           //view --> model
@@ -77,6 +80,12 @@ angular.module('ngWig')
         $q.when(this.onPaste({$event: event, pasteContent: pasteContent})).then((pasteText) => {
           pasteHtmlAtCaret(pasteText);
         });
+      });
+
+      $scope.$watch(
+        () => this.ngModelController && this.ngModelController.$viewValue ? this.ngModelController.$viewValue : this.ngModelController,
+        (nVal, oVal) => {
+          if (nVal !== oVal && Boolean(this.placeholder)) $container.html(this.ngModelController.$viewValue);
       });
 
       $scope.$on('execCommand', (event, params) => {
