@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * version: 3.0.5
+ * version: 3.0.6
  */
 angular.module('ngWig', ['ngwig-app-templates']);
 angular.ngWig = {
