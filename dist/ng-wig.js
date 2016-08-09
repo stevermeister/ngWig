@@ -3,7 +3,7 @@
 /**
  * version: 3.0.7
  */
-var VERSION = '3.0.6';
+var VERSION = '3.0.7';
 angular.module('ngWig', ['ngwig-app-templates']);
 angular.ngWig = {
   version: VERSION
@@ -65,7 +65,7 @@ angular.module('ngWig').component('ngWig', {
     this.$onInit = function () {
       var placeholder = Boolean(_this.placeholder);
       _this.ngModelController.$render = function () {
-        return !placeholder ? $container.html(_this.ngModelController.$viewValue || '<p></p>') : $container.empty();
+        return _this.ngModelController.$viewValue || !placeholder ? $container.html(_this.ngModelController.$viewValue || '<p></p>') : $container.empty();
       };
 
       $container.bind('blur keyup change focus click', function () {
@@ -92,6 +92,13 @@ angular.module('ngWig').component('ngWig', {
       $q.when(_this.onPaste({ $event: event, pasteContent: pasteContent })).then(function (pasteText) {
         pasteHtmlAtCaret(pasteText);
       });
+    });
+
+    $scope.$watch(function () {
+      return _this.ngModelController.$viewValue;
+    }, function (nVal, oVal) {
+      console.log("nVal", nVal, oVal);
+      if (nVal !== oVal && Boolean(_this.placeholder)) $container.html(_this.ngModelController.$viewValue);
     });
 
     $scope.$on('execCommand', function (event, params) {
