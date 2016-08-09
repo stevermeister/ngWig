@@ -6,7 +6,8 @@ angular.module('ngWig')
       onPaste: '&',
       buttons: '@',
       beforeExecCommand: '&',
-      afterExecCommand: '&'
+      afterExecCommand: '&' ,
+      placeholder: '@?'
     },
     require: {
       ngModelController: 'ngModel'
@@ -21,6 +22,7 @@ angular.module('ngWig')
       this.isSourceModeAllowed = 'sourceModeAllowed' in $attrs;
       this.editMode = false;
       this.toolbarButtons = ngWigToolbar.getToolbarButtons(this.buttons && string2array(this.buttons));
+      this.placeholder = $attrs.placeholder;
       $attrs.$observe('disabled', (isDisabled) => {
         this.disabled = isDisabled;
         $container.attr('contenteditable', !isDisabled);
@@ -48,11 +50,12 @@ angular.module('ngWig')
       };
 
       this.$onInit = () => {
-        //model --> view
-        this.ngModelController.$render = () => $container.html(this.ngModelController.$viewValue || '<p></p>');
+        let placeholder = Boolean(this.placeholder);
+        this.ngModelController.$render = () =>  !placeholder ? $container.html(this.ngModelController.$viewValue || '<p></p>') : $container.empty();
 
         $container.bind('blur keyup change focus click', () => {
           //view --> model
+          if (placeholder && !$container.html().length || placeholder && $container.html() === "<br>") $container.empty();
           this.ngModelController.$setViewValue($container.html());
           $scope.$applyAsync();
         });

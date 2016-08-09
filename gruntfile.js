@@ -19,7 +19,11 @@ module.exports = function(grunt) {
       dist: {
         files: [
           {src: srcPath + '/css/ng-wig.css', dest: distPath + '/css/ng-wig.css'},
-          {expand: true, cwd: srcPath + '/javascript/app/', src: ['plugins/*.js'], dest: distPath}
+          {expand: true, cwd: srcPath + '/javascript/app/', src: [
+            'plugins/clear-styles.ngWig.js',
+            'plugins/forecolor.ngWig.js',
+            'plugins/formats.ngWig.js'
+          ], dest: distPath}
         ]
       }
     },
@@ -28,16 +32,22 @@ module.exports = function(grunt) {
         files: {
           '<%= distPath %>/ng-wig.js': [
               srcPath + '/javascript/app/ng-wig/ng-wig.js',
-              srcPath + '/javascript/app/ng-wig/*.js',
-              srcPath + '/javascript/app/plugins/formats.ngWig.js',
-              srcPath + '/javascript/app/templates.js']
+              srcPath + '/javascript/app/ng-wig/ng-wig.component.js',
+              srcPath + '/javascript/app/ng-wig/ng-wig-toolbar.provider.js',
+              srcPath + '/javascript/app/ng-wig/ng-wig-plugin-adapter.component.js',
+              srcPath + '/javascript/app/templates.js'
+            ]
         }
       },
       plugins: {
         files: [{
            expand: true,
            cwd: srcPath + '/javascript/app/plugins/',
-           src: ['*.js'],
+           src: [
+             'clear-styles.ngWig.js',
+             'forecolor.ngWig.js',
+             'formats.ngWig.js'
+           ],
            dest: distPath + '/plugins'
         }]
       }
@@ -71,7 +81,11 @@ module.exports = function(grunt) {
         files: [{
            expand: true,
            cwd: distPath + '/plugins/',
-           src: ['*.js'],
+           src: [
+             'clear-styles.ngWig.js',
+             'forecolor.ngWig.js',
+             'formats.ngWig.js'
+           ],
            dest: distPath + '/plugins',
            ext: ['.ngWig.min.js']
         }]
@@ -131,6 +145,7 @@ module.exports = function(grunt) {
   grunt.registerTask('start', ['html2js', 'watch']);
   grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
   grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin', 'bump:patch']);
+  grunt.registerTask('devBuild', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin']);
   grunt.registerTask('upversion', ['bump:minor']);
   //grunt.registerTask('upversion', ['bump:major']);
 };

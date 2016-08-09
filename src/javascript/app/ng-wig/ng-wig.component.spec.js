@@ -1,5 +1,6 @@
 describe('component: ngWig', () => {
     let component;
+    let $componentController;
     let controller;
     let scope;
     let content = 'Fake text';
@@ -8,7 +9,7 @@ describe('component: ngWig', () => {
     let beforeExecCommand;
     let afterExecCommand;
     let element = angular.element('<div></div>');
-    let attrs = { $observe: () => {} };
+    let attrs = { $observe: () => {} , placeholder: ''};
     let pasteSpy;
     let beforeExecSpy;
     let afterExecSpy;
@@ -24,12 +25,12 @@ describe('component: ngWig', () => {
 
     beforeEach(module('ngWig'));
 
-    beforeEach(inject((_$componentController_, _$rootScope_, _$window_, _$compile_, _ngWigToolbar_) => {
+    beforeEach(inject((_$componentController_, _$q_, _$rootScope_, _$window_, _$compile_, _ngWigToolbar_) => {
         mockWindow = _$window_;
         compile = _$compile_;
-
+        $componentController = _$componentController_;
         scope = _$rootScope_.$new();
-        
+
         pasteSpy = jasmine.createSpy('pasteSpy');
         beforeExecSpy = jasmine.createSpy('beforeExecSpy');
         afterExecSpy = jasmine.createSpy('afterExecSpy');
@@ -37,8 +38,8 @@ describe('component: ngWig', () => {
         spyOn(_ngWigToolbar_, 'getToolbarButtons').and.returnValue(mocks);
         spyOn(mockWindow.getSelection(), 'removeAllRanges');
 
-        component = _$componentController_('ngWig', 
-                                            { $scope: scope, $element: element, $attrs: attrs }, 
+        component = $componentController('ngWig',
+                                            { $scope: scope, $element: element, $attrs: attrs },
                                             { content: content, options: options, buttons: buttons, onPaste: pasteSpy, beforeExecCommand: beforeExecSpy, afterExecCommand: afterExecSpy }
                                             );
     }));
@@ -46,11 +47,11 @@ describe('component: ngWig', () => {
     function getCompiledElement(template) {
         let element = angular.element(template || '<ng-wig ng-model="text1"><ng-wig>');
         let compiledElement = compile(element)(scope);
-        
+
         scope.$digest();
 
         controller = element.controller('ngWig');
-        
+
         return compiledElement;
     }
 
@@ -132,7 +133,7 @@ describe('component: ngWig', () => {
         beforeEach(() => {
             spyOn(scope, '$broadcast');
         });
-        
+
         it('should exist', () => {
             expect(component.execCommand).not.toBe(null);
         });
@@ -198,7 +199,7 @@ describe('component: ngWig', () => {
     it('should set disabled property', () => {
         element = getCompiledElement('<ng-wig disabled="true" ng-model="text1"></ng-wig>');
         ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
-        
+
         expect(controller.disabled).toEqual('true');
         expect(ngWigElement.attr('contenteditable')).toEqual('false');
     });
@@ -251,6 +252,7 @@ describe('component: ngWig', () => {
 
                 expect(controller.ngModelController.$setViewValue).toHaveBeenCalledWith('<p></p>');
             });
+
         });
     });
 });
