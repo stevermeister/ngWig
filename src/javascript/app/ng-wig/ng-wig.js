@@ -1,7 +1,8 @@
 /**
- * version: 3.0.4
+ * version: 3.0.7
  */
+var VERSION = '3.0.7';
 angular.module('ngWig', ['ngwig-app-templates']);
 angular.ngWig = {
-  version: '3.0.1'
+  version: VERSION
 };
