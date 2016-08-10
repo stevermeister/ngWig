@@ -38,20 +38,48 @@ angular.module('ngWig')
       this.execCommand = (command, options) => {
         if (this.editMode) return false;
 
+        if ($document[0].queryCommandSupported && !$document[0].queryCommandSupported(command)) {
+          throw 'The command "' + command + '" is not supported';
+        }
+
         if (command === 'createlink' || command === 'insertImage') {
           options = $window.prompt('Please enter the URL', 'http://');
           if (!options) {
             return;
           }
         }
+
         this.beforeExecCommand({command: command, options: options});
-        $scope.$broadcast('execCommand', {command: command, options: options});
+
+        // use insertHtml for `createlink` command to account for IE/Edge purposes, in case there is no selection
+        let selection = $document[0].getSelection().toString();
+        if(command === 'createlink' && selection === ''){
+          $document[0].execCommand('insertHtml', false, '<a href="' + options + '">' + options + '</a>');
+        }
+        else{
+          $document[0].execCommand(command, false, options);
+        }
+
         this.afterExecCommand({command: command, options: options});
+
+        // added temporarily to pass the tests. For some reason $container[0] is undefined during testing.
+        if($container.length){
+          $container[0].focus();
+        }
       };
 
       this.$onInit = () => {
         let placeholder = Boolean(this.placeholder);
-        this.ngModelController.$render = () => this.ngModelController && this.ngModelController.$viewValue
+
+        // if (this.ngModelController.$viewValue) {
+        //   this.ngModelController.$render = () => $container.html(this.ngModelController.$viewValue);
+        // } else if (placeholder) {
+        //   this.ngModelController.$render = () => $container.empty();
+        // } else {
+        //   this.ngModelController.$render = () => $container.html('<p></p>');
+        // }
+
+        this.ngModelController.$render = () => this.ngModelController.$viewValue
           ? $container.html(this.ngModelController.$viewValue)
           : placeholder ? $container.empty()
           : $container.html('<p></p>');
@@ -87,29 +115,6 @@ angular.module('ngWig')
         (nVal, oVal) => {
           if (nVal !== oVal && Boolean(this.placeholder)) $container.html(this.ngModelController.$viewValue);
       });
-
-      $scope.$on('execCommand', (event, params) => {
-        let selection = $document[0].getSelection().toString();
-        let command = params.command;
-        let options = params.options;
-
-        event.stopPropagation && event.stopPropagation();
-
-        $container[0].focus();
-
-        if ($document[0].queryCommandSupported && !$document[0].queryCommandSupported(command)) {
-          throw 'The command "' + command + '" is not supported';
-        }
-
-        // use insertHtml for `createlink` command to account for IE/Edge purposes, in case there is no selection
-        if(command === 'createlink' && selection === ''){
-          $document[0].execCommand('insertHtml', false, '<a href="' + options + '">' + options + '</a>');
-        }
-        else{
-          $document[0].execCommand(command, false, options);
-        }
-      });
-
     }
   });
 

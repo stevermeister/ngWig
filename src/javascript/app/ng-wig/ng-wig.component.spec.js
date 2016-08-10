@@ -22,13 +22,15 @@ describe('component: ngWig', () => {
     };
     let mockWindow;
     let compile;
+    let currentDocument;
     let $timeout;
 
     beforeEach(module('ngWig'));
 
-    beforeEach(inject((_$componentController_, _$q_, _$rootScope_, _$timeout_, _$window_, _$compile_, _ngWigToolbar_) => {
+    beforeEach(inject((_$componentController_, _$q_, _$rootScope_, _$timeout_, _$window_, _$compile_, _$document_, _ngWigToolbar_) => {
         mockWindow = _$window_;
         compile = _$compile_;
+        currentDocument = _$document_;
         $componentController = _$componentController_;
         scope = _$rootScope_.$new();
         $timeout = _$timeout_;
@@ -39,6 +41,7 @@ describe('component: ngWig', () => {
 
         spyOn(_ngWigToolbar_, 'getToolbarButtons').and.returnValue(mocks);
         spyOn(mockWindow.getSelection(), 'removeAllRanges');
+        spyOn(currentDocument[0], 'execCommand');
 
         component = $componentController('ngWig',
                                             { $scope: scope, $element: element, $attrs: attrs },
@@ -132,10 +135,6 @@ describe('component: ngWig', () => {
     });
 
     describe('execCommand function', () => {
-        beforeEach(() => {
-            spyOn(scope, '$broadcast');
-        });
-
         it('should exist', () => {
             expect(component.execCommand).not.toBe(null);
         });
@@ -146,21 +145,30 @@ describe('component: ngWig', () => {
             expect(component.execCommand('fakeCmd')).toEqual(false);
         });
 
-        it('should broadcast the command', () => {
-            component.execCommand('fakeCmd', {});
+        it('should execute the BOLD command', () => {
+            component.execCommand('bold', {});
 
             expect(beforeExecSpy).toHaveBeenCalledWith({
-                command: 'fakeCmd',
+                command: 'bold',
                 options: {}
             });
-            expect(scope.$broadcast).toHaveBeenCalledWith('execCommand', {
-                command: 'fakeCmd',
-                options: {}
-            });
+            expect(currentDocument[0].execCommand).toHaveBeenCalledWith('bold',false,{});
             expect(afterExecSpy).toHaveBeenCalledWith({
-                command: 'fakeCmd',
+                command: 'bold',
                 options: {}
             });
+        });
+
+        it('should use insertHtml to create a link for IE', () => {
+            spyOn(mockWindow, 'prompt').and.returnValue('http://fakeLink');
+            spyOn(currentDocument[0], 'getSelection').and.returnValue('');
+            component.execCommand('createlink', 'http://fakeLink');
+
+            expect(currentDocument[0].execCommand).toHaveBeenCalledWith('insertHtml', false, '<a href="http://fakeLink">http://fakeLink</a>');
+        });
+
+        it('should fail if command is unknown', function(){
+            expect(() => {component.execCommand('fakeCmd', {})}).toThrow('The command "fakeCmd" is not supported');
         });
 
         it('should show a prompt when the command name is createlink', () => {
@@ -179,7 +187,7 @@ describe('component: ngWig', () => {
 
         it('should not show a prompt when the command is not createlink or insertImage', () => {
             spyOn(mockWindow, 'prompt');
-            component.execCommand('fakeCmd');
+            component.execCommand('bold');
 
             expect(mockWindow.prompt).not.toHaveBeenCalled();
         });
@@ -189,7 +197,7 @@ describe('component: ngWig', () => {
             component.execCommand('createlink');
 
             expect(beforeExecSpy).not.toHaveBeenCalled();
-            expect(scope.$broadcast).not.toHaveBeenCalled();
+            expect(currentDocument[0].execCommand).not.toHaveBeenCalled();
             expect(afterExecSpy).not.toHaveBeenCalled();
         });
     });
@@ -267,7 +275,7 @@ describe('component: ngWig', () => {
               expect(ngWigElement.html()).toEqual('');
             });
 
-            it('should render the model value even if a placeholder exits', function(){
+            it('should render the model value even if a placeholder exists', function(){
               scope.string = "This is a value";
               let el = `<ng-wig ng-model="string" placeholder="My placeholder"><ng-wig>`;
               element = getCompiledElement(el);
@@ -282,6 +290,8 @@ describe('component: ngWig', () => {
 
               $timeout(function () {
                 scope.string = "This is a value";
+                $timeout.flush();
+                expect($timeout.verifyNoPendingTasks()).toEqual(true);
                 expect(ngWigElement.html()).toEqual('This is a value');
               }, 100);
             });
