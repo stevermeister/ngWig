@@ -45,7 +45,7 @@ angular.module('ngWig')
           }
         }
         this.beforeExecCommand({command: command, options: options});
-        $scope.$broadcast('execCommand', {command: command, options: options});
+        this.execute(command, options);
         this.afterExecCommand({command: command, options: options});
       };
 
@@ -79,12 +79,8 @@ angular.module('ngWig')
         });
       });
 
-      $scope.$on('execCommand', (event, params) => {
+      this.execute = (command, options) => {
         let selection = $document[0].getSelection().toString();
-        let command = params.command;
-        let options = params.options;
-
-        event.stopPropagation && event.stopPropagation();
 
         $container[0].focus();
 
@@ -99,7 +95,7 @@ angular.module('ngWig')
         else{
           $document[0].execCommand(command, false, options);
         }
-      });
+      };
 
     }
   });

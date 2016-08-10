@@ -131,7 +131,7 @@ describe('component: ngWig', () => {
 
     describe('execCommand function', () => {
         beforeEach(() => {
-            spyOn(scope, '$broadcast');
+            spyOn(component, 'execute');
         });
 
         it('should exist', () => {
@@ -151,10 +151,7 @@ describe('component: ngWig', () => {
                 command: 'fakeCmd',
                 options: {}
             });
-            expect(scope.$broadcast).toHaveBeenCalledWith('execCommand', {
-                command: 'fakeCmd',
-                options: {}
-            });
+            expect(component.execute).toHaveBeenCalledWith('fakeCmd',{});
             expect(afterExecSpy).toHaveBeenCalledWith({
                 command: 'fakeCmd',
                 options: {}
@@ -187,7 +184,7 @@ describe('component: ngWig', () => {
             component.execCommand('createlink');
 
             expect(beforeExecSpy).not.toHaveBeenCalled();
-            expect(scope.$broadcast).not.toHaveBeenCalled();
+            expect(component.execute).not.toHaveBeenCalled();
             expect(afterExecSpy).not.toHaveBeenCalled();
         });
     });
