@@ -22,12 +22,14 @@ describe('component: ngWig', () => {
     };
     let mockWindow;
     let compile;
+    let currentDocument;
 
     beforeEach(module('ngWig'));
 
-    beforeEach(inject((_$componentController_, _$q_, _$rootScope_, _$window_, _$compile_, _ngWigToolbar_) => {
+    beforeEach(inject((_$componentController_, _$q_, _$rootScope_, _$window_, _$compile_, _$document_, _ngWigToolbar_) => {
         mockWindow = _$window_;
         compile = _$compile_;
+        currentDocument = _$document_;
         $componentController = _$componentController_;
         scope = _$rootScope_.$new();
 
@@ -37,6 +39,7 @@ describe('component: ngWig', () => {
 
         spyOn(_ngWigToolbar_, 'getToolbarButtons').and.returnValue(mocks);
         spyOn(mockWindow.getSelection(), 'removeAllRanges');
+        spyOn(currentDocument[0], 'execCommand');
 
         component = $componentController('ngWig',
                                             { $scope: scope, $element: element, $attrs: attrs },
@@ -130,10 +133,6 @@ describe('component: ngWig', () => {
     });
 
     describe('execCommand function', () => {
-        beforeEach(() => {
-            spyOn(component, 'execute');
-        });
-
         it('should exist', () => {
             expect(component.execCommand).not.toBe(null);
         });
@@ -144,18 +143,30 @@ describe('component: ngWig', () => {
             expect(component.execCommand('fakeCmd')).toEqual(false);
         });
 
-        it('should broadcast the command', () => {
-            component.execCommand('fakeCmd', {});
+        it('should execute the BOLD command', () => {
+            component.execCommand('bold', {});
 
             expect(beforeExecSpy).toHaveBeenCalledWith({
-                command: 'fakeCmd',
+                command: 'bold',
                 options: {}
             });
-            expect(component.execute).toHaveBeenCalledWith('fakeCmd',{});
+            expect(currentDocument[0].execCommand).toHaveBeenCalledWith('bold',false,{});
             expect(afterExecSpy).toHaveBeenCalledWith({
-                command: 'fakeCmd',
+                command: 'bold',
                 options: {}
             });
+        });
+
+        it('should use insertHtml to create a link for IE', () => {
+            spyOn(mockWindow, 'prompt').and.returnValue('http://fakeLink');
+            spyOn(currentDocument[0], 'getSelection').and.returnValue('');
+            component.execCommand('createlink', 'http://fakeLink');
+
+            expect(currentDocument[0].execCommand).toHaveBeenCalledWith('insertHtml', false, '<a href="http://fakeLink">http://fakeLink</a>');
+        });
+
+        it('should fail if command is unknown', function(){
+            expect(() => {component.execCommand('fakeCmd', {})}).toThrow('The command "fakeCmd" is not supported');
         });
 
         it('should show a prompt when the command name is createlink', () => {
@@ -174,7 +185,7 @@ describe('component: ngWig', () => {
 
         it('should not show a prompt when the command is not createlink or insertImage', () => {
             spyOn(mockWindow, 'prompt');
-            component.execCommand('fakeCmd');
+            component.execCommand('bold');
 
             expect(mockWindow.prompt).not.toHaveBeenCalled();
         });
@@ -184,7 +195,7 @@ describe('component: ngWig', () => {
             component.execCommand('createlink');
 
             expect(beforeExecSpy).not.toHaveBeenCalled();
-            expect(component.execute).not.toHaveBeenCalled();
+            expect(currentDocument[0].execCommand).not.toHaveBeenCalled();
             expect(afterExecSpy).not.toHaveBeenCalled();
         });
     });
