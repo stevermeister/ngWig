@@ -1,0 +1,54 @@
+<div class="ng-wig">
+  <ul class="nw-toolbar">
+    <li class="nw-toolbar__item" ng-repeat="button in $ctrl.toolbarButtons">
+        <div ng-if="!button.isComplex">
+          <button type="button"
+                  class="nw-button {{button.styleClass}}"
+                  title="{{button.title}}"
+                  ng-click="$ctrl.execCommand(button.command)"
+                  ng-class="{ 'nw-button--active': !$ctrl.disabled && $ctrl.isEditorActive() && button.isActive() }"
+                  ng-disabled="$ctrl.editMode || $ctrl.disabled">
+            {{ button.title }}
+          </button>
+        </div>
+        <div ng-if="button.isComplex">
+          <ng-wig-plugin
+              exec-command="$ctrl.execCommand"
+              plugin="button"
+              edit-mode="$ctrl.editMode"
+              disabled="$ctrl.disabled"
+              options="$ctrl.options"
+              content="$ctrl.content"></ng-wig-plugin>
+        </div>
+    </li><!--
+    --><li class="nw-toolbar__item">
+      <button type="button"
+              class="nw-button nw-button--source"
+              title="Edit HTML"
+              ng-class="{ 'nw-button--active': $ctrl.editMode }"
+              ng-if="$ctrl.isSourceModeAllowed"
+              ng-click="$ctrl.toggleEditMode()"
+              ng-disabled="$ctrl.disabled">
+        Edit HTML
+      </button>
+    </li>
+  </ul>
+
+  <div class="nw-editor-container">
+    <div class="nw-editor__src-container" ng-show="$ctrl.editMode">
+      <textarea ng-model="$ctrl.content"
+                ng-disabled="$ctrl.disabled"
+                class="nw-editor__src"></textarea>
+    </div>
+    <div class="nw-editor" ng-class="{ 'nw-disabled': $ctrl.disabled }">
+      <div id="ng-wig-editable"
+           tabindex="-1"
+           class="nw-editor__res"
+           ng-class="{'nw-invisible': $ctrl.editMode}"
+           ng-disabled="$ctrl.disabled"
+           contenteditable
+           placeholder="{{$ctrl.placeholder}}">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,24 +1,26 @@
 {
   "name": "ngWig",
-  "version": "2.0.0",
+  "version": "3.0.7",
+  "devDependencies": {
+    "angular": "1.5.0"
+  },
   "homepage": "https://github.com/stevermeister/ngWig",
   "authors": [
     "Stepan Suvorov <stevermeister@gmail.com>"
   ],
-  "description": "demo installation",
+  "description": "Small AngularJS WYSIWYG editor component",
+  "main": [
+    "dist/ng-wig.js",
+    "dist/css/ng-wig.css"
+  ],
   "keywords": [
-    "ng-wig",
-    "demo"
+    "angular",
+    "wysiwyg",
+    "editor"
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
     "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "devDependencies": {
-    "ng-wig": "*"
-  }
+    "bower_components"
+  ]
 }
