@@ -1,6 +1,5 @@
 ngWig
 =====
-
 ##Dependencies
 
 *it's only AngularJS! No jQuery or other WYSIWYG monsters*
