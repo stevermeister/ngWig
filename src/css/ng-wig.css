@@ -262,7 +262,7 @@
 .nw-select:focus { outline: none; }
 
 [contenteditable]:empty:before {
-    content: attr(placeholder);
-    color: grey;
-    display: inline-block;
+  content: attr(placeholder);
+  color: grey;
+  display: inline-block;
 }

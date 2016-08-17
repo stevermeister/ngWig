@@ -23,15 +23,17 @@ describe('component: ngWig', () => {
     let mockWindow;
     let compile;
     let currentDocument;
+    let $timeout;
 
     beforeEach(module('ngWig'));
 
-    beforeEach(inject((_$componentController_, _$q_, _$rootScope_, _$window_, _$compile_, _$document_, _ngWigToolbar_) => {
+    beforeEach(inject((_$componentController_, _$q_, _$rootScope_, _$timeout_, _$window_, _$compile_, _$document_, _ngWigToolbar_) => {
         mockWindow = _$window_;
         compile = _$compile_;
         currentDocument = _$document_;
         $componentController = _$componentController_;
         scope = _$rootScope_.$new();
+        $timeout = _$timeout_;
 
         pasteSpy = jasmine.createSpy('pasteSpy');
         beforeExecSpy = jasmine.createSpy('beforeExecSpy');
@@ -212,6 +214,13 @@ describe('component: ngWig', () => {
         expect(ngWigElement.attr('contenteditable')).toEqual('false');
     });
 
+    it('should set the placeholder property', () => {
+        element = getCompiledElement('<ng-wig disabled="true" ng-model="text1" placeholder="a placholder"></ng-wig>');
+        ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
+
+        expect(ngWigElement.attr('placeholder')).toEqual('a placholder');
+    });
+
     describe('$onInit function', () => {
         let ngWigElement;
 
@@ -221,14 +230,13 @@ describe('component: ngWig', () => {
 
         describe('$render function', () => {
             beforeEach(() => {
-                element = getCompiledElement();
-                ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
-
-                spyOn(controller.ngModelController, '$setViewValue');
+              spyOn(controller.ngModelController, '$setViewValue');
             });
 
             it('should render a paragraph element if ngModel value does not exist', () => {
-                expect(ngWigElement.html()).toEqual('<p></p>');
+              element = getCompiledElement();
+              ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
+              expect(ngWigElement.html()).toEqual('<p></p>');
             });
 
             it('should update the model value on blur event', () => {
@@ -260,6 +268,34 @@ describe('component: ngWig', () => {
 
                 expect(controller.ngModelController.$setViewValue).toHaveBeenCalledWith('<p></p>');
             });
+
+            it('should render an empty element', function(){
+              element = getCompiledElement('<ng-wig ng-model="text1" placeholder="My placeholder"><ng-wig>');
+              ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
+              expect(ngWigElement.html()).toEqual('');
+            });
+
+            it('should render the model value even if a placeholder exists', function(){
+              scope.string = "This is a value";
+              let el = `<ng-wig ng-model="string" placeholder="My placeholder"><ng-wig>`;
+              element = getCompiledElement(el);
+              ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
+              expect(ngWigElement.html()).toEqual('This is a value');
+            });
+
+            it('should render the model value even if a placeholder exits and the model value is recevied async', function(){
+              let el = `<ng-wig ng-model="string" placeholder="My placeholder"><ng-wig>`;
+              element = getCompiledElement(el);
+              ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
+
+              $timeout(function () {
+                scope.string = "This is a value";
+                $timeout.flush();
+                expect($timeout.verifyNoPendingTasks()).toEqual(true);
+                expect(ngWigElement.html()).toEqual('This is a value');
+              }, 100);
+            });
+
 
         });
     });
