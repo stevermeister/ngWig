@@ -22,7 +22,6 @@ angular.module('ngWig')
       this.isSourceModeAllowed = 'sourceModeAllowed' in $attrs;
       this.editMode = false;
       this.toolbarButtons = ngWigToolbar.getToolbarButtons(this.buttons && string2array(this.buttons));
-      this.placeholder = $attrs.placeholder;
       $attrs.$observe('disabled', (isDisabled) => {
         this.disabled = isDisabled;
         $container.attr('contenteditable', !isDisabled);
@@ -71,14 +70,6 @@ angular.module('ngWig')
       this.$onInit = () => {
         let placeholder = Boolean(this.placeholder);
 
-        // if (this.ngModelController.$viewValue) {
-        //   this.ngModelController.$render = () => $container.html(this.ngModelController.$viewValue);
-        // } else if (placeholder) {
-        //   this.ngModelController.$render = () => $container.empty();
-        // } else {
-        //   this.ngModelController.$render = () => $container.html('<p></p>');
-        // }
-
         this.ngModelController.$render = () => this.ngModelController.$viewValue
           ? $container.html(this.ngModelController.$viewValue)
           : placeholder ? $container.empty()
@@ -86,7 +77,7 @@ angular.module('ngWig')
 
         $container.bind('blur keyup change focus click', () => {
           //view --> model
-          if (placeholder && !$container.html().length || placeholder && $container.html() === "<br>") $container.empty();
+          if (placeholder && (!$container.html().length || $container.html() === "<br>")) $container.empty();
           this.ngModelController.$setViewValue($container.html());
           $scope.$applyAsync();
         });
@@ -108,12 +99,6 @@ angular.module('ngWig')
         $q.when(this.onPaste({$event: event, pasteContent: pasteContent})).then((pasteText) => {
           pasteHtmlAtCaret(pasteText);
         });
-      });
-
-      $scope.$watch(
-        () => this.ngModelController && this.ngModelController.$viewValue ? this.ngModelController.$viewValue : this.ngModelController,
-        (nVal, oVal) => {
-          if (nVal !== oVal && Boolean(this.placeholder)) $container.html(this.ngModelController.$viewValue);
       });
     }
   });
