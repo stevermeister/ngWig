@@ -261,6 +261,11 @@
 
 .nw-select:focus { outline: none; }
 
+.nw-button:focus {
+  border-color: lightgray;
+  border-style: solid;
+}
+
 [contenteditable]:empty:before {
   content: attr(placeholder);
   color: grey;
