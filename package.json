@@ -50,7 +50,8 @@
   },
   "main": "dist/ng-wig.min.js",
   "repository": {
-    "git": "https://github.com/stevermeister/ngWig"
+    "type": "git",
+    "git": "https://github.com/stevermeister/ngWig.git"
   },
   "scripts": {
     "start": "grunt start",
