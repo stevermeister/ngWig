@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'/>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+  <meta name="description" content="NgWig : WYSIWYG Editor for AgularJS"/>
+
+  <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+  <title>NgWig</title>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+  <header class="inner">
+    <a id="forkme_banner" href="https://github.com/stevermeister/ngWig">View on GitHub</a>
+
+    <h1 id="project_title">NgWig</h1>
+
+    <h2 id="project_tagline">WYSIWYG Editor for AgularJS</h2>
+
+    <section id="downloads">
+      <a class="zip_download_link" href="https://github.com/stevermeister/ngWig/zipball/master">Download this project as
+        a .zip file</a>
+      <a class="tar_download_link" href="https://github.com/stevermeister/ngWig/tarball/master">Download this project as
+        a tar.gz file</a>
+    </section>
+  </header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+  <section id="main_content" class="inner">
+    <h1>
+      <a name="what-is-ng-wig" class="anchor" href="#what-is-ng-wig"><span class="octicon octicon-link"></span></a>What
+      is ng-wig?
+    </h1>
+
+    <p>ng-wig (or ngWig) is simple <a href="http://en.wikipedia.org/wiki/WYSIWYG">WYSIWYG</a> editor for <strong>AngularJS</strong>
+      that provides the basic functionality like: text styling, headings, lists, alignment.</p>
+
+    <h2>Dependencies</h2>
+      <p><em>it's only AngularJS! No jQuery or other WYSIWYG monsters</em></p>
+
+      <ul>
+          <li>ng-wig2+ - Angular1.3+</li>
+          <li>ng-wig3+ - Angular1.5+</li>
+      </ul>
+
+    <h2>Usage</h2>
+
+    <pre><code>angular.module('yourApp', ['ngWig'])</code></pre>
+
+    <p>it's just attribute directive for textarea:</p>
+
+    <pre><code>&lt;ng-wig ng-model="text1"&gt&lt;/ng-wig&gt</code></pre>
+
+    <h2>Installation</h2>
+
+    <p>ngWig could be simply installed via npm:</p>
+
+    <pre><code>npm install ng-wig</code></pre>
+
+    <p>or via bower:</p>
+
+    <pre><code>bower install ng-wig</code></pre>
+
+    <h2>CDN</h2>
+
+      <pre><code>https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.1/ng-wig.min.js
+
+https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.1/ng-wig.js
+
+https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.1/css/ng-wig.css</code></pre>
+
+      <h2>Always last version CDN</h2>
+
+      <pre><code>https://cdn.rawgit.com/stevermeister/ngWig/master/dist/ng-wig.min.js
+
+https://cdn.rawgit.com/stevermeister/ngWig/master/dist/ng-wig.js
+
+https://cdn.rawgit.com/stevermeister/ngWig/master/dist/css/ng-wig.css</code></pre>
+
+    <h3>
+      <a name="demo" class="anchor" href="#demo"><span class="octicon octicon-link"></span></a><a href="demo/">Demo</a></h3>
+
+    <p><a href="demo/"><img src="images/ng-wig-demo.png"/></a></p>
+
+     <h2>Examples</h2>
+
+      <h3>Quick start (<a href="https://plnkr.co/edit/IaTeHRUdWU1WUJnUiftl?p=preview">plunker</a>)</h3>
+
+      <pre><code>&lt;ng-wig ng-model="text1"&gt&lt;/ng-wig&gt</code></pre>
+
+      <h3>Disabled (<a href="https://plnkr.co/edit/og1wRflbWfqyC8S4edzs?p=preview">plunker</a>)</h3>
+
+      <pre><code>&lt;ng-wig ng-model="text1" ng-disabled="true"&gt&lt;/ng-wig&gt</code></pre>
+
+      <h3>Edit Source option (<a href="https://plnkr.co/edit/JVOI2l2gnZMKORMWjAEZ?p=preview">plunker</a>)</h3>
+
+      <pre><code>&lt;ng-wig ng-model="text1" source-mode-allowed&gt&lt;/ng-wig&gt</code></pre>
+
+      <h3>Placeholder (<a href="https://plnkr.co/edit/yXZkpyHcb47rbXfTHs31?p=preview">plunker</a>)</h3>
+
+      <pre><code>&lt;ng-wig ng-model="text1" placeholder="'Enter instructions here.'"&gt&lt;/ng-wig&gt</code></pre>
+
+      <h3>ngModel sync (<a href="https://plnkr.co/edit/8owI0CDjoos8DArlc10g?p=preview">plunker</a>)</h3>
+
+      <pre><code>&lt;ng-wig ng-model="text1"&gt&lt;/ng-wig&gt&lt;ng-wig ng-model="text1"&gt&lt;/ng-wig&gt</code></pre>
+
+      <h3>Set buttons (<a href="https://plnkr.co/edit/9Fjqwnf74jJAKNx2cMYI?p=preview">plunker</a>)</h3>
+
+      <pre><code>&lt;ng-wig ng-model="text1" buttons="formats, bold, italic"&gt&lt;/ng-wig&gt</code></pre>
+
+      <h3>Setup generic buttons (<a href="https://plnkr.co/edit/XteWPwo0eQ1gz4L6cpDr?p=preview">plunker</a>)</h3>
+
+      <pre><code>.config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
+  ngWigToolbarProvider.addStandardButton('underline', 'Underline', 'underline', 'fa-underline');
+}]);</code></pre>
+
+      <h3>Add custom button (plugin) (<a href="https://plnkr.co/edit/Ik2fmPzDu6ecifUqVICv?p=preview">plunker</a>)</h3>
+<ul>
+    <li>
+        <h4>Javascript:</h4>
+        <pre><code>angular.module('ngWig').config(['ngWigToolbarProvider', function(ngWigToolbarProvider) {
+    ngWigToolbarProvider.addCustomButton('my-custom', 'nw-my-custom-button');
+}])
+.component('nwMyCustomButton', {
+    template: '&lt;button class="nw-button my-custom" title="My Custom Button" ng-click="$ctrl.click()"&gtMy Custom Button&lt;/button&gt',
+    controller: function() {
+        this.click = function(){
+            alert('My Custom Button');
+        };
+    }
+});</code></pre>
+    </li>
+    <li>
+        <h4>CSS:</h4>
+        <pre><code>.nw-button.my-custom:before {
+    content: '\f1b3';
+}</code></pre>
+    </li>
+</ul>
+      <h3>OnPaste Hook (<a href="https://plnkr.co/edit/dsvfoDZw8CPVrNo9R6Bv?p=preview">plunker</a>)</h3>
+
+      <pre><code>&lt;ng-wig ng-model="text1" on-paste="onPaste($event, pasteContent)"&gt&lt;/ng-wig&gt</code></pre>
+
+      <h3>Formats (plugin) (<a href="https://plnkr.co/edit/TgKThPQjlG4ctzGYk6Kq?p=preview">plunker</a>)</h3>
+
+      <pre><code>&lt;ng-wig ng-model="text1" buttons="formats"&gt&lt;/ng-wig&gt</code></pre>
+
+      <h3>Forecolor (plugin) (<a href="https://plnkr.co/edit/2hmkjBJHs7tTyOU7TDIH?p=preview">plunker</a>)</h3>
+
+      <pre><code>&lt;ng-wig ng-model="text1" buttons="clear-styles"&gt&lt;/ng-wig&gt</code></pre>
+
+      <h2>Development Setup</h2>
+
+      <pre><code>npm install
+npm run devSetup</code></pre>
+
+    <h3>
+      <a name="custom-templates" class="anchor" href="#custom-templates"><span class="octicon octicon-link"></span></a>Custom
+      templates?</h3>
+
+    <p>Not a problem!</p>
+
+    <h3>
+      <a name="custom-commands" class="anchor" href="#custom-commands"><span class="octicon octicon-link"></span></a>Custom
+      commands?</h3>
+
+    <p>Not a problem!</p>
+
+    <h2>
+      <a name="contribution" class="anchor" href="#contribution"><span class="octicon octicon-link"></span></a>Contribution
+    </h2>
+
+    <p>Having trouble with ng-wig or want to share idea of improvement? Please create an issue for it <a
+        href="https://github.com/stevermeister/ngWig/issues">here</a></p>
+
+    <h2>
+      <a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Contributors</h2>
+
+    <p>
+      <a href="https://github.com/stevermeister" class="user-mention">@stevermeister</a>,
+      <a href="https://github.com/Velzevul" class="user-mention">@volo</a>,
+      <a href="https://github.com/besuhoff" class="user-mention">@besuhoff</a>
+    </p>
+  </section>
+</div>
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+  <footer class="inner">
+    <p class="copyright">NgWig maintained by <a href="https://github.com/stevermeister">stevermeister</a></p>
+
+    <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+  </footer>
+</div>
+
+
+</body>
+</html>
