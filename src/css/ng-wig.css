@@ -97,6 +97,7 @@
   min-height: 100%;
   padding: 0 8px;
   display: table-cell;
+  word-break: break-all;
 }
 
 .nw-editor__src,
