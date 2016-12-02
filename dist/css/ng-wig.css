@@ -97,6 +97,7 @@
   min-height: 100%;
   padding: 0 8px;
   display: table-cell;
+  word-break: break-all;
 }
 
 .nw-editor__src,
@@ -261,8 +262,13 @@
 
 .nw-select:focus { outline: none; }
 
+.nw-button:focus {
+  border-color: lightgray;
+  border-style: solid;
+}
+
 [contenteditable]:empty:before {
-    content: attr(placeholder);
-    color: grey;
-    display: inline-block;
+  content: attr(placeholder);
+  color: grey;
+  display: inline-block;
 }
