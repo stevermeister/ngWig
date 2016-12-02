@@ -97,6 +97,7 @@
   min-height: 100%;
   padding: 0 8px;
   display: table-cell;
+  word-break: break-all;
 }
 
 .nw-editor__src,
@@ -208,6 +209,10 @@
   content: '\f040';
 }
 
+.nw-button.clear-styles:before {
+  content: '\f12d';
+}
+
 .nw-button:focus {
   outline: none;
 }
@@ -257,3 +262,13 @@
 
 .nw-select:focus { outline: none; }
 
+.nw-button:focus {
+  border-color: lightgray;
+  border-style: solid;
+}
+
+[contenteditable]:empty:before {
+  content: attr(placeholder);
+  color: grey;
+  display: inline-block;
+}
