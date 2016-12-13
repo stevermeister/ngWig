@@ -22,5 +22,8 @@
   "ignore": [
     "node_modules",
     "bower_components"
-  ]
+  ],
+  "dependencies": {
+    "font-awesome": "4.7.0"
+  }
 }
