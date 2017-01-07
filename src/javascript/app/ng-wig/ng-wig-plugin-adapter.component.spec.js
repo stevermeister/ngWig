@@ -52,6 +52,8 @@ describe('component: ngWigPlugin', () => {
     });
 
     it('should replace with the plugin template', () => {
+        component.$onInit();
+        
         let pluginElement = compile('<' + component.plugin.pluginName + ' ' +
         'plugin=' + '"$ctrl.plugin"' +
         'exec-command=' + '"$ctrl.execCommand"' +
