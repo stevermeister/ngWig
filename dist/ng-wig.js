@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * version: 3.0.13
+ * version: 3.0.14
  */
 var VERSION = '3.0.13';
 angular.module('ngWig', ['ngwig-app-templates']);
@@ -226,7 +226,10 @@ angular.module('ngWig').component('ngWigPlugin', {
     content: '='
   },
   controller: ["$scope", "$element", "$compile", function ($scope, $element, $compile) {
-    $element.replaceWith($compile('<' + this.plugin.pluginName + ' ' + 'plugin=' + '"$ctrl.plugin"' + 'exec-command=' + '"$ctrl.execCommand"' + 'edit-mode=' + '"$ctrl.editMode"' + 'disabled=' + '"$ctrl.disabled"' + 'options=' + '"$ctrl.options"' + 'content=' + '"$ctrl.content"' + '/>')($scope));
+    var $ctrl = this;
+    this.$onInit = function () {
+      $element.replaceWith($compile('<' + $ctrl.plugin.pluginName + ' ' + 'plugin=' + '"$ctrl.plugin"' + 'exec-command=' + '"$ctrl.execCommand"' + 'edit-mode=' + '"$ctrl.editMode"' + 'disabled=' + '"$ctrl.disabled"' + 'options=' + '"$ctrl.options"' + 'content=' + '"$ctrl.content"' + '/>')($scope));
+    };
   }]
 });
 angular.module('ngwig-app-templates', ['ng-wig/views/ng-wig.html']);
