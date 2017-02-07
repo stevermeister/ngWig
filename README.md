@@ -29,11 +29,11 @@ or via bower:
 
 ##CDN
 
-    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.9/ng-wig.min.js
+    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.14/ng-wig.min.js
 
-    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.9/ng-wig.js
+    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.14/ng-wig.js
 
-    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.9/css/ng-wig.css
+    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.14/css/ng-wig.css
 
 ##Always last version CDN
     https://cdn.rawgit.com/stevermeister/ngWig/master/dist/ng-wig.min.js
