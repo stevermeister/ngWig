@@ -50,7 +50,7 @@ describe('component: ngWig', () => {
     }));
 
     function getCompiledElement(template) {
-        let element = angular.element(template || '<ng-wig ng-model="text1"><ng-wig>');
+        let element = angular.element(template || '<ng-wig ng-model="text1"></ng-wig>');
         let compiledElement = compile(element)(scope);
 
         scope.$digest();
@@ -100,10 +100,6 @@ describe('component: ngWig', () => {
 
     it('should set editMode', () => {
         expect(component.editMode).toEqual(false);
-    });
-
-    it('should set toolbarButtons', () => {
-        expect(component.toolbarButtons).toBe(mocks);
     });
 
     describe('isEditorActive function', () => {
@@ -202,10 +198,6 @@ describe('component: ngWig', () => {
         });
     });
 
-    it('should fail if ngModel is not provided', () => {
-        expect(() => { getCompiledElement('<ng-wig><ng-wig>') }).toThrow();
-    });
-
     it('should set disabled property', () => {
         element = getCompiledElement('<ng-wig disabled="true" ng-model="text1"></ng-wig>');
         ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
@@ -215,10 +207,10 @@ describe('component: ngWig', () => {
     });
 
     it('should set the placeholder property', () => {
-        element = getCompiledElement('<ng-wig disabled="true" ng-model="text1" placeholder="a placholder"></ng-wig>');
+        element = getCompiledElement('<ng-wig disabled="true" ng-model="text1" placeholder="a placeholder"></ng-wig>');
         ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
 
-        expect(ngWigElement.attr('placeholder')).toEqual('a placholder');
+        expect(ngWigElement.attr('placeholder')).toEqual('a placeholder');
     });
 
     describe('$onInit function', () => {
@@ -226,6 +218,13 @@ describe('component: ngWig', () => {
 
         it('should exist', () => {
             expect(component.$onInit).not.toBe(null);
+        });
+
+        it('should set toolbarButtons', () => {
+            component.ngModelController = controller.ngModelController;
+            component.$onInit();
+
+            expect(component.toolbarButtons).toBe(mocks);
         });
 
         describe('$render function', () => {
@@ -270,21 +269,21 @@ describe('component: ngWig', () => {
             });
 
             it('should render an empty element', function(){
-              element = getCompiledElement('<ng-wig ng-model="text1" placeholder="My placeholder"><ng-wig>');
+              element = getCompiledElement('<ng-wig ng-model="text1" placeholder="My placeholder"></ng-wig>');
               ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
               expect(ngWigElement.html()).toEqual('');
             });
 
             it('should render the model value even if a placeholder exists', function(){
               scope.string = "This is a value";
-              let el = `<ng-wig ng-model="string" placeholder="My placeholder"><ng-wig>`;
+              let el = `<ng-wig ng-model="string" placeholder="My placeholder"></ng-wig>`;
               element = getCompiledElement(el);
               ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
               expect(ngWigElement.html()).toEqual('This is a value');
             });
 
             it('should render the model value even if a placeholder exits and the model value is recevied async', function(){
-              let el = `<ng-wig ng-model="string" placeholder="My placeholder"><ng-wig>`;
+              let el = `<ng-wig ng-model="string" placeholder="My placeholder"></ng-wig>`;
               element = getCompiledElement(el);
               ngWigElement = angular.element(element[0].querySelector('#ng-wig-editable'));
 
@@ -295,8 +294,6 @@ describe('component: ngWig', () => {
                 expect(ngWigElement.html()).toEqual('This is a value');
               }, 100);
             });
-
-
         });
     });
 });
