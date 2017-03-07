@@ -21,7 +21,7 @@ angular.module('ngWig')
       this.required = 'required' in $attrs;
       this.isSourceModeAllowed = 'sourceModeAllowed' in $attrs;
       this.editMode = false;
-      this.toolbarButtons = ngWigToolbar.getToolbarButtons(this.buttons && string2array(this.buttons));
+      
       $attrs.$observe('disabled', (isDisabled) => {
         this.disabled = isDisabled;
         $container.attr('contenteditable', !isDisabled);
@@ -68,6 +68,8 @@ angular.module('ngWig')
       };
 
       this.$onInit = () => {
+        this.toolbarButtons = ngWigToolbar.getToolbarButtons(this.buttons && string2array(this.buttons));
+        
         let placeholder = Boolean(this.placeholder);
 
         this.ngModelController.$render = () => this.ngModelController.$viewValue
