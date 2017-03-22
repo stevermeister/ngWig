@@ -69,8 +69,8 @@ or via bower:
 
 ###ngModel sync ([plunker](https://plnkr.co/edit/8owI0CDjoos8DArlc10g?p=preview))
 
-  ```  <ng-wig ng-model="text1"></ng-wig>
-       <ng-wig ng-model="text1"></ng-wig>```
+    <ng-wig ng-model="text1"></ng-wig>
+    <ng-wig ng-model="text1"></ng-wig>
 
 ###Set buttons ([plunker](https://plnkr.co/edit/9Fjqwnf74jJAKNx2cMYI?p=preview))
 
