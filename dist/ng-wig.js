@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * version: 3.0.14
+ * version: 3.0.15
  */
 var VERSION = '3.0.14';
 angular.module('ngWig', ['ngwig-app-templates']);
@@ -32,7 +32,7 @@ angular.module('ngWig').component('ngWig', {
     this.required = 'required' in $attrs;
     this.isSourceModeAllowed = 'sourceModeAllowed' in $attrs;
     this.editMode = false;
-    this.toolbarButtons = ngWigToolbar.getToolbarButtons(this.buttons && string2array(this.buttons));
+
     $attrs.$observe('disabled', function (isDisabled) {
       _this.disabled = isDisabled;
       $container.attr('contenteditable', !isDisabled);
@@ -80,6 +80,8 @@ angular.module('ngWig').component('ngWig', {
     };
 
     this.$onInit = function () {
+      _this.toolbarButtons = ngWigToolbar.getToolbarButtons(_this.buttons && string2array(_this.buttons));
+
       var placeholder = Boolean(_this.placeholder);
 
       _this.ngModelController.$render = function () {
