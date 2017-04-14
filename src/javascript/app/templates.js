@@ -4,36 +4,54 @@ angular.module("ng-wig/views/ng-wig.html", []).run(["$templateCache", function($
   $templateCache.put("ng-wig/views/ng-wig.html",
     "<div class=\"ng-wig\">\n" +
     "  <ul class=\"nw-toolbar\">\n" +
-    "    <li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--header-one\" title=\"Header\" ng-click=\"execCommand('formatblock', '<h1>')\"></button>\n" +
+    "    <li class=\"nw-toolbar__item\" ng-repeat=\"button in $ctrl.toolbarButtons\">\n" +
+    "        <div ng-if=\"!button.isComplex\">\n" +
+    "          <button type=\"button\"\n" +
+    "                  class=\"nw-button {{button.styleClass}}\"\n" +
+    "                  title=\"{{button.title}}\"\n" +
+    "                  ng-click=\"$ctrl.execCommand(button.command)\"\n" +
+    "                  ng-class=\"{ 'nw-button--active': !$ctrl.disabled && $ctrl.isEditorActive() && button.isActive() }\"\n" +
+    "                  ng-disabled=\"$ctrl.editMode || $ctrl.disabled\">\n" +
+    "            {{ button.title }}\n" +
+    "          </button>\n" +
+    "        </div>\n" +
+    "        <div ng-if=\"button.isComplex\">\n" +
+    "          <ng-wig-plugin\n" +
+    "              exec-command=\"$ctrl.execCommand\"\n" +
+    "              plugin=\"button\"\n" +
+    "              edit-mode=\"$ctrl.editMode\"\n" +
+    "              disabled=\"$ctrl.disabled\"\n" +
+    "              options=\"$ctrl.options\"\n" +
+    "              content=\"$ctrl.content\"></ng-wig-plugin>\n" +
+    "        </div>\n" +
     "    </li><!--\n" +
     "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--paragraph\" title=\"Paragraph\" ng-click=\"execCommand('formatblock', '<p>')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--unordered-list\" title=\"Unordered List\" ng-click=\"execCommand('insertunorderedlist')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--ordered-list\" title=\"Ordered List\" ng-click=\"execCommand('insertorderedlist')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--bold\" title=\"Bold\" ng-click=\"execCommand('bold')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--italic\" title=\"Italic\" ng-click=\"execCommand('italic')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--link\" title=\"link\" ng-click=\"execCommand('createlink')\"></button>\n" +
-    "    </li><!--\n" +
-    "    --><li class=\"nw-toolbar__item\">\n" +
-    "      <button type=\"button\" class=\"nw-button nw-button--source\" ng-class=\"{ 'nw-button--active': editMode }\" ng-click=\"toggleEditMode()\"></button>\n" +
+    "      <button type=\"button\"\n" +
+    "              class=\"nw-button nw-button--source\"\n" +
+    "              title=\"Edit HTML\"\n" +
+    "              ng-class=\"{ 'nw-button--active': $ctrl.editMode }\"\n" +
+    "              ng-if=\"$ctrl.isSourceModeAllowed\"\n" +
+    "              ng-click=\"$ctrl.toggleEditMode()\"\n" +
+    "              ng-disabled=\"$ctrl.disabled\">\n" +
+    "        Edit HTML\n" +
+    "      </button>\n" +
     "    </li>\n" +
     "  </ul>\n" +
     "\n" +
     "  <div class=\"nw-editor-container\">\n" +
-    "    <div class=\"nw-editor\">\n" +
-    "      <textarea class=\"nw-editor__src\" ng-show=\"editMode\" ng-model=\"content\"></textarea>\n" +
-    "      <div ng-class=\"{'nw-invisible': editMode, 'nw-autoexpand': autoexpand}\" class=\"nw-editor__res\" ng-model=\"content\" ng-wig-editable></div>\n" +
+    "    <div class=\"nw-editor__src-container\" ng-show=\"$ctrl.editMode\">\n" +
+    "      <textarea ng-model=\"$ctrl.content\"\n" +
+    "                ng-disabled=\"$ctrl.disabled\"\n" +
+    "                class=\"nw-editor__src\"></textarea>\n" +
+    "    </div>\n" +
+    "    <div class=\"nw-editor\" ng-class=\"{ 'nw-disabled': $ctrl.disabled }\">\n" +
+    "      <div id=\"ng-wig-editable\"\n" +
+    "           class=\"nw-editor__res\"\n" +
+    "           ng-class=\"{'nw-invisible': $ctrl.editMode}\"\n" +
+    "           ng-disabled=\"$ctrl.disabled\"\n" +
+    "           contenteditable\n" +
+    "           placeholder=\"{{$ctrl.placeholder}}\">\n" +
+    "      </div>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "</div>\n" +
