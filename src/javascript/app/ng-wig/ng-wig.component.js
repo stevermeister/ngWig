@@ -21,8 +21,7 @@ angular.module('ngWig')
       this.required = 'required' in $attrs;
       this.isSourceModeAllowed = 'sourceModeAllowed' in $attrs;
       this.editMode = false;
-      this.toolbarButtons = ngWigToolbar.getToolbarButtons(this.buttons && string2array(this.buttons));
-      this.placeholder = $attrs.placeholder;
+      
       $attrs.$observe('disabled', (isDisabled) => {
         this.disabled = isDisabled;
         $container.attr('contenteditable', !isDisabled);
@@ -50,7 +49,7 @@ angular.module('ngWig')
         }
 
         this.beforeExecCommand({command: command, options: options});
-        
+
         // use insertHtml for `createlink` command to account for IE/Edge purposes, in case there is no selection
         let selection = $document[0].getSelection().toString();
         if(command === 'createlink' && selection === ''){
@@ -61,7 +60,7 @@ angular.module('ngWig')
         }
 
         this.afterExecCommand({command: command, options: options});
-        
+
         // added temporarily to pass the tests. For some reason $container[0] is undefined during testing.
         if($container.length){
           $container[0].focus();
@@ -69,12 +68,18 @@ angular.module('ngWig')
       };
 
       this.$onInit = () => {
+        this.toolbarButtons = ngWigToolbar.getToolbarButtons(this.buttons && string2array(this.buttons));
+        
         let placeholder = Boolean(this.placeholder);
-        this.ngModelController.$render = () =>  !placeholder ? $container.html(this.ngModelController.$viewValue || '<p></p>') : $container.empty();
+
+        this.ngModelController.$render = () => this.ngModelController.$viewValue
+          ? $container.html(this.ngModelController.$viewValue)
+          : placeholder ? $container.empty()
+          : $container.html('<p></p>');
 
         $container.bind('blur keyup change focus click', () => {
           //view --> model
-          if (placeholder && !$container.html().length || placeholder && $container.html() === "<br>") $container.empty();
+          if (placeholder && (!$container.html().length || $container.html() === "<br>")) $container.empty();
           this.ngModelController.$setViewValue($container.html());
           $scope.$applyAsync();
         });

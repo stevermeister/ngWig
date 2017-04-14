@@ -1,6 +1,6 @@
 {
   "name": "ng-wig",
-  "version": "3.0.7",
+  "version": "3.0.15",
   "author": "Stepan Suvorov",
   "contributors": [
     {
@@ -34,7 +34,7 @@
     "grunt-contrib-cssmin": "1.0.1",
     "grunt-contrib-uglify": "1.0.0",
     "grunt-contrib-watch": "1.0.0",
-    "grunt-grunticon": "1.2.3",
+    "grunt-grunticon": "2.3.1",
     "grunt-html2js": "0.3.5",
     "grunt-karma": "2.0.0",
     "grunt-ng-annotate": "2.0.1",
@@ -46,11 +46,12 @@
     "load-grunt-tasks": "0.4.0"
   },
   "dependencies": {
-    "angular": "1.5.0"
+    "angular": "1.6.0"
   },
   "main": "dist/ng-wig.min.js",
   "repository": {
-    "git": "https://github.com/stevermeister/ngWig"
+    "type": "git",
+    "git": "https://github.com/stevermeister/ngWig.git"
   },
   "scripts": {
     "start": "grunt start",

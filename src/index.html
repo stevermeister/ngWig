@@ -30,7 +30,7 @@
 <div class="container">
 
     <h1>One simple WYSIWYG</h1>
-    <ng-wig ng-model="text1" class="editor1" source-mode-allowed placeholder="Enter content here."></ng-wig>
+    <ng-wig ng-model="text1" class="editor1" source-mode-allowed></ng-wig>
 
     <h1>One more</h1>
     <form name="myForm" novalidate>
@@ -39,6 +39,12 @@
 
     <h1>Disabled WYSIWYG</h1>
     <ng-wig ng-model="text3" class="editor1" source-mode-allowed ng-disabled="true"></ng-wig>
+
+    <h1>With Placeholder</h1>
+    <ng-wig ng-model="text4" class="editor1" placeholder="{{placeholder}}"></ng-wig>
+
+    <h1>With Placeholder & Asynchronous fetch of content</h1>
+    <ng-wig ng-model="text5" class="editor1" placeholder="{{placeholder}}"></ng-wig>
 
 </div>
 <script src="libs/angular/angular.js"></script>

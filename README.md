@@ -7,6 +7,8 @@ ngWig
 
  - ng-wig2+ - Angular1.3+
  - ng-wig3+ - Angular1.5+
+ 
+ Also suports latest Angular1.6
 
 
 ##Usage
@@ -29,11 +31,11 @@ or via bower:
 
 ##CDN
 
-    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.1/ng-wig.min.js
+    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.14/ng-wig.min.js
 
-    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.1/ng-wig.js
+    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.14/ng-wig.js
 
-    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.1/css/ng-wig.css
+    https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.14/css/ng-wig.css
 
 ##Always last version CDN
     https://cdn.rawgit.com/stevermeister/ngWig/master/dist/ng-wig.min.js
@@ -67,8 +69,8 @@ or via bower:
 
 ###ngModel sync ([plunker](https://plnkr.co/edit/8owI0CDjoos8DArlc10g?p=preview))
 
-  ```  <ng-wig ng-model="text1"></ng-wig>
-       <ng-wig ng-model="text1"></ng-wig>```
+    <ng-wig ng-model="text1"></ng-wig>
+    <ng-wig ng-model="text1"></ng-wig>
 
 ###Set buttons ([plunker](https://plnkr.co/edit/9Fjqwnf74jJAKNx2cMYI?p=preview))
 

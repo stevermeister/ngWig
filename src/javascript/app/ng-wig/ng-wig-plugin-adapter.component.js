@@ -9,7 +9,9 @@ angular.module('ngWig')
       content: '='
     },
     controller: function($scope, $element, $compile) {
-      $element.replaceWith($compile('<' + this.plugin.pluginName + ' ' +
+      var $ctrl = this;
+      this.$onInit = function() {
+        $element.replaceWith($compile('<' + $ctrl.plugin.pluginName + ' ' +
         'plugin=' + '"$ctrl.plugin"' +
         'exec-command=' + '"$ctrl.execCommand"' +
         'edit-mode=' + '"$ctrl.editMode"' +
@@ -17,5 +19,7 @@ angular.module('ngWig')
         'options=' + '"$ctrl.options"' +
         'content=' + '"$ctrl.content"' +
         '/>')($scope));
+      }
+      
     }
   });
