@@ -31,24 +31,24 @@ module.exports = function(grunt) {
       app1: {
         files: {
           '<%= distPath %>/ng-wig.js': [
-              srcPath + '/javascript/app/ng-wig/ng-wig.js',
-              srcPath + '/javascript/app/ng-wig/ng-wig.component.js',
-              srcPath + '/javascript/app/ng-wig/ng-wig-toolbar.provider.js',
-              srcPath + '/javascript/app/ng-wig/ng-wig-plugin-adapter.component.js',
-              srcPath + '/javascript/app/templates.js'
-            ]
+            srcPath + '/javascript/app/ng-wig/ng-wig.js',
+            srcPath + '/javascript/app/ng-wig/ng-wig.component.js',
+            srcPath + '/javascript/app/ng-wig/ng-wig-toolbar.provider.js',
+            srcPath + '/javascript/app/ng-wig/ng-wig-plugin-adapter.component.js',
+            srcPath + '/javascript/app/templates.js'
+          ]
         }
       },
       plugins: {
         files: [{
-           expand: true,
-           cwd: srcPath + '/javascript/app/plugins/',
-           src: [
-             'clear-styles.ngWig.js',
-             'forecolor.ngWig.js',
-             'formats.ngWig.js'
-           ],
-           dest: distPath + '/plugins'
+          expand: true,
+          cwd: srcPath + '/javascript/app/plugins/',
+          src: [
+            'clear-styles.ngWig.js',
+            'forecolor.ngWig.js',
+            'formats.ngWig.js'
+          ],
+          dest: distPath + '/plugins'
         }]
       }
     },
@@ -64,30 +64,30 @@ module.exports = function(grunt) {
       },
       plugins: {
         files: [{
-           expand: true,
-           cwd: distPath + '/plugins/',
-           src: ['*.js'],
-           dest: distPath + '/plugins'
+          expand: true,
+          cwd: distPath + '/plugins/',
+          src: ['*.js'],
+          dest: distPath + '/plugins'
         }]
       }
     },
     uglify: {
       build: {
         files: {
-           'dist/ng-wig.min.js': [ distPath +'/ng-wig.js']
+          'dist/ng-wig.min.js': [ distPath +'/ng-wig.js']
         }
       },
       plugins: {
         files: [{
-           expand: true,
-           cwd: distPath + '/plugins/',
-           src: [
-             'clear-styles.ngWig.js',
-             'forecolor.ngWig.js',
-             'formats.ngWig.js'
-           ],
-           dest: distPath + '/plugins',
-           ext: ['.ngWig.min.js']
+          expand: true,
+          cwd: distPath + '/plugins/',
+          src: [
+            'clear-styles.ngWig.js',
+            'forecolor.ngWig.js',
+            'formats.ngWig.js'
+          ],
+          dest: distPath + '/plugins',
+          ext: ['.ngWig.min.js']
         }]
       }
     },
@@ -147,5 +147,4 @@ module.exports = function(grunt) {
   grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin', 'bump:patch']);
   grunt.registerTask('devBuild', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin']);
   grunt.registerTask('upversion', ['bump:minor']);
-  //grunt.registerTask('upversion', ['bump:major']);
 };
