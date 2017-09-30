@@ -23,9 +23,7 @@ it's just attribute directive for textarea:
 ## Sanitization    
 
 **Important:** ngWig is light weight solution that **does not include sanitization module**. So it's your own responsiblity to be sure that contecnt that you placed there is already checked and does not have any possible injections.
-In this [issue](https://github.com/stevermeister/ngWig/issues/173) [@MacJu](https://github.com/MacJu) provides nice example of how it is important. And here is the description how you can reproduct it: 
-[ngWig - XSS PoC.pdf](https://github.com/stevermeister/ngWig/files/1344494/ngWig.-.XSS.PoC.pdf)
-
+Credits to [@MacJu](https://github.com/MacJu) for highlighting the issue.
 
 ## Installation
 
