@@ -160,7 +160,7 @@ describe('component: ngWig', () => {
             spyOn(currentDocument[0], 'getSelection').and.returnValue('');
             component.execCommand('createlink', 'http://fakeLink');
 
-            expect(currentDocument[0].execCommand).toHaveBeenCalledWith('insertHtml', false, '<a href="http://fakeLink">http://fakeLink</a>');
+            expect(currentDocument[0].execCommand).toHaveBeenCalledWith('insertHtml', false, '<a href="http://fakeLink" target="_blank">http://fakeLink</a>');
         });
 
         it('should fail if command is unknown', function(){
