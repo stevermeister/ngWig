@@ -15,7 +15,7 @@ angular.module('ngWig')
         'plugin=' + '"$ctrl.plugin"' +
         'exec-command=' + '"$ctrl.execCommand"' +
         'edit-mode=' + '"$ctrl.editMode"' +
-        'disabled=' + '"$ctrl.disabled"' +
+        'data-disabled=' + '"$ctrl.disabled"' +
         'options=' + '"$ctrl.options"' +
         'content=' + '"$ctrl.content"' +
         '/>')($scope));
