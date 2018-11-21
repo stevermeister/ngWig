@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * version: 3.0.18
+ * version: 3.0.19
  */
 var VERSION = '3.0.16';
 angular.module('ngWig', ['ngwig-app-templates']);
