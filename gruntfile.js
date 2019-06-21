@@ -11,11 +11,6 @@ module.exports = function(grunt) {
     distPath: distPath,
 
     copy: {
-      dev: {
-        files: [
-          {src: 'bower_components/angular/angular.js', dest:'src/libs/angular/angular.js'}
-        ]
-      },
       dist: {
         files: [
           {src: srcPath + '/css/ng-wig.css', dest: distPath + '/css/ng-wig.css'},
@@ -99,7 +94,6 @@ module.exports = function(grunt) {
       }
     },
     clean:{
-      libs:  ['src/libs/**/*'],
       bower: ['bower_components'],
       target: ['dist/**']
     },
@@ -143,7 +137,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['html2js', 'watch']);
-  grunt.registerTask('install', ['clean:libs', 'copy:dev', 'clean:bower', 'html2js']);
+  grunt.registerTask('install', ['copy:dev', 'clean:bower', 'html2js']);
   grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin', 'bump:patch']);
   grunt.registerTask('devBuild', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin']);
   grunt.registerTask('upversion', ['bump:minor']);
