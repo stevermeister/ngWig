@@ -8,7 +8,7 @@ ngWig
  - ng-wig2+ - Angular1.3+
  - ng-wig3+ - Angular1.5+
  
- Also suports latest Angular1.6
+ Also suports latest Angular1.7.8
 
 
 ## Usage
