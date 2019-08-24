@@ -44,11 +44,11 @@ or via bower:
     https://cdnjs.cloudflare.com/ajax/libs/ng-wig/3.0.14/css/ng-wig.css
 
 ## Always last version CDN
-    https://cdn.rawgit.com/stevermeister/ngWig/master/dist/ng-wig.min.js
+    https://cdn.jsdelivr.net/gh/stevermeister/ngWig@master/dist/ng-wig.min.js
 
-    https://cdn.rawgit.com/stevermeister/ngWig/master/dist/ng-wig.js
+    https://cdn.jsdelivr.net/gh/stevermeister/ngWig@master/dist/ng-wig.js
 
-    https://cdn.rawgit.com/stevermeister/ngWig/master/dist/css/ng-wig.css
+    https://cdn.jsdelivr.net/gh/stevermeister/ngWig@master/dist/css/ng-wig.css
 
 
 [Demo] (http://stevermeister.github.io/ngWig/demo/)
