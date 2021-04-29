@@ -48,6 +48,11 @@ angular.module('ngWig')
           }
         }
 
+        // added temporarily to pass the tests. For some reason $container[0] is undefined during testing.
+        if($container.length){
+          $container[0].focus();
+        }
+
         this.beforeExecCommand({command: command, options: options});
 
         // use insertHtml for `createlink` command to account for IE/Edge purposes, in case there is no selection
