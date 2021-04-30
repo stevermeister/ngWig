@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * version: 3.1.0
+ * version: 3.1.1
  */
 var VERSION = '3.0.16';
 angular.module('ngWig', ['ngwig-app-templates']);
@@ -59,6 +59,11 @@ angular.module('ngWig').component('ngWig', {
         if (!options) {
           return;
         }
+      }
+
+      // added temporarily to pass the tests. For some reason $container[0] is undefined during testing.
+      if ($container.length) {
+        $container[0].focus();
       }
 
       _this.beforeExecCommand({ command: command, options: options });
