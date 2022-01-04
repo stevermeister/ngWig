@@ -1,6 +1,6 @@
 {
   "name": "ng-wig",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "author": "Stepan Suvorov",
   "contributors": [
     {
@@ -37,18 +37,18 @@
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-uglify": "1.0.0",
     "grunt-contrib-watch": "1.1.0",
-    "grunt-html2js": "0.6.0",
+    "grunt-html2js": "^0.8.0",
     "grunt-karma": "^3.0.2",
     "grunt-ng-annotate": "2.0.1",
     "jasmine-core": "2.4.1",
-    "karma": "^4.1.0",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-coverage": "^1.1.2",
-    "karma-jasmine": "^2.0.1",
     "load-grunt-tasks": "^5.0.0"
   },
   "dependencies": {
-    "angular": "~1.8.0"
+    "angular": "~1.8.0",
+    "karma": "^6.3.9",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage": "^2.1.0",
+    "karma-jasmine": "^4.0.1"
   },
   "main": "dist/ng-wig.min.js",
   "repository": {
@@ -57,7 +57,7 @@
   },
   "scripts": {
     "start": "grunt start",
-    "devSetup": "bower install && grunt install",
+    "build": "grunt build",
     "test": "grunt karma:unit"
   },
   "license": "MIT"
