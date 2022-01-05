@@ -94,7 +94,6 @@ module.exports = function(grunt) {
       }
     },
     clean:{
-      bower: ['bower_components'],
       target: ['dist/**']
     },
     html2js: {
@@ -115,8 +114,8 @@ module.exports = function(grunt) {
     },
     bump: {
       options: {
-        files: ['package.json', 'bower.json', 'dist/ng-wig.js', 'src/javascript/app/ng-wig/ng-wig.js'],
-        commitFiles: ['package.json', 'bower.json', 'dist/**', 'src/javascript/app/ng-wig/ng-wig.js'],
+        files: ['package.json', 'dist/ng-wig.js', 'src/javascript/app/ng-wig/ng-wig.js'],
+        commitFiles: ['package.json', 'dist/**', 'src/javascript/app/ng-wig/ng-wig.js'],
         createTag: true,
         tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',
@@ -137,7 +136,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['html2js', 'watch']);
-  grunt.registerTask('install', ['copy:dev', 'clean:bower', 'html2js']);
+  grunt.registerTask('install', ['html2js']);
   grunt.registerTask('build', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin', 'bump:patch']);
   grunt.registerTask('devBuild', ['html2js', 'copy:dist', 'ngAnnotate', 'babel', 'uglify', 'cssmin']);
   grunt.registerTask('upversion', ['bump:minor']);
